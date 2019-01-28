@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 import sys
+import os
 import json
 from collections import OrderedDict
 import mpyq
@@ -186,9 +187,12 @@ class GeneralSection(OrderedDict):
         self.setdefault('elapsed_game_loops', None)
         self.setdefault('elapsed_game_time', None)
         self.setdefault('elapsed_real_time', None)
+        self.setdefault('timestamp', None)
+        self.setdefault('client_version', None)
         self.setdefault('player_slots', [])
 
     def addMetadata(self, metadata):
+        self['elapsed_real_time'] = metadata['Duration']
         for row in metadata['Players']:
             self['player_slots'].append(OrderedDict(
                 player_id=row['PlayerID'],
@@ -197,12 +201,13 @@ class GeneralSection(OrderedDict):
 
     def addHeader(self, header):
         self['elapsed_game_loops'] = header['m_elapsedGameLoops']
+        self['client_version'] = header['m_version']
 
     def addDetails(self, details):
         self['game_title'] = details['m_title']
         self['game_speed'] = GAME_SPEED_MAP[details['m_gameSpeed']]
-        self['elapsed_game_time'] = round(self['elapsed_game_loops'] * 16.0, 2)
-        self['elapsed_real_time'] = round(self['elapsed_game_time'] * (1 + ((details['m_gameSpeed'] - 2) / 5.0)), 2)
+        self['elapsed_game_time'] = round(self['elapsed_game_loops'] / 16.0)
+        self['timestamp'] = (details['m_timeUTC'] / 10000000) - 11644473600
 
         if not self['player_slots']:
             for i, row in enumerate(details['m_playerList']):
@@ -233,6 +238,13 @@ class GeneralSection(OrderedDict):
             if row['m_name']:
                 pslot['name'] = row['m_name']
             pslot['clan'] = row['m_clanTag'] if row['m_clanTag'] else None
+
+
+class MapInfoSection(OrderedDict):
+    def __init__(self):
+        OrderedDict.__init__(self)
+        self.setdefault('id', None)
+        self.setdefault('name', None)
 
 
 TORUS_LIST = ['ShapeTorus2', 'ShapeTorus22', 'ShapeTorus222']
@@ -349,6 +361,7 @@ def main():
     initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))
 
     general = GeneralSection()
+    map_info = MapInfoSection()
     game_result = None
     
     try:
@@ -364,31 +377,48 @@ def main():
 
     tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
 
-    CV_NAMES = [
-        'Ice Baneling Escape - Cold Voyage',
-        'Ice Baneling Escape - EZ',
-        'Ice Baneling Escape - Pro',
-    ]
-    IBE1_NAMES = [
-        'Ice Baneling Escape',
-        '도전! 맹독충의 빙판탈출', # koKR
-        '毒爆大逃亡', # zhTW
-    ]
-    IBE2_NAMES = [
-        'Ice Baneling Escape 2',
-        '맹독충의 빙판탈출 2',
-        'Ice Baneling Escape 2.1 - The Ice Awakens',
-    ]
-    if general['game_title'] in CV_NAMES:
-        for payload in fetch_payloads_from_tracker(tracker):
-            game_result = decode_game_result(payload)
-            if game_result['escaped']:
-                break
-    elif general['game_title'] in IBE2_NAMES or general['game_title'] in IBE1_NAMES:
-        game_result = process_ibe(tracker)
+    NAME_MAP = {
+        'Ice Baneling Escape': 'IBE1',
+        '도전! 맹독충의 빙판탈출': 'IBE1', # koKR
+        '毒爆大逃亡': 'IBE1', # zhTW
 
+        'Reverse Ice Baneling Escape': 'RIBE1',
+        
+        'Ice Baneling Escape 2': 'IBE2',
+        '맹독충의 빙판탈출 2': 'IBE2', # koKR
+        
+        'Ice Baneling Escape 2.1 - The Ice Awakens': 'IBE2.1',
+
+        'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
+        'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
+        'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
+    }
+    
+    fname = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'minfo.json')
+    with open(fname, 'r') as fp:
+        minfo = json.load(fp, encoding='utf-8')
+
+    try:
+        map_id = NAME_MAP[general['game_title']]
+        map_info['id'] = map_id
+        map_info['name'] = minfo['maps'][map_info['id']]['name']
+    except KeyError:
+        map_info = None
+
+    if map_info:
+        if map_info['id'] in ['IBE-CV', 'IBE-CV-EZ', 'IBE-CV-PRO']:
+            for payload in fetch_payloads_from_tracker(tracker):
+                game_result = decode_game_result(payload)
+                if game_result['escaped']:
+                    break
+        elif map_info['id'] in ['IBE1', 'RIBE1', 'IBE2', 'IBE2.1']:
+            game_result = process_ibe(tracker)
+        else:
+            raise Exception('unknown map id "%s"' % map_info['id'])
+    
     osects = OrderedDict()
     osects['general'] = general
+    osects['map'] = map_info
     osects['result'] = game_result
     print(json.dumps(osects, indent=4, sort_keys=False))
 

@@ -1,0 +1,25 @@
+{
+    "maps": {
+        "IBE1": {
+            "name": "Ice Baneling Escape"
+        },
+        "RIBE1": {
+            "name": "Reverse Ice Baneling Escape"
+        },
+        "IBE2": {
+            "name": "Ice Baneling Escape 2"
+        },
+        "IBE2.1": {
+            "name": "Ice Baneling Escape 2.1 - The Ice Awakens"
+        },
+        "IBE-CV": {
+            "name": "Ice Baneling Escape - Cold Voyage"
+        },
+        "IBE-CV-EZ": {
+            "name": "Ice Baneling Escape - Cold Voyage EZ"
+        },
+        "IBE-CV-PRO": {
+            "name": "Ice Baneling Escape - Cold Voyage PRO"
+        }
+    }
+}
