@@ -1,4 +1,6 @@
 #!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
 from __future__ import print_function
 import sys
 import json
@@ -202,6 +204,13 @@ class GeneralSection(OrderedDict):
         self['elapsed_game_time'] = round(self['elapsed_game_loops'] * 16.0, 2)
         self['elapsed_real_time'] = round(self['elapsed_game_time'] * (1 + ((details['m_gameSpeed'] - 2) / 5.0)), 2)
 
+        if not self['player_slots']:
+            for i, row in enumerate(details['m_playerList']):
+                self['player_slots'].append(OrderedDict(
+                    player_id=i + 1,
+                    apm=None,
+                ))
+
         for row in details['m_playerList']:
             pslot = self['player_slots'][row['m_workingSetSlotId']]
             pslot['type'] = PLAYER_TYPE_MAP[row['m_control']]
@@ -224,6 +233,93 @@ class GeneralSection(OrderedDict):
             if row['m_name']:
                 pslot['name'] = row['m_name']
             pslot['clan'] = row['m_clanTag'] if row['m_clanTag'] else None
+
+
+TORUS_LIST = ['ShapeTorus2', 'ShapeTorus22', 'ShapeTorus222']
+
+
+def torus_to_integer(stream, base=3):
+    value = 0;
+
+    for i, uname in enumerate(stream):
+        value += TORUS_LIST.index(uname) * pow(base, i);
+    
+    return value;
+
+
+IBE_VER_DELTA1 = 1
+IBE_VER_DELTA2 = 2
+
+def process_ibe(tracker):
+    past_torus4 = False
+    rows = []
+    score = {}
+    
+    for x in tracker:
+        if x['_eventid'] == 0:
+            score[x['m_playerId']] = x
+        
+        if past_torus4:
+            if x['_eventid'] == 1:
+                if x['m_unitTypeName'] in TORUS_LIST:
+                    rows[-1].append(x['m_unitTypeName'])
+                elif x['m_unitTypeName'] == 'ShapeTorus3':
+                    rows.append([])
+        else:
+            if x['_eventid'] == 1 and x['m_unitTypeName'] == 'ShapeTorus4':
+                past_torus4 = True
+                rows.append([])
+
+    if not past_torus4:
+        return None
+
+    result = {}
+    result['escaped'] = True
+
+    result['players'] = {}
+    for pid in score:
+        result['players'][pid] = {
+            'left': score[pid]['m_stats']['m_scoreValueVespeneCurrent'] == 0
+        }
+    
+    if len(rows) == 16:
+        dver = IBE_VER_DELTA2
+    elif len(rows) == 15:
+        dver = IBE_VER_DELTA1
+    else:
+        raise Exception('unexpected number of rows - %d' % len(rows))
+    
+    rows = map(torus_to_integer, rows)
+    
+    result['escape_time'] = rows.pop(0)
+    rows.pop(0)
+    if dver == IBE_VER_DELTA1:
+        result['difficulty_index'] = rows.pop(0)
+    
+    result['team'] = {}
+    result['team']['revives'] = rows.pop(0)
+    result['team']['deaths'] = rows.pop(0)
+    result['team']['bonus_levelups'] = rows.pop(0)
+    result['team']['used_power_boost_times'] = rows.pop(0)
+    result['team']['used_propel_times'] = rows.pop(0)
+    result['team']['used_throw_essence_times'] = rows.pop(0)
+    result['team']['used_art_times'] = rows.pop(0)
+    result['team']['used_rev_art_times'] = rows.pop(0)
+    if dver == IBE_VER_DELTA2:
+        result['team']['used_time_shift_times'] = rows.pop(0)
+        result['team']['times_leveled_up'] = rows.pop(0)
+
+    result['major_version'] = rows.pop(0)
+    result['minor_version'] = rows.pop(0)
+    
+    if dver == IBE_VER_DELTA2:
+        result['difficulty_index'] = rows.pop(0)
+        rows.pop(0)
+    elif dver == IBE_VER_DELTA1:
+        rows.pop(0)
+        result['escape_time'] += rows.pop(0) / 100.0
+
+    return result
 
 
 def main():
@@ -249,30 +345,47 @@ def main():
         protocol = versions.latest()
         print('Attempting to use newest possible instead: %s' % protocol.__name__, file=sys.stderr)
 
-    metadata = json.loads(read_contents(archive, 'replay.gamemetadata.json'))
     details = protocol.decode_replay_details(read_contents(archive, 'replay.details'))
     initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))
 
     general = GeneralSection()
     game_result = None
     
-    general.addMetadata(metadata)
+    try:
+        if archive.files.index('replay.gamemetadata.json'):
+            metadata = json.loads(read_contents(archive, 'replay.gamemetadata.json'))
+            general.addMetadata(metadata)
+    except ValueError:
+        pass
+    
     general.addHeader(header)
     general.addDetails(details)
     general.addInitData(initd)
 
-    tevents = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
+    tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
 
     CV_NAMES = [
         'Ice Baneling Escape - Cold Voyage',
         'Ice Baneling Escape - EZ',
         'Ice Baneling Escape - Pro',
     ]
+    IBE1_NAMES = [
+        'Ice Baneling Escape',
+        '도전! 맹독충의 빙판탈출', # koKR
+        '毒爆大逃亡', # zhTW
+    ]
+    IBE2_NAMES = [
+        'Ice Baneling Escape 2',
+        '맹독충의 빙판탈출 2',
+        'Ice Baneling Escape 2.1 - The Ice Awakens',
+    ]
     if general['game_title'] in CV_NAMES:
-        for payload in fetch_payloads_from_tracker(tevents):
+        for payload in fetch_payloads_from_tracker(tracker):
             game_result = decode_game_result(payload)
             if game_result['escaped']:
                 break
+    elif general['game_title'] in IBE2_NAMES or general['game_title'] in IBE1_NAMES:
+        game_result = process_ibe(tracker)
 
     osects = OrderedDict()
     osects['general'] = general
