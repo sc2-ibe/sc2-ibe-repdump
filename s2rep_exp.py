@@ -189,6 +189,9 @@ class GeneralSection(OrderedDict):
         self.setdefault('elapsed_real_time', None)
         self.setdefault('timestamp', None)
         self.setdefault('client_version', None)
+        self.setdefault('author_handle', None)
+        self.setdefault('battle_net', None)
+        self.setdefault('server_region', None)
         self.setdefault('player_slots', [])
 
     def addMetadata(self, metadata):
@@ -216,11 +219,18 @@ class GeneralSection(OrderedDict):
                     apm=None,
                 ))
 
+        last_region = row['m_toon']['m_region']
         for row in details['m_playerList']:
             pslot = self['player_slots'][row['m_workingSetSlotId']]
             pslot['type'] = PLAYER_TYPE_MAP[row['m_control']]
             if row['m_control'] == 2:
                 pslot['handle'] = '%d-S2-%d-%d' % (row['m_toon']['m_region'], row['m_toon']['m_realm'], row['m_toon']['m_id'])
+                pslot['toon'] = {
+                    'region': row['m_toon']['m_region'],
+                    'realm': row['m_toon']['m_realm'],
+                    'id': row['m_toon']['m_id'],
+                }
+                last_region = row['m_toon']['m_region']
             else:
                 pslot['handle'] = None
                 pslot['name'] = row['m_name']
@@ -230,7 +240,15 @@ class GeneralSection(OrderedDict):
             pslot['color']['b'] = row['m_color']['m_b']
             pslot['color']['a'] = row['m_color']['m_a']
 
+        self['server_region'] = {
+            'id': last_region,
+            'name': [None, 'NA', 'EU', 'Asia', None, 'CN', 'SEA'][last_region]
+        }
+
     def addInitData(self, initd):
+        self['battle_net'] = initd['m_syncLobbyState']['m_gameDescription']['m_gameOptions']['m_battleNet']
+        self['author_handle'] = initd['m_syncLobbyState']['m_gameDescription']['m_mapAuthorName']
+        
         for i, row in enumerate(initd['m_syncLobbyState']['m_userInitialData']):
             if i >= len(self['player_slots']):
                 break
