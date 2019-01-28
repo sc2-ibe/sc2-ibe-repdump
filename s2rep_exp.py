@@ -219,7 +219,7 @@ class GeneralSection(OrderedDict):
                     apm=None,
                 ))
 
-        last_region = row['m_toon']['m_region']
+        last_region = None
         for row in details['m_playerList']:
             pslot = self['player_slots'][row['m_workingSetSlotId']]
             pslot['type'] = PLAYER_TYPE_MAP[row['m_control']]
