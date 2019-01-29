@@ -279,6 +279,7 @@ def torus_to_integer(stream, base=3):
 
 IBE_VER_DELTA1 = 1
 IBE_VER_DELTA2 = 2
+IBE_VER_DELTA_RIBE = 3
 
 def process_ibe(tracker):
     past_torus4 = False
@@ -286,11 +287,10 @@ def process_ibe(tracker):
     score = {}
     
     for x in tracker:
-        if x['_eventid'] == 0:
-            score[x['m_playerId']] = x
-        
         if past_torus4:
-            if x['_eventid'] == 1:
+            if x['_eventid'] == 0:
+                score[x['m_playerId']] = x
+            elif x['_eventid'] == 1:
                 if x['m_unitTypeName'] in TORUS_LIST:
                     rows[-1].append(x['m_unitTypeName'])
                 elif x['m_unitTypeName'] == 'ShapeTorus3':
@@ -312,18 +312,20 @@ def process_ibe(tracker):
             'left': score[pid]['m_stats']['m_scoreValueVespeneCurrent'] == 0
         }
     
+    rows = map(torus_to_integer, rows)
+    
     if len(rows) == 16:
         dver = IBE_VER_DELTA2
-    elif len(rows) == 15:
+    elif 14 <= len(rows) and len(rows) <= 15:
         dver = IBE_VER_DELTA1
+    elif len(rows) == 11:
+        dver = IBE_VER_DELTA_RIBE
     else:
-        raise Exception('unexpected number of rows - %d' % len(rows))
-    
-    rows = map(torus_to_integer, rows)
+        raise Exception('unexpected number of rows [%d]: %s' % (len(rows), str(rows)))
     
     result['escape_time'] = rows.pop(0)
     rows.pop(0)
-    if dver == IBE_VER_DELTA1:
+    if dver != IBE_VER_DELTA2:
         result['difficulty_index'] = rows.pop(0)
     
     result['team'] = {}
@@ -339,15 +341,20 @@ def process_ibe(tracker):
         result['team']['used_time_shift_times'] = rows.pop(0)
         result['team']['times_leveled_up'] = rows.pop(0)
 
-    result['major_version'] = rows.pop(0)
-    result['minor_version'] = rows.pop(0)
+    if dver != IBE_VER_DELTA_RIBE:
+        result['major_version'] = rows.pop(0)
+        result['minor_version'] = rows.pop(0)
+    else:
+        result['major_version'] = None
+        result['minor_version'] = None
     
     if dver == IBE_VER_DELTA2:
         result['difficulty_index'] = rows.pop(0)
         rows.pop(0)
     elif dver == IBE_VER_DELTA1:
         rows.pop(0)
-        result['escape_time'] += rows.pop(0) / 100.0
+        if len(rows):
+            result['escape_time'] += rows.pop(0) / 100.0
 
     return result
 
