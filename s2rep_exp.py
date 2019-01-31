@@ -295,7 +295,7 @@ IBE_VER_DELTA1 = 1
 IBE_VER_DELTA2 = 2
 IBE_VER_DELTA_RIBE = 3
 
-def process_ibe(tracker):
+def process_ibe(tracker, map_id):
     past_torus4 = False
     rows = []
     score = {}
@@ -321,17 +321,31 @@ def process_ibe(tracker):
     result['escaped'] = True
 
     result['players'] = {}
+    num_left = 0
     for pid in score:
         result['players'][pid] = {
             'left': score[pid]['m_stats']['m_scoreValueVespeneCurrent'] == 0
         }
+        num_left += 1
+    # if data indicates that every player has left then it must be incorrect..
+    # (early versions of IBE didn't export player status info)
+    if num_left == len(result['players']):
+        for pid in score:
+            result['players'][pid] = {
+                'left': False
+            }
     
     rows = map(torus_to_integer, rows)
     
     if len(rows) == 16:
         dver = IBE_VER_DELTA2
-    elif 14 <= len(rows) and len(rows) <= 15:
+    elif len(rows) == 15:
         dver = IBE_VER_DELTA1
+    elif len(rows) == 14:
+        if map_id == 'IBE2':
+            dver = IBE_VER_DELTA2
+        else:
+            dver = IBE_VER_DELTA1
     elif len(rows) == 11:
         dver = IBE_VER_DELTA_RIBE
     else:
@@ -363,8 +377,12 @@ def process_ibe(tracker):
         result['minor_version'] = None
     
     if dver == IBE_VER_DELTA2:
-        result['difficulty_index'] = rows.pop(0)
-        rows.pop(0)
+        if len(rows):
+            result['difficulty_index'] = rows.pop(0)
+            rows.pop(0)
+        else:
+            # IBE2 v1.3 - c26ccb8a690e9ced1614de57fe27a255d9fa98ea4ec98ce6cf50cbf973b9b935 
+            result['difficulty_index'] = 1 # assume it's normal/normal
     elif dver == IBE_VER_DELTA1:
         rows.pop(0)
         if len(rows):
@@ -452,7 +470,7 @@ def main():
                 if game_result['escaped']:
                     break
         elif map_info['id'] in ['IBE1', 'RIBE1', 'IBE2', 'IBE2.1']:
-            game_result = process_ibe(tracker)
+            game_result = process_ibe(tracker, map_info['id'])
         else:
             raise Exception('unknown map id "%s"' % map_info['id'])
     
