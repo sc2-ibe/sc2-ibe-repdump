@@ -212,7 +212,8 @@ class GeneralSection(OrderedDict):
         working_slots = {}
 
         for slot_id, row in enumerate(initd['m_syncLobbyState']['m_lobbyState']['m_slots']):
-            if row['m_control'] == 0:
+            # if slot is FREE (0) or NOT AVAILABLE (1)
+            if row['m_control'] <= 1:
                 continue
 
             pslot = OrderedDict(
@@ -254,7 +255,7 @@ class GeneralSection(OrderedDict):
             if ev['_event'] != 'NNet.Replay.Tracker.SPlayerSetupEvent':
                 break
             if ev['m_slotId'] is None:
-                break
+                continue
             pslot = slots[ev['m_slotId']]
             pslot['player_id'] = ev['m_playerId']
 
