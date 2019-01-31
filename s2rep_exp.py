@@ -196,11 +196,6 @@ class GeneralSection(OrderedDict):
 
     def addMetadata(self, metadata):
         self['elapsed_real_time'] = metadata['Duration']
-        for row in metadata['Players']:
-            self['player_slots'].append(OrderedDict(
-                player_id=row['PlayerID'],
-                apm=row['APM'],
-            ))
 
     def addHeader(self, header):
         self['elapsed_game_loops'] = header['m_elapsedGameLoops']
@@ -212,16 +207,32 @@ class GeneralSection(OrderedDict):
         self['elapsed_game_time'] = round(self['elapsed_game_loops'] / 16.0)
         self['timestamp'] = (details['m_timeUTC'] / 10000000) - 11644473600
 
-        if not self['player_slots']:
-            for i, row in enumerate(details['m_playerList']):
-                self['player_slots'].append(OrderedDict(
-                    player_id=i + 1,
-                    apm=None,
-                ))
+    def setupPlayers(self, initd, details, tracker, metadata=None):
+        slots = {}
+        working_slots = {}
 
-        last_region = None
+        for slot_id, row in enumerate(initd['m_syncLobbyState']['m_lobbyState']['m_slots']):
+            if row['m_control'] == 0:
+                continue
+
+            pslot = OrderedDict(
+                player_id=None,
+                apm=None,
+            )
+            self['player_slots'].append(pslot)
+            slots[slot_id] = pslot
+            working_slots[row['m_workingSetSlotId']] = pslot
+
+            if row['m_userId'] is not None:
+                user_data = initd['m_syncLobbyState']['m_userInitialData'][row['m_userId']]
+                pslot['name'] = user_data['m_name']
+                pslot['clan'] = user_data['m_clanTag']
+            else:
+                pslot['name'] = None
+                pslot['clan'] = None
+
         for row in details['m_playerList']:
-            pslot = self['player_slots'][row['m_workingSetSlotId']]
+            pslot = working_slots[row['m_workingSetSlotId']]
             pslot['type'] = PLAYER_TYPE_MAP[row['m_control']]
             if row['m_control'] == 2:
                 pslot['handle'] = '%d-S2-%d-%d' % (row['m_toon']['m_region'], row['m_toon']['m_realm'], row['m_toon']['m_id'])
@@ -230,7 +241,6 @@ class GeneralSection(OrderedDict):
                     'realm': row['m_toon']['m_realm'],
                     'id': row['m_toon']['m_id'],
                 }
-                last_region = row['m_toon']['m_region']
             else:
                 pslot['handle'] = None
                 pslot['name'] = row['m_name']
@@ -240,23 +250,27 @@ class GeneralSection(OrderedDict):
             pslot['color']['b'] = row['m_color']['m_b']
             pslot['color']['a'] = row['m_color']['m_a']
 
-        self['server_region'] = {
-            'id': last_region,
-            'name': [None, 'NA', 'EU', 'Asia', None, 'CN', 'SEA'][last_region]
-        }
+        for ev in tracker:
+            if ev['_event'] != 'NNet.Replay.Tracker.SPlayerSetupEvent':
+                break
+            if ev['m_slotId'] is None:
+                break
+            pslot = slots[ev['m_slotId']]
+            pslot['player_id'] = ev['m_playerId']
+
+        if metadata:
+            for i, row in enumerate(metadata['Players']):
+                self['player_slots'][i]['apm'] = row['APM']
 
     def addInitData(self, initd):
         self['battle_net'] = initd['m_syncLobbyState']['m_gameDescription']['m_gameOptions']['m_battleNet']
         self['author_handle'] = initd['m_syncLobbyState']['m_gameDescription']['m_mapAuthorName']
+        region = int(self['author_handle'].split('-')[0])
+        self['server_region'] = {
+            'id': region,
+            'name': [None, 'NA', 'EU', 'Asia', None, 'CN', 'SEA'][region]
+        }
         
-        for i, row in enumerate(initd['m_syncLobbyState']['m_userInitialData']):
-            if i >= len(self['player_slots']):
-                break
-            pslot = self['player_slots'][i]
-            if row['m_name']:
-                pslot['name'] = row['m_name']
-            pslot['clan'] = row['m_clanTag'] if row['m_clanTag'] else None
-
 
 class MapInfoSection(OrderedDict):
     def __init__(self):
@@ -384,23 +398,21 @@ def main():
 
     details = protocol.decode_replay_details(read_contents(archive, 'replay.details'))
     initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))
+    try:
+        if archive.files.index('replay.gamemetadata.json'):
+            metadata = json.loads(read_contents(archive, 'replay.gamemetadata.json'))
+    except ValueError:
+        metadata = None
 
     general = GeneralSection()
     map_info = MapInfoSection()
     game_result = None
-    
-    try:
-        if archive.files.index('replay.gamemetadata.json'):
-            metadata = json.loads(read_contents(archive, 'replay.gamemetadata.json'))
-            general.addMetadata(metadata)
-    except ValueError:
-        pass
-    
+
     general.addHeader(header)
     general.addDetails(details)
     general.addInitData(initd)
-
-    tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
+    if metadata:
+        general.addMetadata(metadata)
 
     NAME_MAP = {
         'Ice Baneling Escape': 'IBE1',
@@ -431,6 +443,9 @@ def main():
         map_info = None
 
     if map_info:
+        tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
+        general.setupPlayers(initd, details, tracker, metadata)
+        
         if map_info['id'] in ['IBE-CV', 'IBE-CV-EZ', 'IBE-CV-PRO']:
             for payload in fetch_payloads_from_tracker(tracker):
                 game_result = decode_game_result(payload)
