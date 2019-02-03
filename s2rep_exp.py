@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
@@ -192,6 +192,7 @@ class GeneralSection(OrderedDict):
         self.setdefault('author_handle', None)
         self.setdefault('battle_net', None)
         self.setdefault('server_region', None)
+        self.setdefault('resumed_replay', None)
         self.setdefault('player_slots', [])
 
     def addMetadata(self, metadata):
@@ -271,7 +272,14 @@ class GeneralSection(OrderedDict):
             'id': region,
             'name': [None, 'NA', 'EU', 'Asia', None, 'CN', 'SEA'][region]
         }
-        
+
+    def processGameEvents(self, gameevents):
+        self['resumed_replay'] = False
+        for ev in gameevents:
+            if ev['_event'] == 'NNet.Game.SHijackReplayGameEvent':
+                self['resumed_replay'] = True
+                break
+
 
 class MapInfoSection(OrderedDict):
     def __init__(self):
@@ -410,7 +418,7 @@ def main():
     baseBuild = header['m_version']['m_baseBuild']
     try:
         protocol = versions.build(baseBuild)
-    except Exception, e:
+    except Exception as e:
         print('Unsupported base build: {0} ({1})'.format(baseBuild, str(e)), file=sys.stderr)
         protocol = versions.latest()
         print('Attempting to use newest possible instead: %s' % protocol.__name__, file=sys.stderr)
@@ -462,8 +470,11 @@ def main():
         map_info = None
 
     if map_info:
+        gameevents = protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events'))
         tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
+
         general.setupPlayers(initd, details, tracker, metadata)
+        general.processGameEvents(gameevents)
         
         if map_info['id'] in ['IBE-CV', 'IBE-CV-EZ', 'IBE-CV-PRO']:
             for payload in fetch_payloads_from_tracker(tracker):
