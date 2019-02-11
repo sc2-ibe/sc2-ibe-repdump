@@ -113,10 +113,14 @@ def decode_game_result(payload):
     gmr = OrderedDict()
 
     gmr['schema_version'] = rd.read_uint16()
+    if gmr['schema_version'] >= 2:
+        CHALLENGE_POWERUP_MAX = 16
+        CHALLENGE_BUTTON_MAX = 16
+
     gmr['game_version'] = rd.read_uint16()
     gmr['game_code'] = rd.read_uint16()
-    gmr['game_speed'] = True if gmr['game_code'] & (1 << 1) else False
-    gmr['game_diff'] = True if gmr['game_code'] & (1 << 0) else False
+    gmr['game_speed'] = 1 if gmr['game_code'] & (1 << 1) else 0
+    gmr['game_diff'] = 1 if gmr['game_code'] & (1 << 0) else 0
     gmr['escape_time'] = round(rd.read_fixed32(), 2)
     gmr['escaped'] = gmr['escape_time'] > 0.0
     rd.read_uint8()
@@ -147,6 +151,8 @@ def decode_game_result(payload):
 
         gmr['challenges'][i] = OrderedDict()
         gmr['challenges'][i]['completed_by'] = completed_by
+        if gmr['schema_version'] >= 2:
+            gmr['challenges'][i]['time_offset_start'] = round(rd.read_fixed32(), 2)
         gmr['challenges'][i]['completed_time'] = round(rd.read_fixed32(), 2)
         gmr['challenges'][i]['order'] = rd.read_uint8()
 
@@ -452,6 +458,7 @@ def main():
         '맹독충의 빙판탈출 2': 'IBE2', # koKR
         
         'Ice Baneling Escape 2.1 - The Ice Awakens': 'IBE2.1',
+        '맹독충의 빙판탈출 2.1 - 얼음 깨기': 'IBE2.1', # koKR
 
         'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
         'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
@@ -464,6 +471,11 @@ def main():
 
     try:
         map_id = NAME_MAP[general['game_title']]
+
+        # IBE2.1 before name change
+        if general['game_title'] == '맹독충의 빙판탈출 2' and general['author_handle'] in ['1-S2-1-4182020', '2-S2-1-2642502', '3-S2-1-4137301']:
+            map_id = 'IBE2.1'
+
         map_info['id'] = map_id
         map_info['name'] = minfo['maps'][map_info['id']]['name']
     except KeyError:
@@ -475,17 +487,20 @@ def main():
 
         general.setupPlayers(initd, details, tracker, metadata)
         general.processGameEvents(gameevents)
-        
-        if map_info['id'] in ['IBE-CV', 'IBE-CV-EZ', 'IBE-CV-PRO']:
+
+        if map_info['id'] in ['IBE-CV', 'IBE-CV-EZ', 'IBE-CV-PRO', 'IBE2.1']:
             for payload in fetch_payloads_from_tracker(tracker):
                 game_result = decode_game_result(payload)
                 if game_result['escaped']:
                     break
-        elif map_info['id'] in ['IBE1', 'RIBE1', 'IBE2', 'IBE2.1']:
-            game_result = process_ibe(tracker, map_info['id'])
-        else:
-            raise Exception('unknown map id "%s"' % map_info['id'])
-    
+
+        if not game_result:
+            tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
+            if map_info['id'] in ['IBE1', 'RIBE1', 'IBE2', 'IBE2.1']:
+                game_result = process_ibe(tracker, map_info['id'])
+            else:
+                raise Exception('unknown map id "%s"' % map_info['id'])
+
     osects = OrderedDict()
     osects['general'] = general
     osects['map'] = map_info
