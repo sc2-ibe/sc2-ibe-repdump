@@ -91,24 +91,24 @@ def fetch_payloads_from_tracker(tevents):
                 curr_utag_index = x['m_unitTagIndex']
 
 
-MAX_PLAYERS = 10
-ABIL_MAX = 8
-CHALLENGE_MAX = 30
-CHALLENGE_POWERUP_MAX = 8
-CHALLENGE_BUTTON_MAX = 8
-
-ABIL_MAP = [
-    "BOOST",
-    "CREEP",
-    "THROW_ESSENCE",
-    "ART",
-    "SHADE_CREATE",
-    "SHADE_USE",
-    "THROW_ESSENCE_REVIVE",
-    "ART_REVIVE"
-]
-
 def decode_game_result(payload):
+    MAX_PLAYERS = 10
+    ABIL_MAX = 8
+    CHALLENGE_MAX = 30
+    CHALLENGE_POWERUP_MAX = 8
+    CHALLENGE_BUTTON_MAX = 8
+
+    ABIL_MAP = [
+        "BOOST",
+        "CREEP",
+        "THROW_ESSENCE",
+        "ART",
+        "SHADE_CREATE",
+        "SHADE_USE",
+        "THROW_ESSENCE_REVIVE",
+        "ART_REVIVE"
+    ]
+
     rd = DReader(payload)
     gmr = OrderedDict()
 
