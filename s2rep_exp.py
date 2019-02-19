@@ -97,6 +97,7 @@ def decode_game_result(dstream):
     CHALLENGE_MAX = 30
     CHALLENGE_POWERUP_MAX = 8
     CHALLENGE_BUTTON_MAX = 8
+    CURRENT_SCHEMA_VERSION = 3
 
     ABIL_MAP = [
         "BOOST",
@@ -113,6 +114,8 @@ def decode_game_result(dstream):
     gmr = OrderedDict()
 
     gmr['schema_version'] = rd.read_uint16()
+    if gmr['schema_version'] > CURRENT_SCHEMA_VERSION:
+        raise Exception('not supported schema version %d' % gmr['schema_version'])
     if gmr['schema_version'] >= 2:
         CHALLENGE_POWERUP_MAX = 16
         CHALLENGE_BUTTON_MAX = 16
