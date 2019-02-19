@@ -122,6 +122,8 @@ def decode_game_result(dstream):
     gmr['game_speed'] = 1 if gmr['game_code'] & (1 << 1) else 0
     gmr['game_diff'] = 1 if gmr['game_code'] & (1 << 0) else 0
     gmr['escape_time'] = round(rd.read_fixed32(), 2)
+    if gmr['schema_version'] >= 3:
+        gmr['started_at'] = round(rd.read_fixed32(), 2)
     gmr['escaped'] = gmr['escape_time'] > 0.0
     rd.read_uint8()
     gmr['challenges_completed'] = 0
@@ -156,17 +158,25 @@ def decode_game_result(dstream):
         gmr['challenges'][i]['completed_time'] = round(rd.read_fixed32(), 2)
         gmr['challenges'][i]['order'] = rd.read_uint8()
 
+        # bug in schema v2 (IBE2.1 wouldn't reset timer for the first challenge after restart)
+        if gmr['schema_version'] == 2 and gmr['challenges'][i]['order'] == 0:
+            gmr['challenges'][i]['time_offset_start'] = 0.0
+
         gmr['challenges'][i]['buttons_by'] = []
         for l in range(0, CHALLENGE_BUTTON_MAX):
             tmp = rd.read_uint8()
             if tmp > 0:
                 gmr['challenges'][i]['buttons_by'].append(tmp)
+            if gmr['schema_version'] >= 3 and tmp == 0:
+                break
 
         gmr['challenges'][i]['powerups_by'] = []
         for l in range(0, CHALLENGE_POWERUP_MAX):
             tmp = rd.read_uint8()
             if tmp > 0:
                 gmr['challenges'][i]['powerups_by'].append(tmp)
+            if gmr['schema_version'] >= 3 and tmp == 0:
+                break
 
     return gmr
 
