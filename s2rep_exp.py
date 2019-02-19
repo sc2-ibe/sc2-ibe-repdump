@@ -74,24 +74,24 @@ class DReader(object):
         return value
 
 
-def fetch_payloads_from_tracker(tevents):
+def seek_payload_in_tracker(tracker):
+    for x in tracker:
+        if x['_event'] == 'NNet.Replay.Tracker.SUnitBornEvent' and x['m_unitTypeName'] in ['__', 'ShapeTorus4']:
+            yield x
+
+
+def fetch_dstream_from_tracker(tracker, initial_event):
     curr_payload = []
-    curr_utag_index = None
-    for x in tevents:
-        if curr_utag_index != None:
-            if x['_eventid'] == 2 and x['m_unitTagIndex'] == curr_utag_index:
-                yield curr_payload
-                curr_utag_index = None
-            elif x['_eventid'] in [1, 2]:
-                curr_payload.append(x['m_x'])
-                curr_payload.append(x['m_y'])
-        else:
-            if x['_eventid'] == 1 and x['m_unitTypeName'] == '__':
-                curr_payload = []
-                curr_utag_index = x['m_unitTagIndex']
+    for x in tracker:
+        if x['_event'] == 'NNet.Replay.Tracker.SUnitDiedEvent' and x['m_unitTagIndex'] == initial_event['m_unitTagIndex']:
+            return curr_payload
+        elif x['_event'] in ['NNet.Replay.Tracker.SUnitBornEvent', 'NNet.Replay.Tracker.SUnitDiedEvent']:
+            curr_payload.append(x['m_x'])
+            curr_payload.append(x['m_y'])
+    raise Exception('unexpected end of dstream')
 
 
-def decode_game_result(payload):
+def decode_game_result(dstream):
     MAX_PLAYERS = 10
     ABIL_MAX = 8
     CHALLENGE_MAX = 30
@@ -109,7 +109,7 @@ def decode_game_result(payload):
         "ART_REVIVE"
     ]
 
-    rd = DReader(payload)
+    rd = DReader(dstream)
     gmr = OrderedDict()
 
     gmr['schema_version'] = rd.read_uint16()
@@ -156,13 +156,17 @@ def decode_game_result(payload):
         gmr['challenges'][i]['completed_time'] = round(rd.read_fixed32(), 2)
         gmr['challenges'][i]['order'] = rd.read_uint8()
 
-        gmr['challenges'][i]['buttons_by'] = OrderedDict()
+        gmr['challenges'][i]['buttons_by'] = []
         for l in range(0, CHALLENGE_BUTTON_MAX):
-            gmr['challenges'][i]['buttons_by'][l] = rd.read_uint8()
+            tmp = rd.read_uint8()
+            if tmp > 0:
+                gmr['challenges'][i]['buttons_by'].append(tmp)
 
-        gmr['challenges'][i]['powerups_by'] = OrderedDict()
+        gmr['challenges'][i]['powerups_by'] = []
         for l in range(0, CHALLENGE_POWERUP_MAX):
-            gmr['challenges'][i]['powerups_by'][l] = rd.read_uint8()
+            tmp = rd.read_uint8()
+            if tmp > 0:
+                gmr['challenges'][i]['powerups_by'].append(tmp)
 
     return gmr
 
@@ -273,7 +277,11 @@ class GeneralSection(OrderedDict):
     def addInitData(self, initd):
         self['battle_net'] = initd['m_syncLobbyState']['m_gameDescription']['m_gameOptions']['m_battleNet']
         self['author_handle'] = initd['m_syncLobbyState']['m_gameDescription']['m_mapAuthorName']
-        region = int(self['author_handle'].split('-')[0])
+        if self['author_handle']:
+            region = int(self['author_handle'].split('-')[0])
+        else:
+            # test mode
+            region = 0
         self['server_region'] = {
             'id': region,
             'name': [None, 'NA', 'EU', 'Asia', None, 'CN', 'SEA'][region]
@@ -302,7 +310,7 @@ def torus_to_integer(stream, base=3):
 
     for i, uname in enumerate(stream):
         value += TORUS_LIST.index(uname) * pow(base, i);
-    
+
     return value;
 
 
@@ -310,27 +318,17 @@ IBE_VER_DELTA1 = 1
 IBE_VER_DELTA2 = 2
 IBE_VER_DELTA_RIBE = 3
 
-def process_ibe(tracker, map_id):
-    past_torus4 = False
-    rows = []
+def process_ibe(tracker, map_id, initial_event):
+    rows = [[]]
     score = {}
-    
     for x in tracker:
-        if past_torus4:
-            if x['_eventid'] == 0:
-                score[x['m_playerId']] = x
-            elif x['_eventid'] == 1:
-                if x['m_unitTypeName'] in TORUS_LIST:
-                    rows[-1].append(x['m_unitTypeName'])
-                elif x['m_unitTypeName'] == 'ShapeTorus3':
-                    rows.append([])
-        else:
-            if x['_eventid'] == 1 and x['m_unitTypeName'] == 'ShapeTorus4':
-                past_torus4 = True
+        if x['_event'] == 'NNet.Replay.Tracker.SPlayerStatsEvent':
+            score[x['m_playerId']] = x
+        elif x['_event'] == 'NNet.Replay.Tracker.SUnitBornEvent':
+            if x['m_unitTypeName'] in TORUS_LIST:
+                rows[-1].append(x['m_unitTypeName'])
+            elif x['m_unitTypeName'] == 'ShapeTorus3':
                 rows.append([])
-
-    if not past_torus4:
-        return None
 
     result = {}
     result['escaped'] = True
@@ -349,9 +347,9 @@ def process_ibe(tracker, map_id):
             result['players'][pid] = {
                 'left': False
             }
-    
+
     rows = map(torus_to_integer, rows)
-    
+
     if len(rows) == 16:
         dver = IBE_VER_DELTA2
     elif len(rows) == 15:
@@ -365,12 +363,12 @@ def process_ibe(tracker, map_id):
         dver = IBE_VER_DELTA_RIBE
     else:
         raise Exception('unexpected number of rows [%d]: %s' % (len(rows), str(rows)))
-    
+
     result['escape_time'] = rows.pop(0)
     rows.pop(0)
     if dver != IBE_VER_DELTA2:
         result['difficulty_index'] = rows.pop(0)
-    
+
     result['team'] = {}
     result['team']['revives'] = rows.pop(0)
     result['team']['deaths'] = rows.pop(0)
@@ -390,13 +388,13 @@ def process_ibe(tracker, map_id):
     else:
         result['major_version'] = None
         result['minor_version'] = None
-    
+
     if dver == IBE_VER_DELTA2:
         if len(rows):
             result['difficulty_index'] = rows.pop(0)
             rows.pop(0)
         else:
-            # IBE2 v1.3 - c26ccb8a690e9ced1614de57fe27a255d9fa98ea4ec98ce6cf50cbf973b9b935 
+            # IBE2 v1.3 - c26ccb8a690e9ced1614de57fe27a255d9fa98ea4ec98ce6cf50cbf973b9b935
             result['difficulty_index'] = 1 # assume it's normal/normal
     elif dver == IBE_VER_DELTA1:
         rows.pop(0)
@@ -453,10 +451,10 @@ def main():
         '毒爆大逃亡': 'IBE1', # zhTW
 
         'Reverse Ice Baneling Escape': 'RIBE1',
-        
+
         'Ice Baneling Escape 2': 'IBE2',
         '맹독충의 빙판탈출 2': 'IBE2', # koKR
-        
+
         'Ice Baneling Escape 2.1 - The Ice Awakens': 'IBE2.1',
         '맹독충의 빙판탈출 2.1 - 얼음 깨기': 'IBE2.1', # koKR
 
@@ -464,7 +462,7 @@ def main():
         'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
         'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
     }
-    
+
     fname = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'minfo.json')
     with open(fname, 'r') as fp:
         minfo = json.load(fp, encoding='utf-8')
@@ -482,24 +480,26 @@ def main():
         map_info = None
 
     if map_info:
-        gameevents = protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events'))
         tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
 
         general.setupPlayers(initd, details, tracker, metadata)
-        general.processGameEvents(gameevents)
 
-        if map_info['id'] in ['IBE-CV', 'IBE-CV-EZ', 'IBE-CV-PRO', 'IBE2.1']:
-            for payload in fetch_payloads_from_tracker(tracker):
-                game_result = decode_game_result(payload)
+        for initial_event in seek_payload_in_tracker(tracker):
+            if initial_event['m_unitTypeName'] == '__':
+                dstream = fetch_dstream_from_tracker(tracker, initial_event)
+                game_result = decode_game_result(dstream)
                 if game_result['escaped']:
                     break
-
-        if not game_result:
-            tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
-            if map_info['id'] in ['IBE1', 'RIBE1', 'IBE2', 'IBE2.1']:
-                game_result = process_ibe(tracker, map_info['id'])
+                else:
+                    game_result = None
             else:
-                raise Exception('unknown map id "%s"' % map_info['id'])
+                game_result = process_ibe(tracker, map_info['id'], initial_event)
+
+        # process gamevents to determine if replay was resumed
+        # do so only in case of successful runs
+        if game_result:
+            gameevents = protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events'))
+            general.processGameEvents(gameevents)
 
     osects = OrderedDict()
     osects['general'] = general
