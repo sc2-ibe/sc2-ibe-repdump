@@ -92,7 +92,7 @@ def fetch_dstream_from_tracker(tracker, initial_event):
     raise Exception('unexpected end of dstream')
 
 
-def decode_game_result(dstream):
+def decode_game_result(dstream, player_slots):
     MAX_PLAYERS = 10
     ABIL_MAX = 8
     CHALLENGE_MAX = 30
@@ -148,6 +148,19 @@ def decode_game_result(dstream):
         for l in range(0, ABIL_MAX):
             gmr['players'][i]['abilities_used'][ABIL_MAP[l]] = rd.read_uint16()
 
+    for ps in player_slots:
+        if ps['player_id'] not in gmr['players']:
+            i = ps['player_id']
+            gmr['players'][i] = OrderedDict()
+            gmr['players'][i]['left'] = True
+            gmr['players'][i]['level'] = None
+            gmr['players'][i]['deaths'] = None
+            gmr['players'][i]['revives'] = None
+
+            gmr['players'][i]['abilities_used'] = OrderedDict()
+            for l in range(0, ABIL_MAX):
+                gmr['players'][i]['abilities_used'][ABIL_MAP[l]] = None
+
     gmr['challenges'] = OrderedDict()
     for i in range(0, CHALLENGE_MAX):
         completed_by = rd.read_uint8()
@@ -190,6 +203,8 @@ def decode_game_result(dstream):
     gmr['team']['bonus_levelups'] = 0
 
     for i in gmr['players']:
+        if not gmr['players'][i]['deaths']:
+            continue
         gmr['team']['deaths'] += gmr['players'][i]['deaths']
         gmr['team']['revives'] += gmr['players'][i]['revives']
         gmr['team']['times_leveled_up'] += gmr['players'][i]['level'] -  1
@@ -554,7 +569,7 @@ def main():
         for initial_event in seek_payload_in_tracker(tracker):
             if initial_event['m_unitTypeName'] == '__':
                 dstream = fetch_dstream_from_tracker(tracker, initial_event)
-                game_result = decode_game_result(dstream)
+                game_result = decode_game_result(dstream, general['player_slots'])
                 if game_result['escaped']:
                     break
                 else:
