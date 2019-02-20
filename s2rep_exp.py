@@ -181,6 +181,22 @@ def decode_game_result(dstream):
             if gmr['schema_version'] >= 3 and tmp == 0:
                 break
 
+    # add in team summary
+    gmr['team'] = OrderedDict()
+    gmr['team']['deaths'] = 0
+    gmr['team']['revives'] = 0
+    gmr['team']['times_leveled_up'] = 0
+    gmr['team']['bonus_levelups'] = 0
+
+    for i in gmr['players']:
+        gmr['team']['deaths'] += gmr['players'][i]['deaths']
+        gmr['team']['revives'] += gmr['players'][i]['revives']
+        gmr['team']['times_leveled_up'] += gmr['players'][i]['level'] -  1
+
+    for i in gmr['challenges']:
+        for x in gmr['challenges'][i]['powerups_by']:
+            gmr['team']['bonus_levelups'] += 1
+
     return gmr
 
 
