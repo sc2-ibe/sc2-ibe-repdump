@@ -257,7 +257,7 @@ class GeneralSection(OrderedDict):
                 continue
 
             pslot = OrderedDict(
-                player_id=None,
+                player_id=slot_id + 1,
                 apm=None,
             )
             self['player_slots'].append(pslot)
@@ -347,7 +347,7 @@ IBE_VER_DELTA1 = 1
 IBE_VER_DELTA2 = 2
 IBE_VER_DELTA_RIBE = 3
 
-def process_ibe(tracker, map_id, initial_event):
+def process_ibe(tracker, map_id, initial_event, player_slots):
     rows = [[]]
     score = {}
     for x in tracker:
@@ -364,6 +364,10 @@ def process_ibe(tracker, map_id, initial_event):
 
     result['players'] = {}
     num_left = 0
+    for ps in player_slots:
+        result['players'][ps['player_id']] = {
+            'left': True
+        }
     for pid in score:
         result['players'][pid] = {
             'left': score[pid]['m_stats']['m_scoreValueVespeneCurrent'] == 0
@@ -388,6 +392,8 @@ def process_ibe(tracker, map_id, initial_event):
             dver = IBE_VER_DELTA2
         else:
             dver = IBE_VER_DELTA1
+    elif len(rows) == 13 and map_id == 'IBE1':
+        dver = IBE_VER_DELTA1
     elif len(rows) == 11:
         dver = IBE_VER_DELTA_RIBE
     else:
@@ -425,7 +431,7 @@ def process_ibe(tracker, map_id, initial_event):
         else:
             # IBE2 v1.3 - c26ccb8a690e9ced1614de57fe27a255d9fa98ea4ec98ce6cf50cbf973b9b935
             result['difficulty_index'] = 1 # assume it's normal/normal
-    elif dver == IBE_VER_DELTA1:
+    elif dver == IBE_VER_DELTA1 and len(rows):
         rows.pop(0)
         if len(rows):
             result['escape_time'] += rows.pop(0) / 100.0
@@ -522,7 +528,7 @@ def main():
                 else:
                     game_result = None
             else:
-                game_result = process_ibe(tracker, map_info['id'], initial_event)
+                game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
 
         # process gamevents to determine if replay was resumed
         # do so only in case of successful runs
