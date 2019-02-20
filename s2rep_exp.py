@@ -240,7 +240,12 @@ class GeneralSection(OrderedDict):
 
     def addHeader(self, header):
         self['elapsed_game_loops'] = header['m_elapsedGameLoops']
-        self['client_version'] = header['m_version']
+        self['client_version'] = '.'.join([
+            str(header['m_version']['m_major']),
+            str(header['m_version']['m_minor']),
+            str(header['m_version']['m_revision']),
+            str(header['m_version']['m_build']),
+        ])
 
     def addDetails(self, details):
         self['game_title'] = details['m_title']
@@ -443,7 +448,7 @@ def process_ibe(tracker, map_id, initial_event, player_slots):
 def hash_result(general, map_id, result):
     inp = []
     inp.append(map_id)
-    inp.append(general['client_version']['m_build'])
+    inp.append(general['client_version'])
     inp.append(general['author_handle'])
 
     for x in general['player_slots']:
@@ -451,12 +456,14 @@ def hash_result(general, map_id, result):
         inp.append(x['type'])
         if x['type'] == 'USER':
             inp.append(x['handle'])
-        inp.append(result['players'][x['player_id']]['left'])
+        if result:
+            inp.append(result['players'][x['player_id']]['left'])
 
-    inp.append(result['escape_time'])
-    inp.append(result['team']['deaths'])
-    inp.append(result['team']['revives'])
-    inp.append(result['team']['bonus_levelups'])
+    if result:
+        inp.append(result['escape_time'])
+        inp.append(result['team']['deaths'])
+        inp.append(result['team']['revives'])
+        inp.append(result['team']['bonus_levelups'])
 
     def to_str(val):
         return str(val)
