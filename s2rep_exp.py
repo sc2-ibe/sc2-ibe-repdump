@@ -8,6 +8,7 @@ import json
 from collections import OrderedDict
 import mpyq
 from s2protocol import versions
+import hashlib
 
 
 class DReader(object):
@@ -439,6 +440,30 @@ def process_ibe(tracker, map_id, initial_event, player_slots):
     return result
 
 
+def hash_result(general, map_id, result):
+    inp = []
+    inp.append(map_id)
+    inp.append(general['client_version']['m_build'])
+    inp.append(general['author_handle'])
+
+    for x in general['player_slots']:
+        inp.append(x['player_id'])
+        inp.append(x['type'])
+        if x['type'] == 'USER':
+            inp.append(x['handle'])
+        inp.append(result['players'][x['player_id']]['left'])
+
+    inp.append(result['escape_time'])
+    inp.append(result['team']['deaths'])
+    inp.append(result['team']['revives'])
+    inp.append(result['team']['bonus_levelups'])
+
+    def to_str(val):
+        return str(val)
+
+    return hashlib.sha1(','.join(map(to_str, inp))).hexdigest()
+
+
 def main():
     archive = mpyq.MPQArchive(sys.argv[1])
 
@@ -540,6 +565,7 @@ def main():
     osects['general'] = general
     osects['map'] = map_info
     osects['result'] = game_result
+    osects['hash'] = hash_result(general, map_info['id'], game_result)
     print(json.dumps(osects, indent=4, sort_keys=False))
 
 
