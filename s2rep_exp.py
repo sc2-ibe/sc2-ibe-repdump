@@ -98,7 +98,7 @@ def decode_game_result(dstream, player_slots):
     CHALLENGE_MAX = 30
     CHALLENGE_POWERUP_MAX = 8
     CHALLENGE_BUTTON_MAX = 8
-    CURRENT_SCHEMA_VERSION = 3
+    CURRENT_SCHEMA_VERSION = 4
 
     ABIL_MAP = [
         "BOOST",
@@ -127,7 +127,9 @@ def decode_game_result(dstream, player_slots):
     gmr['game_diff'] = 1 if gmr['game_code'] & (1 << 0) else 0
     gmr['escape_time'] = round(rd.read_fixed32(), 2)
     if gmr['schema_version'] >= 3:
-        gmr['started_at'] = round(rd.read_fixed32(), 2)
+        gmr['started_at_rt'] = round(rd.read_fixed32(), 2)
+    if gmr['schema_version'] >= 4:
+        gmr['started_at_gt'] = round(rd.read_fixed32(), 2)
     gmr['escaped'] = gmr['escape_time'] > 0.0
     rd.read_uint8()
     gmr['challenges_completed'] = 0
@@ -549,6 +551,7 @@ def main():
     with open(fname, 'r') as fp:
         minfo = json.load(fp, encoding='utf-8')
 
+    map_id = None
     try:
         map_id = NAME_MAP[general['game_title']]
 
@@ -587,7 +590,7 @@ def main():
     osects['general'] = general
     osects['map'] = map_info
     osects['result'] = game_result
-    osects['hash'] = hash_result(general, map_info['id'], game_result)
+    osects['hash'] = hash_result(general, map_id, game_result)
     print(json.dumps(osects, indent=4, sort_keys=False))
 
 
