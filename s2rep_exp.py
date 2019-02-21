@@ -98,7 +98,7 @@ def decode_game_result(dstream, player_slots):
     CHALLENGE_MAX = 30
     CHALLENGE_POWERUP_MAX = 8
     CHALLENGE_BUTTON_MAX = 8
-    CURRENT_SCHEMA_VERSION = 4
+    CURRENT_SCHEMA_VERSION = 5
 
     ABIL_MAP = [
         "BOOST",
@@ -171,7 +171,10 @@ def decode_game_result(dstream, player_slots):
         gmr['challenges_completed'] += 1
 
         gmr['challenges'][i] = OrderedDict()
-        gmr['challenges'][i]['completed_by'] = completed_by
+        if gmr['schema_version'] >= 5:
+            gmr['challenges'][i]['completed_by'] = [completed_by, rd.read_uint8()]
+        else:
+            gmr['challenges'][i]['completed_by'] = [completed_by, completed_by]
         if gmr['schema_version'] >= 2:
             gmr['challenges'][i]['time_offset_start'] = round(rd.read_fixed32(), 2)
         gmr['challenges'][i]['completed_time'] = round(rd.read_fixed32(), 2)
@@ -183,18 +186,26 @@ def decode_game_result(dstream, player_slots):
 
         gmr['challenges'][i]['buttons_by'] = []
         for l in range(0, CHALLENGE_BUTTON_MAX):
-            tmp = rd.read_uint8()
-            if tmp > 0:
+            tmp = [rd.read_uint8()]
+            if gmr['schema_version'] >= 5:
+                tmp.append(rd.read_uint8())
+            else:
+                tmp.append(tmp[0])
+            if tmp[0] > 0:
                 gmr['challenges'][i]['buttons_by'].append(tmp)
-            if gmr['schema_version'] >= 3 and tmp == 0:
+            if gmr['schema_version'] >= 3 and tmp[0] == 0:
                 break
 
         gmr['challenges'][i]['powerups_by'] = []
         for l in range(0, CHALLENGE_POWERUP_MAX):
-            tmp = rd.read_uint8()
-            if tmp > 0:
+            tmp = [rd.read_uint8()]
+            if gmr['schema_version'] >= 5:
+                tmp.append(rd.read_uint8())
+            else:
+                tmp.append(tmp[0])
+            if tmp[0] > 0:
                 gmr['challenges'][i]['powerups_by'].append(tmp)
-            if gmr['schema_version'] >= 3 and tmp == 0:
+            if gmr['schema_version'] >= 3 and tmp[0] == 0:
                 break
 
     # add in team summary
