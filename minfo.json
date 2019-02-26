@@ -20,6 +20,15 @@
         },
         "IBE-CV-PRO": {
             "name": "Ice Baneling Escape - Cold Voyage PRO"
+        },
+        "BTB": {
+            "name": "Back to Brood Ice Escape"
+        },
+        "BTB-PRO": {
+            "name": "Back to Brood Ice Escape - PRO"
+        },
+        "BTB-BANE": {
+            "name": "Back to Brood Ice Escape - Baneling"
         }
     }
 }

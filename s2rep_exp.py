@@ -98,7 +98,7 @@ def decode_game_result(dstream, player_slots):
     CHALLENGE_MAX = 30
     CHALLENGE_POWERUP_MAX = 8
     CHALLENGE_BUTTON_MAX = 8
-    CURRENT_SCHEMA_VERSION = 5
+    CURRENT_SCHEMA_VERSION = 7
 
     ABIL_MAP = [
         "BOOST",
@@ -121,10 +121,18 @@ def decode_game_result(dstream, player_slots):
         CHALLENGE_POWERUP_MAX = 16
         CHALLENGE_BUTTON_MAX = 16
 
+    if gmr['schema_version'] >= 7:
+        gmr['framework_version'] = rd.read_uint16()
+    else:
+        gmr['framework_version'] = 0
     gmr['game_version'] = rd.read_uint16()
-    gmr['game_code'] = rd.read_uint16()
-    gmr['game_speed'] = 1 if gmr['game_code'] & (1 << 1) else 0
-    gmr['game_diff'] = 1 if gmr['game_code'] & (1 << 0) else 0
+    if gmr['schema_version'] >= 6:
+        gmr['game_diff'] = rd.read_uint8()
+        gmr['game_speed'] = rd.read_uint8()
+    else:
+        gmr['game_code'] = rd.read_uint16()
+        gmr['game_speed'] = 1 if gmr['game_code'] & (1 << 1) else 0
+        gmr['game_diff'] = 1 if gmr['game_code'] & (1 << 0) else 0
     gmr['escape_time'] = round(rd.read_fixed32(), 2)
     if gmr['schema_version'] >= 3:
         gmr['started_at_rt'] = round(rd.read_fixed32(), 2)
@@ -556,6 +564,11 @@ def main():
         'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
         'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
         'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
+
+        'Back to Brood Ice Escape': 'BTB',
+        'Back to Brood Ice Escape PRO': 'BTB-PRO',
+        'Back to Brood Ice Escape PRO mode': 'BTB-PRO',
+        'Back to Brood Baneling mode': 'BTB-BANE',
     }
 
     fname = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'minfo.json')
