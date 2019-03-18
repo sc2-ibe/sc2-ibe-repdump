@@ -93,12 +93,12 @@ def fetch_dstream_from_tracker(tracker, initial_event):
 
 
 def decode_game_result(dstream, player_slots):
-    MAX_PLAYERS = 10
-    ABIL_MAX = 8
+    MAX_PLAYERS = 16
+    ABIL_MAX = 12
     CHALLENGE_MAX = 30
-    CHALLENGE_POWERUP_MAX = 8
-    CHALLENGE_BUTTON_MAX = 8
-    CURRENT_SCHEMA_VERSION = 7
+    CHALLENGE_POWERUP_MAX = 16
+    CHALLENGE_BUTTON_MAX = 16
+    CURRENT_SCHEMA_VERSION = 8
 
     ABIL_MAP = [
         "BOOST",
@@ -108,7 +108,8 @@ def decode_game_result(dstream, player_slots):
         "SHADE_CREATE",
         "SHADE_USE",
         "THROW_ESSENCE_REVIVE",
-        "ART_REVIVE"
+        "ART_REVIVE",
+        "TIME_SHIFT"
     ]
 
     rd = DReader(dstream)
@@ -117,9 +118,12 @@ def decode_game_result(dstream, player_slots):
     gmr['schema_version'] = rd.read_uint16()
     if gmr['schema_version'] > CURRENT_SCHEMA_VERSION:
         raise Exception('not supported schema version %d' % gmr['schema_version'])
-    if gmr['schema_version'] >= 2:
-        CHALLENGE_POWERUP_MAX = 16
-        CHALLENGE_BUTTON_MAX = 16
+    if gmr['schema_version'] < 2:
+        CHALLENGE_POWERUP_MAX = 8
+        CHALLENGE_BUTTON_MAX = 8
+    if gmr['schema_version'] < 8:
+        MAX_PLAYERS = 10
+        ABIL_MAX = 8
 
     if gmr['schema_version'] >= 7:
         gmr['framework_version'] = rd.read_uint16()
@@ -156,6 +160,9 @@ def decode_game_result(dstream, player_slots):
 
         gmr['players'][i]['abilities_used'] = OrderedDict()
         for l in range(0, ABIL_MAX):
+            if l >= len(ABIL_MAP):
+                rd.read_uint16()
+                continue
             gmr['players'][i]['abilities_used'][ABIL_MAP[l]] = rd.read_uint16()
 
     for ps in player_slots:
@@ -169,6 +176,8 @@ def decode_game_result(dstream, player_slots):
 
             gmr['players'][i]['abilities_used'] = OrderedDict()
             for l in range(0, ABIL_MAX):
+                if l >= len(ABIL_MAP):
+                    continue
                 gmr['players'][i]['abilities_used'][ABIL_MAP[l]] = None
 
     gmr['challenges'] = OrderedDict()
