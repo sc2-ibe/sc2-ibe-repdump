@@ -310,9 +310,11 @@ class GeneralSection(OrderedDict):
                 user_data = initd['m_syncLobbyState']['m_userInitialData'][row['m_userId']]
                 pslot['name'] = user_data['m_name']
                 pslot['clan'] = user_data['m_clanTag']
+                pslot['user_id'] = row['m_userId']
             else:
                 pslot['name'] = None
                 pslot['clan'] = None
+                pslot['user_id'] = None
 
         for row in details['m_playerList']:
             pslot = working_slots[row['m_workingSetSlotId']]
