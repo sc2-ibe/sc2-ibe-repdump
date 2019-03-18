@@ -562,8 +562,13 @@ def main():
         '맹독충의 빙판탈출 2.1 - 얼음 깨기': 'IBE2.1', # koKR
 
         'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
+        '맹독충의 빙판탈출 - 차가운 여행': 'IBE-CV', # koKR
+
         'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
+        '맹독충의 빙판탈출 - 차가운 여행 - EZ': 'IBE-CV-EZ', # koKR
+
         'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
+        '맹독충의 빙판탈출 - 차가운 여행 - PRO': 'IBE-CV-PRO', # koKR
 
         'Back to Brood Ice Escape': 'BTB',
         'Back to Brood Ice Escape PRO': 'BTB-PRO',
