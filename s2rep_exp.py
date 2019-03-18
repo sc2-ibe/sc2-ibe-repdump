@@ -188,7 +188,6 @@ def decode_game_result(dstream, player_slots):
     gmr['challenges'] = OrderedDict()
     for i in range(0, CHALLENGE_MAX):
         completed_by_tmp = rd.read_uint8()
-        print(i, completed_by_tmp)
         if not completed_by_tmp:
             continue
         gmr['challenges_completed'] += 1
@@ -255,7 +254,7 @@ def decode_game_result(dstream, player_slots):
         for x in gmr['challenges'][i]['powerups_by']:
             gmr['team']['bonus_levelups'] += 1
 
-    print("[%d/%d]" % (rd.offset, len(rd.buff)))
+    # print("[%d/%d]" % (rd.offset, len(rd.buff)))
 
     return gmr
 
