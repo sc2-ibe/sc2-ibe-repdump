@@ -122,7 +122,7 @@ def decode_game_result(dstream, player_slots):
         CHALLENGE_POWERUP_MAX = 8
         CHALLENGE_BUTTON_MAX = 8
     if gmr['schema_version'] < 8:
-        MAX_PLAYERS = 10
+        MAX_PLAYERS = 11
         ABIL_MAX = 8
 
     if gmr['schema_version'] >= 9:
@@ -153,7 +153,7 @@ def decode_game_result(dstream, player_slots):
     gmr['challenges_total'] = rd.read_uint8()
 
     gmr['players'] = OrderedDict()
-    for i in range(1, MAX_PLAYERS + 1):
+    for i in range(1, MAX_PLAYERS):
         exists = rd.read_bool()
         if not exists:
             continue
@@ -188,6 +188,7 @@ def decode_game_result(dstream, player_slots):
     gmr['challenges'] = OrderedDict()
     for i in range(0, CHALLENGE_MAX):
         completed_by_tmp = rd.read_uint8()
+        print(i, completed_by_tmp)
         if not completed_by_tmp:
             continue
         gmr['challenges_completed'] += 1
@@ -254,7 +255,7 @@ def decode_game_result(dstream, player_slots):
         for x in gmr['challenges'][i]['powerups_by']:
             gmr['team']['bonus_levelups'] += 1
 
-    # print("[%d/%d]" % (rd.offset, len(rd.buff)))
+    print("[%d/%d]" % (rd.offset, len(rd.buff)))
 
     return gmr
 
