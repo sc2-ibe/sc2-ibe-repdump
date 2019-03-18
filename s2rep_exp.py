@@ -98,7 +98,7 @@ def decode_game_result(dstream, player_slots):
     CHALLENGE_MAX = 30
     CHALLENGE_POWERUP_MAX = 16
     CHALLENGE_BUTTON_MAX = 16
-    CURRENT_SCHEMA_VERSION = 8
+    CURRENT_SCHEMA_VERSION = 9
 
     ABIL_MAP = [
         "BOOST",
@@ -124,6 +124,11 @@ def decode_game_result(dstream, player_slots):
     if gmr['schema_version'] < 8:
         MAX_PLAYERS = 10
         ABIL_MAX = 8
+
+    if gmr['schema_version'] >= 9:
+        gmr['schema_build_revision'] = rd.read_uint8()
+    else:
+        gmr['schema_build_revision'] = 0
 
     if gmr['schema_version'] >= 7:
         gmr['framework_version'] = rd.read_uint16()
@@ -182,16 +187,22 @@ def decode_game_result(dstream, player_slots):
 
     gmr['challenges'] = OrderedDict()
     for i in range(0, CHALLENGE_MAX):
-        completed_by = rd.read_uint8()
-        if not completed_by:
+        completed_by_tmp = rd.read_uint8()
+        if not completed_by_tmp:
             continue
         gmr['challenges_completed'] += 1
-
         gmr['challenges'][i] = OrderedDict()
-        if gmr['schema_version'] >= 5:
-            gmr['challenges'][i]['completed_by'] = [completed_by, rd.read_uint8()]
+
+        gmr['challenges'][i]['completed_by'] = []
+        if gmr['schema_version'] < 9:
+            if gmr['schema_version'] >= 5:
+                gmr['challenges'][i]['completed_by'].append([completed_by_tmp, rd.read_uint8()])
+            else:
+                gmr['challenges'][i]['completed_by'].append([completed_by_tmp, completed_by_tmp])
         else:
-            gmr['challenges'][i]['completed_by'] = [completed_by, completed_by]
+            for l in range(0, completed_by_tmp):
+                gmr['challenges'][i]['completed_by'].append([rd.read_uint8(), rd.read_uint8()])
+
         if gmr['schema_version'] >= 2:
             gmr['challenges'][i]['time_offset_start'] = round(rd.read_fixed32(), 2)
         gmr['challenges'][i]['completed_time'] = round(rd.read_fixed32(), 2)
@@ -242,6 +253,8 @@ def decode_game_result(dstream, player_slots):
     for i in gmr['challenges']:
         for x in gmr['challenges'][i]['powerups_by']:
             gmr['team']['bonus_levelups'] += 1
+
+    # print("[%d/%d]" % (rd.offset, len(rd.buff)))
 
     return gmr
 
