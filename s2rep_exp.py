@@ -9,6 +9,8 @@ from collections import OrderedDict
 import mpyq
 from s2protocol import versions
 import hashlib
+import argparse
+import logging
 
 
 class DReader(object):
@@ -259,7 +261,7 @@ def decode_game_result(dstream, player_slots):
         for x in gmr['challenges'][i]['powerups_by']:
             gmr['team']['bonus_levelups'] += 1
 
-    # print("[%d/%d]" % (rd.offset, len(rd.buff)))
+    logging.debug('[%d/%d]' % (rd.offset, len(rd.buff)))
 
     return gmr
 
@@ -541,12 +543,37 @@ def hash_result(general, map_id, result):
 
 
 def main():
-    archive = mpyq.MPQArchive(sys.argv[1])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('replay_file', help='.SC2Replay file to load')
+    parser.add_argument('-v', '--verbose', help='verbose logging', action='store_true')
+    parser.add_argument('--include-loss', help='include results that did not end with an escape', action='store_true')
+    args = parser.parse_args()
+
+    logging.basicConfig(
+        format='%(asctime)s,%(msecs)-3d %(levelname)s [%(funcName)s]: %(message)s',
+        datefmt='%H:%M:%S'
+    )
+    logging._levelNames[logging.DEBUG] = 'DEBG'
+    logging._levelNames[logging.WARNING] = 'WARN'
+    logging._levelNames[logging.ERROR] = 'ERRO'
+    logging._levelNames[logging.CRITICAL] = 'CRIT'
+    logging.addLevelName(logging.DEBUG, "\033[1;35m%s\033[1;0m" % logging.getLevelName(logging.DEBUG))
+    logging.addLevelName(logging.INFO, "\033[1;32m%s\033[1;0m" % logging.getLevelName(logging.INFO))
+    logging.addLevelName(logging.WARNING, "\033[1;33m%s\033[1;0m" % logging.getLevelName(logging.WARNING))
+    logging.addLevelName(logging.ERROR, "\033[1;31m%s\033[1;0m" % logging.getLevelName(logging.ERROR))
+    logging.addLevelName(logging.CRITICAL, "\033[1;41m%s\033[1;0m" % logging.getLevelName(logging.CRITICAL))
+
+    if args.verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
+    else:
+        logging.getLogger().setLevel(logging.ERROR)
+
+    archive = mpyq.MPQArchive(args.replay_file)
 
     def read_contents(archive, content):
         contents = archive.read_file(content)
         if not contents:
-            print('Error: Archive missing {}'.format(content), file=sys.stderr)
+            logging.critical('Archive missing file: "%s"' % content)
             sys.exit(1)
         return contents
 
@@ -559,9 +586,9 @@ def main():
     try:
         protocol = versions.build(baseBuild)
     except Exception as e:
-        print('Unsupported base build: {0} ({1})'.format(baseBuild, str(e)), file=sys.stderr)
+        logging.warn('Unsupported base build: %s (%s)' % (baseBuild, str(e)))
         protocol = versions.latest()
-        print('Attempting to use newest possible instead: %s' % protocol.__name__, file=sys.stderr)
+        logging.warn('Attempting to use newest possible instead: %s' % protocol.__name__)
 
     details = protocol.decode_replay_details(read_contents(archive, 'replay.details'))
     initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))
@@ -575,6 +602,7 @@ def main():
     map_info = MapInfoSection()
     game_result = None
 
+    logging.info('Building general section..')
     general.addHeader(header)
     general.addDetails(details)
     general.addInitData(initd)
@@ -625,16 +653,25 @@ def main():
         map_info['name'] = minfo['maps'][map_info['id']]['name']
     except KeyError:
         map_info = None
+        logging.info('Unknown map title: "%s"' % (general['game_title']))
 
+    results_all = []
     if map_info:
+        logging.debug('Reading tracker events..')
         tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
 
+        logging.info('Setting up players..')
         general.setupPlayers(initd, details, tracker, metadata)
 
+        logging.info('Seeking game result..')
         for initial_event in seek_payload_in_tracker(tracker):
+            logging.debug('Decoding result at gameloop %d' % (initial_event['_gameloop']))
             if initial_event['m_unitTypeName'] == '__':
                 dstream = fetch_dstream_from_tracker(tracker, initial_event)
+                logging.debug('dstream %s' % (str(dstream)))
                 game_result = decode_game_result(dstream, general['player_slots'])
+                if args.include_loss:
+                    results_all.append(game_result)
                 if game_result['escaped']:
                     break
                 else:
@@ -645,6 +682,7 @@ def main():
         # process gamevents to determine if replay was resumed
         # do so only in case of successful runs
         if game_result:
+            logging.info('Processing game events..')
             gameevents = protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events'))
             general.processGameEvents(gameevents)
 
@@ -652,6 +690,8 @@ def main():
     osects['general'] = general
     osects['map'] = map_info
     osects['result'] = game_result
+    if args.include_loss:
+        osects['results'] = results_all
     osects['hash'] = hash_result(general, map_id, game_result)
     print(json.dumps(osects, indent=4, sort_keys=False))
 
