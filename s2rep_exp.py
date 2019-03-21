@@ -135,13 +135,18 @@ def decode_game_result(dstream, player_slots):
     else:
         gmr['framework_version'] = 0
     gmr['game_version'] = rd.read_uint16()
-    if gmr['schema_version'] >= 6:
+    if gmr['schema_version'] >= 8:
+        # IBE-CV speed either 2 (norm) or 4 (faster), for some unkown reason - it should be instead 3 (fast)
         gmr['game_diff'] = rd.read_uint8()
-        gmr['game_speed'] = rd.read_uint8()
+        gmr['game_speed'] = (3 if rd.read_uint8() == 4 else 2)
+    elif gmr['schema_version'] >= 6:
+        # BTB = diff always 0; speed code relative to normal
+        gmr['game_diff'] = rd.read_uint8() + 1
+        gmr['game_speed'] = rd.read_uint8() + 2
     else:
-        gmr['game_code'] = rd.read_uint16()
-        gmr['game_speed'] = 1 if gmr['game_code'] & (1 << 1) else 0
-        gmr['game_diff'] = 1 if gmr['game_code'] & (1 << 0) else 0
+        gmode_code = rd.read_uint16()
+        gmr['game_speed'] = (1 if gmode_code & (1 << 1) else 0) + 2
+        gmr['game_diff'] = (1 if gmode_code & (1 << 0) else 0) + 1
     gmr['escape_time'] = round(rd.read_fixed32(), 2)
     if gmr['schema_version'] >= 3:
         gmr['started_at_rt'] = round(rd.read_fixed32(), 2)
@@ -467,8 +472,9 @@ def process_ibe(tracker, map_id, initial_event, player_slots):
 
     result['escape_time'] = rows.pop(0)
     rows.pop(0)
+    difficulty_index = None
     if dver != IBE_VER_DELTA2:
-        result['difficulty_index'] = rows.pop(0)
+        difficulty_index = rows.pop(0)
 
     result['team'] = {}
     result['team']['revives'] = rows.pop(0)
@@ -492,15 +498,18 @@ def process_ibe(tracker, map_id, initial_event, player_slots):
 
     if dver == IBE_VER_DELTA2:
         if len(rows):
-            result['difficulty_index'] = rows.pop(0)
+            difficulty_index = rows.pop(0)
             rows.pop(0)
         else:
             # IBE2 v1.3 - c26ccb8a690e9ced1614de57fe27a255d9fa98ea4ec98ce6cf50cbf973b9b935
-            result['difficulty_index'] = 1 # assume it's normal/normal
+            difficulty_index = 1 # assume it's normal/normal
     elif dver == IBE_VER_DELTA1 and len(rows):
         rows.pop(0)
         if len(rows):
             result['escape_time'] += rows.pop(0) / 100.0
+
+    result['game_diff'] = 2 if difficulty_index in [3, 4] else 1
+    result['game_speed'] = 4 if difficulty_index in [2, 4] else 2
 
     return result
 
