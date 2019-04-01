@@ -445,7 +445,8 @@ def process_ibe(tracker, map_id, initial_event, player_slots):
         result['players'][pid] = {
             'left': score[pid]['m_stats']['m_scoreValueVespeneCurrent'] == 0
         }
-        num_left += 1
+        if result['players'][pid]['left']:
+            num_left += 1
     # if data indicates that every player has left then it must be incorrect..
     # (early versions of IBE didn't export player status info)
     if num_left == len(result['players']):
