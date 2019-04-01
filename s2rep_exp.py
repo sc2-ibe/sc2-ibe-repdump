@@ -11,6 +11,7 @@ from s2protocol import versions
 import hashlib
 import argparse
 import logging
+from s2ibedump.evaluation import GameEvaluation
 
 
 class DReader(object):
@@ -548,10 +549,11 @@ def main():
     parser.add_argument('replay_file', help='.SC2Replay file to load')
     parser.add_argument('-v', '--verbose', help='verbose logging', action='store_true')
     parser.add_argument('--include-loss', help='include results that did not end with an escape', action='store_true')
+    parser.add_argument('--evaluate', action='store_true')
     args = parser.parse_args()
 
     logging.basicConfig(
-        format='%(asctime)s,%(msecs)-3d %(levelname)s [%(funcName)s]: %(message)s',
+        format='%(asctime)s,%(msecs)-3d %(levelname)s: %(message)s',
         datefmt='%H:%M:%S'
     )
     logging._levelNames[logging.DEBUG] = 'DEBG'
@@ -680,6 +682,19 @@ def main():
             else:
                 game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
 
+        deltaResult = None
+        if args.evaluate and map_info['id'] in ['IBE2']:
+            deltaResult = game_result
+            gstate = GameEvaluation(
+                map_info['id'],
+                general['player_slots'],
+                protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events')),
+                protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events')),
+                1.4 if deltaResult and deltaResult['game_speed'] == 4 else 1.0
+            )
+            gstate.process()
+            game_result = gstate.rebuildGameResult(deltaResult)
+
         # process gamevents to determine if replay was resumed
         # do so only in case of successful runs
         if game_result:
@@ -693,7 +708,9 @@ def main():
     osects['result'] = game_result
     if args.include_loss:
         osects['results'] = results_all
-    osects['hash'] = hash_result(general, map_id, game_result)
+    if deltaResult:
+        osects['delta_result'] = deltaResult
+    osects['hash'] = hash_result(general, map_id, deltaResult if deltaResult is not None else game_result)
     print(json.dumps(osects, indent=4, sort_keys=False))
 
 
