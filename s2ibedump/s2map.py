@@ -9,10 +9,6 @@ import xml.etree.ElementTree as ET
 import math
 
 
-G_IBE1 = 'IBE1'
-G_IBE2 = 'IBE2'
-
-
 class CmdFlags(object):
     Alternate              = 1 << 0
     Queued                 = 1 << 1
@@ -104,7 +100,15 @@ def readRegions(filename, gver):
     root = tree.getroot()
 
     levels = {}
-    if gver == G_IBE2:
+    if gver == 'IBE1':
+        for key in range(0, 21):
+            levels[key] = {
+                'finPlayers': lambda x: 1,
+                'region': None,
+                'spawn': None,
+                'finish': None,
+            }
+    elif gver == 'IBE2':
         for key in range(0, 28):
             levels[key] = {
                 'finPlayers': lambda x: 1,
@@ -118,13 +122,24 @@ def readRegions(filename, gver):
         lId = None
         regionKind = None
 
-        if gver == G_IBE2 and regionName == 'lvl0FinalFFOpen':
+        if gver == 'IBE2' and regionName == 'lvl0FinalFFOpen':
             lId = 0
             regionKind = 'finish'
-        elif gver == G_IBE2 and regionName == 'lvl0Reveal1':
+        elif gver == 'IBE2' and regionName == 'lvl0Reveal1':
             lId = 0
             regionKind = 'region'
-        else:
+        elif gver == 'IBE1':
+            if regionName == 'FinalLevelRegion':
+                lId = 0
+                regionKind = 'region'
+            elif regionName == 'FinalLevelSpawnRegion':
+                lId = 0
+                regionKind = 'spawn'
+            elif regionName == 'FinalLevelOpenSwitch05':
+                lId = 0
+                regionKind = 'finish'
+
+        if lId is None:
             m = re.match(r'^(lvl|level)([0-9]+)(region|spawn|finish)(?:1p)?(?:region)?$', regionName, re.IGNORECASE)
             if not m:
                 continue
@@ -152,19 +167,21 @@ def readRegions(filename, gver):
             )
             rg = DiamondShape(center[0], center[1], float(shape.find('width').attrib['value']), float(shape.find('height').attrib['value']))
 
-        if gver == G_IBE2 and lId == '0607':
+        if gver == 'IBE2' and lId == '0607':
             levels[6][regionKind.lower()] = rg
             levels[7][regionKind.lower()] = rg
         else:
             levels[int(lId)][regionKind.lower()] = rg
-            if gver == G_IBE2 and lId == '13':
+            if gver == 'IBE2' and lId == '13':
                 levels[27][regionKind.lower()] = rg
 
-    if gver == G_IBE2:
+    if gver == 'IBE2':
         levels[0]['finPlayers'] = lambda x: 0
         levels[8]['finPlayers'] = lambda x: 2 if x>= 8 else 3 if x >= 5 else 1
         levels[9]['finPlayers'] = lambda x: 3 if x>= 3 else 2 if x >= 2 else 1
         levels[17]['finPlayers'] = lambda x: 2 if x >= 2 else 1
+    elif gver == 'IBE1':
+        levels[0]['finPlayers'] = lambda x: 0
 
     return levels
 

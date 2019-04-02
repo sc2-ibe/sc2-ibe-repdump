@@ -1,0 +1,5579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Regions>
+    <region id="2">
+        <name value="level01region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="104.9782,110.0842,170.1381,150.724"/>
+        </shape>
+    </region>
+    <region id="6">
+        <name value="level01FinishRegion"/>
+        <shape type="circle">
+            <center value="122.0214,129.9726"/>
+            <radius value="1.489"/>
+        </shape>
+    </region>
+    <region id="7">
+        <name value="topLeftOfMap"/>
+        <shape type="rect">
+            <quad value="8.1166,254.6015,9.3415,255.9287"/>
+        </shape>
+    </region>
+    <region id="9">
+        <name value="level01OpenGate01"/>
+        <shape type="rect">
+            <quad value="151.327,121.8723,153.7265,124.1718"/>
+        </shape>
+    </region>
+    <region id="5">
+        <name value="level01spawn"/>
+        <shape type="rect">
+            <quad value="137.13,123.817,140.364,132.891"/>
+        </shape>
+    </region>
+    <region id="3">
+        <name value="ice001"/>
+        <shape type="circle">
+            <center value="132.503,139.7524"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="circle">
+            <center value="132.4965,139.7785"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.7512,140.5378"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.1064,141.036"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="circle">
+            <center value="130.2785,141.6196"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="rect">
+            <quad value="116.8591,141.0327,130.3195,142.4118"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.2084,140.9926,118.0583,142.3806"/>
+        </shape>
+        <shape type="rect">
+            <quad value="129.8283,123.6574,135.8281,133.3715"/>
+        </shape>
+        <shape type="rect">
+            <quad value="132.0205,133.238,133.531,139.6892"/>
+        </shape>
+        <shape type="rect">
+            <quad value="125.151,116.5224,126.07,117.53"/>
+        </shape>
+        <shape type="circle">
+            <center value="130.7302,141.4328"/>
+            <radius value="0.877"/>
+        </shape>
+    </region>
+    <region id="4">
+        <name value="level02region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="21.9443,95.0913,79.1042,160.091"/>
+        </shape>
+    </region>
+    <region id="8">
+        <name value="level02OpenGate01"/>
+        <shape type="rect">
+            <quad value="69.819,142.9526,72.2187,145.2521"/>
+        </shape>
+    </region>
+    <region id="10">
+        <name value="level02spawn"/>
+        <shape type="rect">
+            <quad value="35.908,142.5288,40.1857,146.2717"/>
+        </shape>
+    </region>
+    <region id="11">
+        <name value="level02FinishRegion"/>
+        <shape type="rect">
+            <quad value="32.021,105.6252,35.5737,108.8625"/>
+        </shape>
+    </region>
+    <region id="12">
+        <name value="level04region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="82.719,92.017,97.0227,174.806"/>
+        </shape>
+    </region>
+    <region id="13">
+        <name value="level04spawn"/>
+        <shape type="rect">
+            <quad value="87.374,160.0561,91.4985,164.1113"/>
+        </shape>
+    </region>
+    <region id="14">
+        <name value="level04FinishRegion"/>
+        <shape type="rect">
+            <quad value="88.1618,98.6396,91.7145,101.877"/>
+        </shape>
+    </region>
+    <region id="15">
+        <name value="level04OpenGate"/>
+        <shape type="rect">
+            <quad value="86.15,109.916,87.6008,111.0456"/>
+        </shape>
+    </region>
+    <region id="16">
+        <name value="level04LandRegion01"/>
+        <shape type="circle">
+            <center value="90.1408,140.1501"/>
+            <radius value="3.4301"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="90.11,140.2202"/>
+            <radius value="1.9177"/>
+        </shape>
+    </region>
+    <region id="18">
+        <name value="level04DeathRegion01"/>
+        <shape type="circle">
+            <center value="90.093,140.227"/>
+            <radius value="1.9177"/>
+        </shape>
+    </region>
+    <region id="17">
+        <name value="level02landreg2"/>
+        <shape type="rect">
+            <quad value="35.3327,141.6416,40.8105,147.039"/>
+        </shape>
+    </region>
+    <region id="20">
+        <name value="level02icereg1"/>
+        <shape type="circle">
+            <center value="53.9143,132.7302"/>
+            <radius value="1.9355"/>
+        </shape>
+        <shape type="circle">
+            <center value="54.6186,133.3005"/>
+            <radius value="1.9355"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.544,134.1926"/>
+            <radius value="1.9355"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.791,138.07"/>
+            <radius value="1.9355"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.7446,137.4296"/>
+            <radius value="1.9355"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.5256,135.9707"/>
+            <radius value="1.6794"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.2495,134.9877"/>
+            <radius value="1.6794"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.3962,141.916"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.7463,140.5585"/>
+            <radius value="2.0612"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.83,139.2607"/>
+            <radius value="2"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.1347,143.2121"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.7495,144.655"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.0441,146.1381"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.4326,147.6228"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.315,147.9372"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="51.1706,147.9904"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.3244,148.0373"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="48.971,147.5881"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.9575,146.6157"/>
+            <radius value="2.1274"/>
+        </shape>
+        <shape type="circle">
+            <center value="54.8842,147.3483"/>
+            <radius value="1.428"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.7553,129.4736"/>
+            <radius value="2.7998"/>
+        </shape>
+        <shape type="circle">
+            <center value="48.6337,129.479"/>
+            <radius value="1.476"/>
+        </shape>
+        <shape type="circle">
+            <center value="50.091,130.0993"/>
+            <radius value="1.476"/>
+        </shape>
+        <shape type="circle">
+            <center value="51.2595,130.31"/>
+            <radius value="1.476"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.0544,130.8186"/>
+            <radius value="1.476"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.6796,131.2023"/>
+            <radius value="1.476"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.2622,132.233"/>
+            <radius value="1.952"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.3808,132.0698"/>
+            <radius value="1.679"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.7751,132.313"/>
+            <radius value="2.3464"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.808,132.0632"/>
+            <radius value="1.8271"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.7517,131.2827"/>
+            <radius value="1.3471"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.9055,134.1506"/>
+            <radius value="1.0622"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.7968,128.231"/>
+            <radius value="1.3835"/>
+        </shape>
+    </region>
+    <region id="22">
+        <name value="level02straightslideregion"/>
+        <shape type="circle">
+            <center value="48.897,124.659"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="48.124,124.3706"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="50.2333,125.1464"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.965,125.9143"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.1437,126.1643"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.5935,126.5383"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.8203,126.8862"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="58.7644,127.1752"/>
+            <radius value="1.5102"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.5573,128.5104"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.1535,128.3686"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="60.116,126.493"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.6223,126.3352"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="49.234,127.692"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="49.4274,127.3464"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="49.641,127.0083"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="49.8132,126.6823"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.9057,125.0803"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.6552,125.0217"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.8398,124.4672"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.0253,123.9128"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.3847,123.0578"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.2348,123.4023"/>
+            <radius value="0.517"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.2714,126.806"/>
+            <radius value="0.6171"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.3825,127.2336"/>
+            <radius value="0.6171"/>
+        </shape>
+        <shape type="circle">
+            <center value="51.558,128.7731"/>
+            <radius value="0.6171"/>
+        </shape>
+        <shape type="circle">
+            <center value="50.3125,127.475"/>
+            <radius value="1.3474"/>
+        </shape>
+        <shape type="circle">
+            <center value="50.923,127.7646"/>
+            <radius value="1.3474"/>
+        </shape>
+        <shape type="circle">
+            <center value="51.8254,128.0874"/>
+            <radius value="0.6171"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.1276,127.6628"/>
+            <radius value="0.6171"/>
+        </shape>
+        <shape type="circle">
+            <center value="51.6667,128.439"/>
+            <radius value="0.6171"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.0241,129.058"/>
+            <radius value="0.2106"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.78,126.9052"/>
+            <radius value="0.6171"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.847,128.6716"/>
+            <radius value="0.5183"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.6118,127.4196"/>
+            <radius value="1.3413"/>
+        </shape>
+        <shape type="circle">
+            <center value="59.4555,126.4531"/>
+            <radius value="0.7951"/>
+        </shape>
+        <shape type="circle">
+            <center value="48.8862,127.9016"/>
+            <radius value="0.3352"/>
+        </shape>
+        <shape type="circle">
+            <center value="49.422,128.0756"/>
+            <radius value="0.377"/>
+        </shape>
+    </region>
+    <region id="83">
+        <name value="level02straightslide023"/>
+        <shape type="circle">
+            <center value="51.277,124.4311"/>
+            <radius value="0.8151"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.4294,124.0688"/>
+            <radius value="1.117"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.8161,123.4"/>
+            <radius value="0.9638"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.4201,122.4907"/>
+            <radius value="1.1408"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.7248,122.7382"/>
+            <radius value="0.5664"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.2685,125.1904"/>
+            <radius value="0.869"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.1157,124.2695"/>
+            <radius value="0.9301"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.36,123.515"/>
+            <radius value="0.8347"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.3105,121.739"/>
+            <radius value="0.5617"/>
+        </shape>
+    </region>
+    <region id="25">
+        <name value="level02landPRIORregion02"/>
+        <shape type="circle">
+            <center value="57.4831,119.973"/>
+            <radius value="1.0285"/>
+        </shape>
+        <shape type="circle">
+            <center value="58.123,119.9233"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.9645,119.563"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.8383,119.288"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.613,118.889"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.4255,118.5405"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.2197,118.468"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.1213,118.859"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.9052,119.2751"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.8413,119.4836"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.8527,119.7531"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="56.9497,120.0852"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.1193,120.43"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.2824,120.8007"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.4094,121.092"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.7863,120.5615"/>
+            <radius value="0.545"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.351,121.5976"/>
+            <radius value="0.385"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.3037,118.1203"/>
+            <radius value="0.385"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.2905,117.644"/>
+            <radius value="0.3232"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.6464,120.95"/>
+            <radius value="0.4743"/>
+        </shape>
+    </region>
+    <region id="26">
+        <name value="level02icePriorityRegion03"/>
+        <shape type="circle">
+            <center value="68.7883,129.652"/>
+            <radius value="1.987"/>
+        </shape>
+        <shape type="circle">
+            <center value="67.7797,129.3823"/>
+            <radius value="2.3493"/>
+        </shape>
+        <shape type="circle">
+            <center value="66.5874,129.2812"/>
+            <radius value="2.3493"/>
+        </shape>
+        <shape type="circle">
+            <center value="65.5678,129.1184"/>
+            <radius value="2.3493"/>
+        </shape>
+        <shape type="circle">
+            <center value="64.4912,129.0234"/>
+            <radius value="2.3493"/>
+        </shape>
+        <shape type="circle">
+            <center value="63.3857,128.7666"/>
+            <radius value="2.3493"/>
+        </shape>
+        <shape type="circle">
+            <center value="62.6408,128.4462"/>
+            <radius value="2.3493"/>
+        </shape>
+        <shape type="circle">
+            <center value="60.79,128.8088"/>
+            <radius value="0.9182"/>
+        </shape>
+        <shape type="circle">
+            <center value="60.9934,128.0732"/>
+            <radius value="0.9616"/>
+        </shape>
+        <shape type="circle">
+            <center value="61.2097,127.449"/>
+            <radius value="0.9616"/>
+        </shape>
+        <shape type="circle">
+            <center value="60.922,126.4511"/>
+            <radius value="0.199"/>
+        </shape>
+        <shape type="rect">
+            <quad value="60.3012,126.004,61.595,127.5876"/>
+        </shape>
+        <shape type="circle">
+            <center value="71.2348,129.4965"/>
+            <radius value="2.488"/>
+        </shape>
+        <shape type="circle">
+            <center value="67.3918,119.1682"/>
+            <radius value="2.4494"/>
+        </shape>
+        <shape type="circle">
+            <center value="67.7092,117.5415"/>
+            <radius value="1.8986"/>
+        </shape>
+        <shape type="circle">
+            <center value="69.0605,116.3708"/>
+            <radius value="2.1105"/>
+        </shape>
+        <shape type="circle">
+            <center value="68.967,115.3432"/>
+            <radius value="2.1105"/>
+        </shape>
+        <shape type="circle">
+            <center value="69.1267,114.0893"/>
+            <radius value="1.4047"/>
+        </shape>
+        <shape type="circle">
+            <center value="67.3425,112.054"/>
+            <radius value="1.8708"/>
+        </shape>
+        <shape type="circle">
+            <center value="68.4482,109.227"/>
+            <radius value="2.0002"/>
+        </shape>
+        <shape type="circle">
+            <center value="68.6501,108.6601"/>
+            <radius value="2.0002"/>
+        </shape>
+        <shape type="circle">
+            <center value="68.6923,108.11"/>
+            <radius value="2.0002"/>
+        </shape>
+        <shape type="circle">
+            <center value="68.407,107.5312"/>
+            <radius value="2.0002"/>
+        </shape>
+        <shape type="circle">
+            <center value="67.8237,106.4321"/>
+            <radius value="1.4531"/>
+        </shape>
+    </region>
+    <region id="24">
+        <name value="level03spawn"/>
+        <shape type="rect">
+            <quad value="61.18,180.3295,63.8198,184.6994"/>
+        </shape>
+    </region>
+    <region id="28">
+        <name value="level03Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="48.3627,165.5952,74.9743,202.3273"/>
+        </shape>
+    </region>
+    <region id="29">
+        <name value="level03FinishRegion"/>
+        <shape type="circle">
+            <center value="69.0771,171.218"/>
+            <radius value="1.653"/>
+        </shape>
+    </region>
+    <region id="30">
+        <name value="level03startgroup1"/>
+        <shape type="rect">
+            <quad value="49.015,192.1748,49.9782,192.9667"/>
+        </shape>
+    </region>
+    <region id="31">
+        <name value="level03startgroup2"/>
+        <shape type="rect">
+            <quad value="53.0078,180.1347,53.9711,180.9267"/>
+        </shape>
+    </region>
+    <region id="32">
+        <name value="level05FinishRegion"/>
+        <shape type="circle">
+            <center value="19.5483,181.911"/>
+            <radius value="1.653"/>
+        </shape>
+    </region>
+    <region id="33">
+        <name value="level05SpawnRegion"/>
+        <shape type="rect">
+            <quad value="17.8103,170.109,22.14,173.9687"/>
+        </shape>
+    </region>
+    <region id="34">
+        <name value="level05SurpriseRegion"/>
+        <shape type="rect">
+            <quad value="17.9873,186.0168,19.0097,186.731"/>
+        </shape>
+    </region>
+    <region id="35">
+        <name value="level05SurpriseRegionFinish"/>
+        <shape type="rect">
+            <quad value="17.9812,187.4577,19.0183,188.0056"/>
+        </shape>
+    </region>
+    <region id="36">
+        <name value="level05Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="11.9521,167.0441,40.3918,208.584"/>
+        </shape>
+    </region>
+    <region id="37">
+        <name value="initCameraRegion"/>
+        <shape type="rect">
+            <quad value="0.0144,0.0104,17.0144,17.0104"/>
+        </shape>
+    </region>
+    <region id="38">
+        <name value="level06SpawnRegion"/>
+        <shape type="rect">
+            <quad value="89.0373,186.083,93.045,188.8764"/>
+        </shape>
+    </region>
+    <region id="39">
+        <name value="level06FinishRegion"/>
+        <shape type="circle">
+            <center value="119.0014,236.03"/>
+            <radius value="1.8454"/>
+        </shape>
+    </region>
+    <region id="40">
+        <name value="level06Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="85.8208,184.085,128.0212,241.8747"/>
+        </shape>
+    </region>
+    <region id="41">
+        <name value="level06RandomRegion1"/>
+        <shape type="circle">
+            <center value="106.7492,221.761"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="circle">
+            <center value="108.33,223.3063"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="circle">
+            <center value="109.7861,224.6064"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="rect">
+            <quad value="109.3312,223.0341,116.848,226.947"/>
+        </shape>
+        <shape type="circle">
+            <center value="116.878,223.764"/>
+            <radius value="2.0446"/>
+        </shape>
+        <shape type="circle">
+            <center value="105.5664,220.3981"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="115.0104,221.2355,119.0466,223.052"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="111.02,218.0024,120.1591,229.0205"/>
+        </shape>
+        <shape type="circle">
+            <center value="106.7558,222.7307"/>
+            <radius value="1.3125"/>
+        </shape>
+        <shape type="rect">
+            <quad value="103.02,218.6691,106.8862,220.9252"/>
+        </shape>
+    </region>
+    <region id="42">
+        <name value="level07SpawnRegion"/>
+        <shape type="rect">
+            <quad value="69.2807,216.0222,72.676,219.2592"/>
+        </shape>
+    </region>
+    <region id="43">
+        <name value="level07FinishRegion"/>
+        <shape type="circle">
+            <center value="70.078,234.1225"/>
+            <radius value="1.553"/>
+        </shape>
+    </region>
+    <region id="44">
+        <name value="level07NormalIceRegion1"/>
+        <shape type="rect">
+            <quad value="69.7258,221.0146,69.9758,222.2233"/>
+        </shape>
+        <shape type="rect">
+            <quad value="69.9758,221.9675,70.3581,222.2175"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.1035,221.9785,70.3535,222.9953"/>
+        </shape>
+        <shape type="rect">
+            <quad value="69.9118,222.0163,70.1618,222.2663"/>
+        </shape>
+        <shape type="circle">
+            <center value="69.9726,221.996"/>
+            <radius value="0.199"/>
+        </shape>
+        <shape type="circle">
+            <center value="70.1013,222.2136"/>
+            <radius value="0.1767"/>
+        </shape>
+        <shape type="rect">
+            <quad value="69.7727,220.932,70.0227,221.8293"/>
+        </shape>
+        <shape type="circle">
+            <center value="70.1481,222.1105"/>
+            <radius value="0.2336"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.1738,221.976,70.4238,224.8103"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="69.93,222.3591"/>
+            <radius value="0.1748"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="69.6674,222.1848,69.9763,222.4772"/>
+        </shape>
+    </region>
+    <region id="45">
+        <name value="level07LandRegion01"/>
+        <shape type="rect">
+            <quad value="70.0883,222.9531,70.363,224.9873"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.3305,224.7373,71.0202,224.9873"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.7482,224.7294,70.9982,227.488"/>
+        </shape>
+        <shape type="rect">
+            <quad value="69.8691,227.238,70.7885,227.488"/>
+        </shape>
+        <shape type="rect">
+            <quad value="69.8618,227.4187,70.127,229.1464"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.0861,224.7766,70.7814,225.0266"/>
+        </shape>
+        <shape type="rect">
+            <quad value="69.9177,227.4125,70.17,229.1328"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.0886,227.2756,70.994,227.5256"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.7841,224.733,71.0341,227.4931"/>
+        </shape>
+        <shape type="rect">
+            <quad value="69.8796,227.2175,70.8806,227.4675"/>
+        </shape>
+        <shape type="rect">
+            <quad value="70.3315,224.7094,71.0417,224.9594"/>
+        </shape>
+    </region>
+    <region id="46">
+        <name value="level07Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="59.3417,213.4287,79.844,240.0571"/>
+        </shape>
+    </region>
+    <region id="48">
+        <name value="level08SpawnRegion"/>
+        <shape type="rect">
+            <quad value="108.3547,171.1025,112.5131,175.1743"/>
+        </shape>
+    </region>
+    <region id="47">
+        <name value="level08Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="104.0153,162.0495,175.0151,183.2492"/>
+        </shape>
+    </region>
+    <region id="49">
+        <name value="level08LandRegion01"/>
+        <shape type="rect">
+            <quad value="124.5756,174.0227,125.0756,177.0585"/>
+        </shape>
+        <shape type="circle">
+            <center value="124.9858,176.0842"/>
+            <radius value="0.305"/>
+        </shape>
+        <shape type="circle">
+            <center value="125.0014,175.0126"/>
+            <radius value="0.2785"/>
+        </shape>
+        <shape type="circle">
+            <center value="125.0231,174.0317"/>
+            <radius value="0.2121"/>
+        </shape>
+    </region>
+    <region id="50">
+        <name value="level08OpenGate01"/>
+        <shape type="circle">
+            <center value="113.0146,164.0544"/>
+            <radius value="0.7072"/>
+        </shape>
+    </region>
+    <region id="52">
+        <name value="level08SwitchLeft"/>
+        <shape type="rect">
+            <quad value="106.0698,177.0175,107.0197,177.9672"/>
+        </shape>
+    </region>
+    <region id="53">
+        <name value="level08SwitchRight"/>
+        <shape type="rect">
+            <quad value="108.0207,177.0092,108.9707,177.959"/>
+        </shape>
+    </region>
+    <region id="54">
+        <name value="level08SwitchDown"/>
+        <shape type="rect">
+            <quad value="112.027,179.082,112.977,180.0317"/>
+        </shape>
+    </region>
+    <region id="55">
+        <name value="level08SwitchUp"/>
+        <shape type="rect">
+            <quad value="112.0234,181.0805,112.9733,182.0302"/>
+        </shape>
+    </region>
+    <region id="56">
+        <name value="level08FinishRegion"/>
+        <shape type="circle">
+            <center value="167.7763,173.8334"/>
+            <radius value="1.4553"/>
+        </shape>
+    </region>
+    <region id="57">
+        <name value="level08StartEscort"/>
+        <shape type="rect">
+            <quad value="117.961,170.5917,118.974,172.0888"/>
+        </shape>
+    </region>
+    <region id="58">
+        <name value="level08EscortRegion"/>
+        <shape type="rect">
+            <quad value="114.0014,162.009,136.0014,186.783"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="114,162,118,166"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="113.6418,164.647"/>
+            <radius value="3.38"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="116.5095,160.5231"/>
+            <radius value="3.898"/>
+        </shape>
+    </region>
+    <region id="59">
+        <name value="level08DestroyRegion"/>
+        <shape type="rect">
+            <quad value="102.2854,158.935,134.5607,183.859"/>
+        </shape>
+    </region>
+    <region id="60">
+        <name value="level09SpawnRegion"/>
+        <shape type="rect">
+            <quad value="25.5178,33.7473,30.6252,38.3774"/>
+        </shape>
+    </region>
+    <region id="61">
+        <name value="level09Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="21.997,24.8334,90.096,82.4377"/>
+        </shape>
+    </region>
+    <region id="62">
+        <name value="level09FinishRegion"/>
+        <shape type="circle">
+            <center value="79.9394,33.863"/>
+            <radius value="1.621"/>
+        </shape>
+    </region>
+    <region id="63">
+        <name value="level09RandomRegion"/>
+        <shape type="rect">
+            <quad value="48.0683,64.0168,80.0014,79.9636"/>
+        </shape>
+    </region>
+    <region id="64">
+        <name value="level10FinishRegion"/>
+        <shape type="circle">
+            <center value="94.004,78.2495"/>
+            <radius value="1.434"/>
+        </shape>
+    </region>
+    <region id="65">
+        <name value="level10SpawnRegion"/>
+        <shape type="circle">
+            <center value="60.58,19.4582"/>
+            <radius value="1.704"/>
+        </shape>
+    </region>
+    <region id="66">
+        <name value="level10GroundRegion01"/>
+        <shape type="circle">
+            <center value="60.4973,19.5854"/>
+            <radius value="2.543"/>
+        </shape>
+    </region>
+    <region id="67">
+        <name value="level10IceRegion01"/>
+        <shape type="circle">
+            <center value="101.5166,66.3747"/>
+            <radius value="4.3891"/>
+        </shape>
+    </region>
+    <region id="68">
+        <name value="level10RandomRegion2"/>
+        <shape type="rect">
+            <quad value="100.0825,33.1093,107.8583,46.8525"/>
+        </shape>
+    </region>
+    <region id="69">
+        <name value="level10Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="57.639,7.2497,111.1396,82.7224"/>
+        </shape>
+    </region>
+    <region id="70">
+        <name value="level12SpawnRegion"/>
+        <shape type="rect">
+            <quad value="115.6245,20.053,118.0241,22.043"/>
+        </shape>
+    </region>
+    <region id="71">
+        <name value="level12Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="112.8166,15.5524,161.646,42.45"/>
+        </shape>
+    </region>
+    <region id="72">
+        <name value="level11Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="109.8352,55.4973,159.835,103.1972"/>
+        </shape>
+    </region>
+    <region id="73">
+        <name value="level11RandomRegion01"/>
+        <shape type="rect">
+            <quad value="128.0136,79.9802,136.0136,92.9802"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="125.7741,79.17"/>
+            <radius value="6.7226"/>
+        </shape>
+    </region>
+    <region id="74">
+        <name value="level11RandomRegion02"/>
+        <shape type="rect">
+            <quad value="144.016,75.0478,152.9802,84.9672"/>
+        </shape>
+        <shape type="circle">
+            <center value="153.2968,79.9924"/>
+            <radius value="3.6738"/>
+        </shape>
+        <shape type="rect">
+            <quad value="150.8955,75.0461,157.0056,79.0222"/>
+        </shape>
+    </region>
+    <region id="75">
+        <name value="level11FinishRegion"/>
+        <shape type="circle">
+            <center value="148.0278,97.9243"/>
+            <radius value="1.506"/>
+        </shape>
+    </region>
+    <region id="76">
+        <name value="level11SpawnRegion"/>
+        <shape type="circle">
+            <center value="123.467,62.5578"/>
+            <radius value="2.401"/>
+        </shape>
+    </region>
+    <region id="77">
+        <name value="level11Pickup"/>
+        <shape type="circle">
+            <center value="105.976,80.6994"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="78">
+        <name value="level12FinishRegion"/>
+        <shape type="circle">
+            <center value="156.1057,35.949"/>
+            <radius value="1.5534"/>
+        </shape>
+    </region>
+    <region id="79">
+        <name value="level12RandomRegion01"/>
+        <shape type="rect">
+            <quad value="118.084,32.064,136.0712,39.9301"/>
+        </shape>
+    </region>
+    <region id="80">
+        <name value="level12RandomRegion02"/>
+        <shape type="rect">
+            <quad value="135.9934,32.0156,152.0366,39.9572"/>
+        </shape>
+    </region>
+    <region id="81">
+        <name value="lv12Patrolend"/>
+        <shape type="rect">
+            <quad value="119.4841,24.814,121.7092,29.7915"/>
+        </shape>
+    </region>
+    <region id="82">
+        <name value="lv12Patrolcheck"/>
+        <shape type="rect">
+            <quad value="118.0214,24.8845,123.0214,29.654"/>
+        </shape>
+    </region>
+    <region id="84">
+        <name value="level11RandomRegion03"/>
+        <shape type="rect">
+            <quad value="115.109,69.701,135.9916,81.803"/>
+        </shape>
+        <shape type="rect">
+            <quad value="118.3017,80.7177,129.9326,92.8591"/>
+        </shape>
+        <shape type="rect">
+            <quad value="115.073,79.453,118.566,90.086"/>
+        </shape>
+    </region>
+    <region id="85">
+        <name value="level06RandomRegion2"/>
+        <shape type="circle">
+            <center value="106.7048,221.7868"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="circle">
+            <center value="104.558,219.5141"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="circle">
+            <center value="105.2963,218.9165"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="circle">
+            <center value="108.2856,223.3322"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="circle">
+            <center value="109.7416,224.6323"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="rect">
+            <quad value="109.2868,223.06,116.8034,226.973"/>
+        </shape>
+        <shape type="circle">
+            <center value="116.8334,223.7897"/>
+            <radius value="2.0446"/>
+        </shape>
+        <shape type="circle">
+            <center value="105.522,220.424"/>
+            <radius value="1.6784"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="114.966,221.2614,119.0021,223.078"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="102.6491,216.4714,111.0173,227.4685"/>
+        </shape>
+    </region>
+    <region id="86">
+        <name value="level13Region"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="6.9423,86.0852,17.1154,156.9392"/>
+        </shape>
+    </region>
+    <region id="87">
+        <name value="level13SpawnRegion"/>
+        <shape type="rect">
+            <quad value="9.4958,89.503,14.4958,94.503"/>
+        </shape>
+    </region>
+    <region id="89">
+        <name value="level13FinishRegion"/>
+        <shape type="circle">
+            <center value="11.9567,149.1586"/>
+            <radius value="1.4543"/>
+        </shape>
+    </region>
+    <region id="88">
+        <name value="level13RandomRegion1"/>
+        <shape type="rect">
+            <quad value="7.9631,111.4707,16.0131,118.4274"/>
+        </shape>
+    </region>
+    <region id="90">
+        <name value="level13RandomRegion2"/>
+        <shape type="rect">
+            <quad value="7.9504,104.521,16.0004,111.4777"/>
+        </shape>
+    </region>
+    <region id="91">
+        <name value="level13RandomRegion3"/>
+        <shape type="rect">
+            <quad value="7.951,97.5268,16.001,104.4836"/>
+        </shape>
+    </region>
+    <region id="92">
+        <name value="lvl13SmallExp01"/>
+        <shape type="rect">
+            <quad value="8.0007,129.0307,10.0004,131.0307"/>
+        </shape>
+    </region>
+    <region id="93">
+        <name value="lvl13SmallExp02"/>
+        <shape type="rect">
+            <quad value="10.0036,129.0024,12.0034,131.0024"/>
+        </shape>
+    </region>
+    <region id="94">
+        <name value="lvl13SmallExp03"/>
+        <shape type="rect">
+            <quad value="12.0053,128.9731,14.0051,130.9731"/>
+        </shape>
+    </region>
+    <region id="95">
+        <name value="lvl13SmallExp04"/>
+        <shape type="rect">
+            <quad value="14.0046,129.0002,16.0043,131.0002"/>
+        </shape>
+    </region>
+    <region id="96">
+        <name value="lvl13SmallExp05"/>
+        <shape type="rect">
+            <quad value="8.0021,127.0002,10.002,129.0002"/>
+        </shape>
+    </region>
+    <region id="97">
+        <name value="lvl13SmallExp06"/>
+        <shape type="rect">
+            <quad value="10.0043,127.0026,12.0041,129.0026"/>
+        </shape>
+    </region>
+    <region id="98">
+        <name value="lvl13SmallExp07"/>
+        <shape type="rect">
+            <quad value="12.006,127.0024,14.0058,129.0024"/>
+        </shape>
+    </region>
+    <region id="99">
+        <name value="lvl13SmallExp08"/>
+        <shape type="rect">
+            <quad value="14.002,127.0004,16.0017,129.0004"/>
+        </shape>
+    </region>
+    <region id="100">
+        <name value="lvl13SmallExp09"/>
+        <shape type="rect">
+            <quad value="8.003,125.0051,10.0026,127.0051"/>
+        </shape>
+    </region>
+    <region id="101">
+        <name value="lvl13SmallExp10"/>
+        <shape type="rect">
+            <quad value="10.0041,125.0021,12.004,127.0021"/>
+        </shape>
+    </region>
+    <region id="102">
+        <name value="lvl13SmallExp11"/>
+        <shape type="rect">
+            <quad value="12.0017,125.002,14.0014,127.002"/>
+        </shape>
+    </region>
+    <region id="103">
+        <name value="lvl13SmallExp12"/>
+        <shape type="rect">
+            <quad value="14.001,125.0014,16.0007,127.0014"/>
+        </shape>
+    </region>
+    <region id="104">
+        <name value="lvl13SmallExp13"/>
+        <shape type="rect">
+            <quad value="8.0063,123.0034,10.006,125.0034"/>
+        </shape>
+    </region>
+    <region id="105">
+        <name value="lvl13SmallExp14"/>
+        <shape type="rect">
+            <quad value="10.0026,123.0026,12.0024,125.0026"/>
+        </shape>
+    </region>
+    <region id="106">
+        <name value="lvl13SmallExp15"/>
+        <shape type="rect">
+            <quad value="12.005,123.0007,14.0046,125.0007"/>
+        </shape>
+    </region>
+    <region id="107">
+        <name value="lvl13SmallExp16"/>
+        <shape type="rect">
+            <quad value="14.0051,123.0053,16.005,125.0053"/>
+        </shape>
+    </region>
+    <region id="108">
+        <name value="lvl13SmallExp17"/>
+        <shape type="rect">
+            <quad value="8.0026,121.0031,10.0024,123.0031"/>
+        </shape>
+    </region>
+    <region id="109">
+        <name value="lvl13SmallExp18"/>
+        <shape type="rect">
+            <quad value="10.002,121.0021,12.0017,123.0021"/>
+        </shape>
+    </region>
+    <region id="110">
+        <name value="lvl13SmallExp19"/>
+        <shape type="rect">
+            <quad value="12.005,121.0021,14.0046,123.0021"/>
+        </shape>
+    </region>
+    <region id="111">
+        <name value="lvl13SmallExp20"/>
+        <shape type="rect">
+            <quad value="14.002,121.0024,16.0017,123.0024"/>
+        </shape>
+    </region>
+    <region id="112">
+        <name value="lvl13LargeExp01"/>
+        <shape type="rect">
+            <quad value="8.0002,139.0012,12.0002,143.0012"/>
+        </shape>
+    </region>
+    <region id="113">
+        <name value="lvl13LargeExp02"/>
+        <shape type="rect">
+            <quad value="12.0014,139.0004,16.0014,143.0004"/>
+        </shape>
+    </region>
+    <region id="114">
+        <name value="lvl13LargeExp03"/>
+        <shape type="rect">
+            <quad value="8.0007,135.0002,12.0007,139.0002"/>
+        </shape>
+    </region>
+    <region id="115">
+        <name value="lvl13LargeExp04"/>
+        <shape type="rect">
+            <quad value="12.0014,135.0002,16.0014,139.0002"/>
+        </shape>
+    </region>
+    <region id="116">
+        <name value="lvl13LargeExp05"/>
+        <shape type="rect">
+            <quad value="8.0012,131.0007,12.0012,135.0007"/>
+        </shape>
+    </region>
+    <region id="117">
+        <name value="lvl13LargeExp06"/>
+        <shape type="rect">
+            <quad value="12.0007,131.0007,16.0007,135.0007"/>
+        </shape>
+    </region>
+    <region id="118">
+        <name value="level13Pickup"/>
+        <shape type="circle">
+            <center value="8.97,138.8728"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="121">
+        <name value="lvl13DeathRegion01"/>
+        <shape type="rect">
+            <quad value="10.7573,134.3183,11.355,134.9714"/>
+        </shape>
+        <shape type="rect">
+            <quad value="10.1765,132.2678,10.8586,133.9746"/>
+        </shape>
+        <shape type="rect">
+            <quad value="7.9963,132.2197,10.5212,132.909"/>
+        </shape>
+        <shape type="rect">
+            <quad value="10.6376,133.6223,10.9023,134.4455"/>
+        </shape>
+        <shape type="rect">
+            <quad value="10.1042,129.1481,15.993,130.9611"/>
+        </shape>
+        <shape type="rect">
+            <quad value="12.1806,130.7172,12.9204,132.92"/>
+        </shape>
+        <shape type="rect">
+            <quad value="13.7302,130.7172,14.9291,131.9257"/>
+        </shape>
+        <shape type="rect">
+            <quad value="12.7131,130.5783,13.9047,132.4658"/>
+        </shape>
+        <shape type="rect">
+            <quad value="8,125.1938,13.945,126.9287"/>
+        </shape>
+        <shape type="rect">
+            <quad value="7.976,121.0974,9.8562,125.7453"/>
+        </shape>
+        <shape type="rect">
+            <quad value="12.1247,121.148,15.9943,122.9821"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="9.994,133.9191"/>
+            <radius value="0.4238"/>
+        </shape>
+    </region>
+    <region id="120">
+        <name value="lvl13DeathRegion02"/>
+        <shape type="rect">
+            <quad value="9.3034,137.3718,10.5244,137.7512"/>
+        </shape>
+        <shape type="rect">
+            <quad value="9.2824,135.2622,9.7358,137.7341"/>
+        </shape>
+        <shape type="rect">
+            <quad value="10.6872,136.7666,15.069,137.2868"/>
+        </shape>
+        <shape type="rect">
+            <quad value="14.1706,134.152,14.9035,137.9475"/>
+        </shape>
+        <shape type="rect">
+            <quad value="13.316,137.1525,13.8208,138.5"/>
+        </shape>
+        <shape type="rect">
+            <quad value="13.5231,138.2617,13.795,139.087"/>
+        </shape>
+        <shape type="circle">
+            <center value="13.8317,139.1928"/>
+            <radius value="0.2705"/>
+        </shape>
+        <shape type="circle">
+            <center value="14.065,139.5336"/>
+            <radius value="0.2705"/>
+        </shape>
+        <shape type="circle">
+            <center value="14.2246,139.774"/>
+            <radius value="0.2705"/>
+        </shape>
+        <shape type="rect">
+            <quad value="10.3981,136.8237,10.7214,139.3063"/>
+        </shape>
+        <shape type="circle">
+            <center value="10.2922,139.4807"/>
+            <radius value="0.267"/>
+        </shape>
+        <shape type="circle">
+            <center value="10.0427,139.7736"/>
+            <radius value="0.267"/>
+        </shape>
+        <shape type="circle">
+            <center value="9.7683,140.0007"/>
+            <radius value="0.267"/>
+        </shape>
+        <shape type="rect">
+            <quad value="7.9492,139.9553,9.619,140.2053"/>
+        </shape>
+        <shape type="circle">
+            <center value="11.597,134.9877"/>
+            <radius value="0.3251"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.0847,135.2634"/>
+            <radius value="0.3251"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.5017,135.547"/>
+            <radius value="0.3251"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.916,135.6723"/>
+            <radius value="0.3251"/>
+        </shape>
+        <shape type="circle">
+            <center value="9.4157,134.9594"/>
+            <radius value="0.3251"/>
+        </shape>
+        <shape type="circle">
+            <center value="9.2734,134.4531"/>
+            <radius value="0.3251"/>
+        </shape>
+        <shape type="circle">
+            <center value="9.2822,134.1"/>
+            <radius value="0.3251"/>
+        </shape>
+    </region>
+    <region id="122">
+        <name value="level14SpawnRegion"/>
+        <shape type="rect">
+            <quad value="189.8425,13.3508,195.1264,18.7033"/>
+        </shape>
+    </region>
+    <region id="124">
+        <name value="Level14LandRegion01"/>
+        <shape type="circle">
+            <center value="227.5776,55.5158"/>
+            <radius value="6.4562"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="218.8332,58.0036,235.6564,63.638"/>
+        </shape>
+    </region>
+    <region id="128">
+        <name value="Level14DeathRegion02"/>
+        <shape type="circle">
+            <center value="201.094,66.7683"/>
+            <radius value="3.0776"/>
+        </shape>
+        <shape type="circle">
+            <center value="199.394,67.6423"/>
+            <radius value="3.0776"/>
+        </shape>
+        <shape type="circle">
+            <center value="198.0427,68.1074"/>
+            <radius value="3.0776"/>
+        </shape>
+        <shape type="circle">
+            <center value="201.3623,69.183"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="202.301,72.661"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="203.282,74.568"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="205.7214,78.2526"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="208.0947,79.8022"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="210.2124,80.5664"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="214.7565,80.8596"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.7536,79.6601"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="216.9675,80.694"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="circle">
+            <center value="191.3381,59.137"/>
+            <radius value="2.3142"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="193.012,60.0117,194.3574,61.7036"/>
+        </shape>
+        <shape type="circle">
+            <center value="205.4562,75.462"/>
+            <radius value="1.9558"/>
+        </shape>
+        <shape type="circle">
+            <center value="212.4401,80.9472"/>
+            <radius value="3.519"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="198.9426,63.2343,202.0834,71.1635"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="201.5603,63.0422,202.6394,64.0573"/>
+        </shape>
+    </region>
+    <region id="129">
+        <name value="Level14DeathRegion03"/>
+        <shape type="circle">
+            <center value="212.8901,69.519"/>
+            <radius value="2.832"/>
+        </shape>
+        <shape type="circle">
+            <center value="211.3776,67.6281"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="210.5593,65.3361"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="209.4624,62.5461"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="208.0671,60.1357"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="205.7336,58.1342"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="202.2963,57.15"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="200.2133,57.1923"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="197.4943,57.061"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="195.772,57.1047"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="193.5251,58.218"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="198.9931,57.1604"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="204.1862,57.4936"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="206.9511,58.956"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="208.9758,61.4553"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="209.9978,64.0136"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="211.0981,66.6203"/>
+            <radius value="1.8964"/>
+        </shape>
+        <shape type="circle">
+            <center value="214.5227,68.8942"/>
+            <radius value="1.633"/>
+        </shape>
+        <shape type="circle">
+            <center value="215.4812,67.5554"/>
+            <radius value="1.633"/>
+        </shape>
+        <shape type="circle">
+            <center value="216.4926,66.7734"/>
+            <radius value="1.633"/>
+        </shape>
+    </region>
+    <region id="127">
+        <name value="Level14DeathRegion01"/>
+        <shape type="circle">
+            <negative/>
+            <center value="192.2536,58.1496"/>
+            <radius value="8.4868"/>
+        </shape>
+        <shape type="rect">
+            <quad value="181.9211,60.0351,204.294,79.09"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="192.8671,58.8703,205.971,66.1384"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="198.9426,63.1843,202.0834,71.1135"/>
+        </shape>
+    </region>
+    <region id="126">
+        <name value="Level14SlideRegion01"/>
+        <shape type="rect">
+            <quad value="184.076,58.648,217.0214,78.0622"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="215.8073,59.4016"/>
+            <radius value="6.3078"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="198.9167,69.981,202.1345,71.128"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="198.9658,64.0173,202.1801,71.1191"/>
+        </shape>
+    </region>
+    <region id="130">
+        <name value="Level14FinishRegion"/>
+        <shape type="circle">
+            <center value="185.7226,51.2473"/>
+            <radius value="1.3886"/>
+        </shape>
+    </region>
+    <region id="123">
+        <name value="Level14Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="180.8034,11.8791,234.1376,77.864"/>
+        </shape>
+    </region>
+    <region id="119">
+        <name value="Level14Pickup"/>
+        <shape type="circle">
+            <center value="200.4567,70.5517"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="125">
+        <name value="Level15FinishRegion"/>
+        <shape type="circle">
+            <center value="181.0288,90.097"/>
+            <radius value="1.1481"/>
+        </shape>
+    </region>
+    <region id="131">
+        <name value="Level15SpawnRegion"/>
+        <shape type="rect">
+            <quad value="193.9743,114.0512,198.0217,118.0217"/>
+        </shape>
+    </region>
+    <region id="132">
+        <name value="Level15Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="172.7204,82.01,210.7204,123.0097"/>
+        </shape>
+    </region>
+    <region id="133">
+        <name value="Level15SlideRegion01"/>
+        <shape type="circle">
+            <center value="191.1677,89.6633"/>
+            <radius value="6.0998"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="187.5002,89.0051,192.0695,91.1237"/>
+        </shape>
+    </region>
+    <region id="134">
+        <name value="Level15AlwaysDeathRegion"/>
+        <shape type="circle">
+            <center value="191.0512,89.5832"/>
+            <radius value="3.4"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="187.4926,88.997,192.062,91.1157"/>
+        </shape>
+    </region>
+    <region id="135">
+        <name value="Level15LandRegion01"/>
+        <shape type="rect">
+            <quad value="190.4367,88.9602,192.0842,91.1477"/>
+        </shape>
+    </region>
+    <region id="136">
+        <name value="Level15StraightSlideRegion01"/>
+        <shape type="rect">
+            <quad value="187.988,88.9631,190.4521,91.0712"/>
+        </shape>
+    </region>
+    <region id="137">
+        <name value="Level15Pickup"/>
+        <shape type="circle">
+            <center value="191.2578,90.0024"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="138">
+        <name value="level15OpenGate01"/>
+        <shape type="rect">
+            <quad value="191.3457,104.0424,193.6452,106.2424"/>
+        </shape>
+    </region>
+    <region id="139">
+        <name value="level15OpenGate02"/>
+        <shape type="rect">
+            <quad value="202.8896,108.4301,205.1892,110.6301"/>
+        </shape>
+    </region>
+    <region id="140">
+        <name value="level15OpenGate03"/>
+        <shape type="rect">
+            <quad value="203.984,104.0922,205.9836,105.992"/>
+        </shape>
+    </region>
+    <region id="141">
+        <name value="level15OpenGate04"/>
+        <shape type="rect">
+            <quad value="189.0166,99.066,191.0163,100.9655"/>
+        </shape>
+    </region>
+    <region id="142">
+        <name value="level15OpenGate05"/>
+        <shape type="rect">
+            <quad value="205.3088,92.407,207.6083,94.607"/>
+        </shape>
+    </region>
+    <region id="143">
+        <name value="level15OpenGate06"/>
+        <shape type="rect">
+            <quad value="205.5876,96.4995,207.5874,98.3991"/>
+        </shape>
+    </region>
+    <region id="145">
+        <name value="level12Pickup"/>
+        <shape type="circle">
+            <center value="110.9963,17.98"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="146">
+        <name value="level02Pickup"/>
+        <shape type="circle">
+            <center value="56.9565,114.0922"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="147">
+        <name value="level09Pickup"/>
+        <shape type="circle">
+            <center value="18.9934,35.06"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="148">
+        <name value="level05Pickup"/>
+        <shape type="circle">
+            <center value="30.5034,195.0764"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="149">
+        <name value="level01Pickup"/>
+        <shape type="circle">
+            <center value="159.4826,133.5124"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="23">
+        <name value="level02priorityslide03"/>
+        <shape type="circle">
+            <center value="55.8586,122.9013"/>
+            <radius value="0.7995"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.063,122.3144"/>
+            <radius value="0.7995"/>
+        </shape>
+        <shape type="circle">
+            <center value="54.3737,121.8115"/>
+            <radius value="0.7995"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.8447,121.3916"/>
+            <radius value="0.7995"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.401,119.654"/>
+            <radius value="1.0217"/>
+        </shape>
+        <shape type="circle">
+            <center value="54.2077,120.669"/>
+            <radius value="1.0217"/>
+        </shape>
+        <shape type="circle">
+            <center value="54.3571,119.0361"/>
+            <radius value="1.6896"/>
+        </shape>
+        <shape type="circle">
+            <center value="53.372,118.068"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="52.481,117.5532"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="51.2458,117.3684"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="49.9033,117.4645"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="48.4885,117.8012"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.2353,118.4892"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.2851,119.3676"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.447,120.4475"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="44.5625,121.5058"/>
+            <radius value="1.6525"/>
+        </shape>
+        <shape type="circle">
+            <center value="44.8432,122.7084"/>
+            <radius value="1.968"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.1464,123.9785"/>
+            <radius value="1.1083"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.7155,121.9885"/>
+            <radius value="1.1083"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.7524,124.501"/>
+            <radius value="0.8347"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.969,123.7856"/>
+            <radius value="0.8347"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.1867,123.1166"/>
+            <radius value="0.8347"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.368,122.7888"/>
+            <radius value="0.8347"/>
+        </shape>
+        <shape type="circle">
+            <center value="55.9321,121.7663"/>
+            <radius value="1.3596"/>
+        </shape>
+    </region>
+    <region id="150">
+        <name value="level16SpawnRegion"/>
+        <shape type="rect">
+            <quad value="140.4807,234.4636,143.4736,237.4777"/>
+        </shape>
+    </region>
+    <region id="151">
+        <name value="Level16IceRegion01"/>
+        <shape type="circle">
+            <center value="169.5,215.5"/>
+            <radius value="5.75"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="162.6218,216.1225,167.918,221.3232"/>
+        </shape>
+        <shape type="circle">
+            <center value="171,222"/>
+            <radius value="4.0998"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="165.084,218.8801,167.9301,225.6796"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.9821,222"/>
+            <radius value="4.0998"/>
+        </shape>
+        <shape type="rect">
+            <quad value="141.785,221.4392,145.072,223.506"/>
+        </shape>
+    </region>
+    <region id="153">
+        <name value="Level16AlwaysDeathRegion01"/>
+        <shape type="circle">
+            <center value="166,219"/>
+            <radius value="2.9248"/>
+        </shape>
+        <shape type="circle">
+            <center value="145.055,217.9311"/>
+            <radius value="3.95"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="145.0744,212.4003,149.6047,221.9946"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="164.1955,214.8432,167.2087,216.2165"/>
+        </shape>
+    </region>
+    <region id="152">
+        <name value="Level16Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="135.4523,197.9167,175.4521,237.9165"/>
+        </shape>
+    </region>
+    <region id="159">
+        <name value="Level16LetUnitDown"/>
+        <shape type="rect">
+            <quad value="155.653,208.2651,157.839,218.2587"/>
+        </shape>
+    </region>
+    <region id="154">
+        <name value="sillyDeathRegion"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="103.9445,78.1594,110.0083,83.0407"/>
+        </shape>
+        <shape type="rect">
+            <quad value="17.207,34.5864,20.609,37.3007"/>
+        </shape>
+        <shape type="rect">
+            <quad value="137.942,136.079,143.3242,138.9035"/>
+        </shape>
+        <shape type="rect">
+            <quad value="104.4802,164.9934,107.4548,168.9846"/>
+        </shape>
+        <shape type="circle">
+            <center value="102.505,232.3935"/>
+            <radius value="0.7937"/>
+        </shape>
+        <shape type="rect">
+            <quad value="145.2587,85.6696,150.571,92.7587"/>
+        </shape>
+    </region>
+    <region id="156">
+        <name value="Level16IceRegion02"/>
+        <shape type="circle">
+            <center value="139.4025,207.9558"/>
+            <radius value="4.0998"/>
+        </shape>
+        <shape type="circle">
+            <center value="141.067,201.9633"/>
+            <radius value="4.0998"/>
+        </shape>
+        <shape type="circle">
+            <center value="145.0112,200.08"/>
+            <radius value="2.0498"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="138.3576,206.819"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="137.6555,207.2541"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="136.9362,207.7375"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="135.997,208.3366"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="135.281,209.0432"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="137.5034,206.2807"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="136.7922,205.6125"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="136.3217,204.9638"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="135.9846,204.2385"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="135.6936,203.3874"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="135.5097,202.3693"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="142.1657,202.021"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="142.8088,202.9064"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="143.4511,203.7397"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="143.951,204.45"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="144.305,205.1345"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="144.7224,206.204"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="145.008,207.5102"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="144.9396,208.8854"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="144.6193,210.1186"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="143.8774,211.4018"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="135.7392,206.9018"/>
+            <radius value="0.9453"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="144.8088,203.2814"/>
+            <radius value="1.151"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="143.7658,202.9892"/>
+            <radius value="1.151"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="142.9155,202.4064"/>
+            <radius value="1.151"/>
+        </shape>
+    </region>
+    <region id="157">
+        <name value="Level16FinishRegion"/>
+        <shape type="circle">
+            <center value="157.5612,200.1118"/>
+            <radius value="1.1484"/>
+        </shape>
+    </region>
+    <region id="158">
+        <name value="Level16BushRegion01"/>
+        <shape type="circle">
+            <center value="137.6174,223.6213"/>
+            <radius value="0.6625"/>
+        </shape>
+        <shape type="circle">
+            <center value="140.7932,221.359"/>
+            <radius value="0.6625"/>
+        </shape>
+        <shape type="circle">
+            <center value="137.7497,219.0744"/>
+            <radius value="0.6625"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.927,216.5534"/>
+            <radius value="0.6625"/>
+        </shape>
+        <shape type="circle">
+            <center value="136.8398,214.3051"/>
+            <radius value="0.6625"/>
+        </shape>
+        <shape type="circle">
+            <center value="140.1914,212.281"/>
+            <radius value="0.6625"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.376,211.6098"/>
+            <radius value="0.558"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.9404,211.3281"/>
+            <radius value="0.277"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.0605,211.0754"/>
+            <radius value="0.277"/>
+        </shape>
+    </region>
+    <region id="161">
+        <name value="Level16Pickup"/>
+        <shape type="circle">
+            <center value="135.9921,205.4694"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="160">
+        <name value="Level16AlwaysDeathRegion2"/>
+        <shape type="circle">
+            <center value="138.3054,206.8364"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="137.6032,207.2714"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="136.884,207.755"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="135.9448,208.354"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="135.2287,209.0605"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="137.4511,206.298"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="136.74,205.63"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="136.2695,204.9812"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="135.9323,204.2558"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="135.6413,203.4047"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="135.4575,202.3867"/>
+            <radius value="1.4045"/>
+        </shape>
+        <shape type="circle">
+            <center value="142.1135,202.0383"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="142.7565,202.9238"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="143.399,203.757"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="143.8986,204.4672"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="144.2526,205.1518"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="144.6701,206.2214"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="144.9558,207.5275"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="144.8874,208.9028"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="144.5671,210.136"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="143.8251,211.4191"/>
+            <radius value="1.4633"/>
+        </shape>
+        <shape type="circle">
+            <center value="144.7941,203.273"/>
+            <radius value="1.151"/>
+        </shape>
+        <shape type="circle">
+            <center value="143.7512,202.9807"/>
+            <radius value="1.151"/>
+        </shape>
+        <shape type="circle">
+            <center value="142.901,202.398"/>
+            <radius value="1.151"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="132.8488,205.2741,135.2731,210.8452"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="133.8076,202.1025,136.1186,209.225"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="135.0874,204.5915,137.1516,208.677"/>
+        </shape>
+    </region>
+    <region id="162">
+        <name value="Level17PriorityLandRegion01"/>
+        <shape type="circle">
+            <center value="224.8144,14.95"/>
+            <radius value="1.564"/>
+        </shape>
+        <shape type="rect">
+            <quad value="233.992,20.9638,236.0402,23.0512"/>
+        </shape>
+    </region>
+    <region id="163">
+        <name value="Level17SpawnRegion"/>
+        <shape type="circle">
+            <center value="210.6716,25.5883"/>
+            <radius value="1.6513"/>
+        </shape>
+    </region>
+    <region id="164">
+        <name value="Level17Region"/>
+        <color value="255,0,0,0"/>
+        <invisible/>
+        <shape type="rect">
+            <quad value="207.9704,7.9375,243.9702,39.4375"/>
+        </shape>
+    </region>
+    <region id="165">
+        <name value="Level17Pickup"/>
+        <shape type="circle">
+            <center value="224.7507,14.972"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="166">
+        <name value="Level17IceRevRegion01"/>
+        <shape type="circle">
+            <center value="217.432,10.5524"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <center value="227.4824,10.571"/>
+            <radius value="2.5498"/>
+        </shape>
+    </region>
+    <region id="168">
+        <name value="Level17AlwaysDeathRegion01"/>
+        <shape type="circle">
+            <center value="219.4736,13.531"/>
+            <radius value="2.45"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="219.0114,12.777,222.5432,17.1623"/>
+        </shape>
+        <shape type="circle">
+            <center value="225.4062,13.5432"/>
+            <radius value="2.45"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="222.0886,12.215,226.9077,18.1003"/>
+        </shape>
+    </region>
+    <region id="167">
+        <name value="Level17AlwaysDeathRegion02"/>
+        <shape type="circle">
+            <negative/>
+            <center value="217.369,10.509"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="227.5332,10.5817"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="rect">
+            <quad value="214.044,6.4018,217.9877,10.972"/>
+        </shape>
+        <shape type="rect">
+            <quad value="227.0283,7.0517,230.7104,11.0261"/>
+        </shape>
+    </region>
+    <region id="169">
+        <name value="Level17PriorityLandRegion02"/>
+        <shape type="circle">
+            <center value="210.6726,25.641"/>
+            <radius value="2.65"/>
+        </shape>
+    </region>
+    <region id="171">
+        <name value="Level17AlwaysDeathRegion04"/>
+        <shape type="circle">
+            <center value="237.972,12.0585"/>
+            <radius value="1.45"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="239.242,10.4577,240.401,13.6774"/>
+        </shape>
+        <shape type="rect">
+            <quad value="238.328,10.1511,239.244,11.6936"/>
+        </shape>
+        <shape type="rect">
+            <quad value="234.9162,9.03,237.143,10.9697"/>
+        </shape>
+        <shape type="rect">
+            <quad value="236.5278,9.9228,237.5092,12.0153"/>
+        </shape>
+    </region>
+    <region id="170">
+        <name value="Level17AlwaysDeathRegion03"/>
+        <shape type="circle">
+            <negative/>
+            <center value="237.977,12.1083"/>
+            <radius value="2.035"/>
+        </shape>
+        <shape type="rect">
+            <quad value="236.0034,12.4855,241.484,16.7902"/>
+        </shape>
+    </region>
+    <region id="174">
+        <name value="Level17AlwaysDeathRegion06"/>
+        <shape type="circle">
+            <negative/>
+            <center value="241.0122,11.973"/>
+            <radius value="2.035"/>
+        </shape>
+        <shape type="rect">
+            <quad value="239.034,8.7526,243.018,11.7473"/>
+        </shape>
+        <shape type="rect">
+            <quad value="242.835,9.7465,244.5654,11.0395"/>
+        </shape>
+    </region>
+    <region id="172">
+        <name value="Level17AlwaysDeathRegion05"/>
+        <shape type="circle">
+            <center value="241.0085,12.069"/>
+            <radius value="1.45"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="239.2575,11.0834,239.796,13.1271"/>
+        </shape>
+        <shape type="rect">
+            <quad value="241.7468,11.9643,242.4721,13.5463"/>
+        </shape>
+        <shape type="rect">
+            <quad value="239.7915,12.134,240.9677,14.4016"/>
+        </shape>
+        <shape type="rect">
+            <quad value="241.1535,13.0532,242.9921,16.9274"/>
+        </shape>
+    </region>
+    <region id="173">
+        <name value="Level17LandRegions01"/>
+        <shape type="rect">
+            <quad value="235.9426,8.5317,243.0805,16.3544"/>
+        </shape>
+    </region>
+    <region id="175">
+        <name value="Level17FinishRegion"/>
+        <shape type="circle">
+            <center value="243.984,35.053"/>
+            <radius value="1.2993"/>
+        </shape>
+    </region>
+    <region id="155">
+        <name value="Level17IcePriorityRegion01"/>
+        <shape type="rect">
+            <quad value="223.5673,20.9772,224.203,23.0776"/>
+        </shape>
+    </region>
+    <region id="176">
+        <name value="Level17IceRegion01"/>
+        <shape type="circle">
+            <center value="220.4555,22.0764"/>
+            <radius value="3.5732"/>
+        </shape>
+    </region>
+    <region id="177">
+        <name value="Level13DTRegion3"/>
+        <shape type="circle">
+            <center value="15.8642,140.9294"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="15.5593,141.3364"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="15.2553,141.6525"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="14.8813,141.8554"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="14.5793,142.0964"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="14.2326,142.226"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="13.7653,142.1884"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="13.3657,142.2556"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.872,142.197"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.5126,141.9191"/>
+            <radius value="0.2968"/>
+        </shape>
+        <shape type="rect">
+            <quad value="12.3085,140.7827,12.625,142.046"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.2082,140.1965"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.3051,140.602"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="11.868,140.5385"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="11.6245,140.7968"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="11.3356,141.0246"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="11.1147,141.2277"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="10.7783,141.5214"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="10.5227,141.5197"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="10.1652,141.666"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="9.7302,141.7893"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="9.4501,141.893"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="9.1301,141.9931"/>
+            <radius value="0.2651"/>
+        </shape>
+        <shape type="circle">
+            <center value="10.7568,142.0871"/>
+            <radius value="0.4697"/>
+        </shape>
+        <shape type="circle">
+            <center value="11.708,141.8054"/>
+            <radius value="0.4697"/>
+        </shape>
+        <shape type="rect">
+            <quad value="11.1257,141.0898,12.4685,141.9396"/>
+        </shape>
+        <shape type="circle">
+            <center value="13.2143,142.4597"/>
+            <radius value="0.2004"/>
+        </shape>
+        <shape type="circle">
+            <center value="12.947,142.3315"/>
+            <radius value="0.304"/>
+        </shape>
+        <shape type="rect">
+            <quad value="13.4716,143.785,16.739,144.2526"/>
+        </shape>
+        <shape type="rect">
+            <quad value="7.6777,143.7878,12.6447,144.2692"/>
+        </shape>
+    </region>
+    <region id="178">
+        <name value="Level18Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="214.7087,86.026,243.7087,126.8342"/>
+        </shape>
+    </region>
+    <region id="179">
+        <name value="Level18FinishRegion"/>
+        <shape type="circle">
+            <center value="240.9152,87.953"/>
+            <radius value="1.474"/>
+        </shape>
+    </region>
+    <region id="180">
+        <name value="Level18SpawnRegion"/>
+        <shape type="circle">
+            <center value="240.5153,120.5314"/>
+            <radius value="1.5524"/>
+        </shape>
+    </region>
+    <region id="182">
+        <name value="Level18IceRegion01"/>
+        <shape type="circle">
+            <center value="240.4753,110.5573"/>
+            <radius value="3.5551"/>
+        </shape>
+        <shape type="circle">
+            <center value="240.5432,99.499"/>
+            <radius value="5.0998"/>
+        </shape>
+        <shape type="circle">
+            <center value="231.482,99.0224"/>
+            <radius value="2.5905"/>
+        </shape>
+        <shape type="circle">
+            <center value="231.4548,111.5461"/>
+            <radius value="3.6198"/>
+        </shape>
+        <shape type="rect">
+            <quad value="230.3261,114.5971,232.422,118.042"/>
+        </shape>
+        <shape type="circle">
+            <center value="227.4438,106.0278"/>
+            <radius value="1.0886"/>
+        </shape>
+    </region>
+    <region id="183">
+        <name value="Level18Pickup"/>
+        <shape type="circle">
+            <center value="236,106"/>
+            <radius value="0.6098"/>
+        </shape>
+    </region>
+    <region id="184">
+        <name value="Level18PatrolEndRegion01"/>
+        <shape type="rect">
+            <quad value="217.309,121.4421,225.3273,122.238"/>
+        </shape>
+    </region>
+    <region id="185">
+        <name value="Level18LandRegion01"/>
+        <shape type="rect">
+            <quad value="225.9707,119.4284,227.5263,126.0686"/>
+        </shape>
+        <shape type="rect">
+            <quad value="227.2421,118.1936,230.1306,119.6936"/>
+        </shape>
+    </region>
+    <region id="186">
+        <name value="Level19IceRegion01"/>
+        <shape type="circle">
+            <center value="34.0856,239.9265"/>
+            <radius value="4.0498"/>
+        </shape>
+        <shape type="circle">
+            <center value="34.123,232.0715"/>
+            <radius value="4.0498"/>
+        </shape>
+        <shape type="circle">
+            <center value="35.0283,226.9101"/>
+            <radius value="3.12"/>
+        </shape>
+        <shape type="circle">
+            <center value="35.0537,244.9328"/>
+            <radius value="3.12"/>
+        </shape>
+    </region>
+    <region id="188">
+        <name value="Level19AlwaysDeathRegion02"/>
+        <shape type="circle">
+            <center value="32.9287,229.8857"/>
+            <radius value="2"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="35.012,226.9885"/>
+            <radius value="3.057"/>
+        </shape>
+        <shape type="rect">
+            <quad value="26.4033,229.9064,33.0144,231.9157"/>
+        </shape>
+    </region>
+    <region id="187">
+        <name value="Level19AlwaysDeathRegion01"/>
+        <shape type="circle">
+            <center value="32.9526,242.0688"/>
+            <radius value="2"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="34.797,244.558"/>
+            <radius value="2.715"/>
+        </shape>
+        <shape type="rect">
+            <quad value="26.548,240.1005,32.6203,241.9514"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="25.1877,240.8107,27.1567,242.3496"/>
+        </shape>
+    </region>
+    <region id="191">
+        <name value="Level19SpawnRegion"/>
+        <shape type="rect">
+            <quad value="9.225,233.4375,14.6166,238.545"/>
+        </shape>
+    </region>
+    <region id="192">
+        <name value="Level19Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="11.3481,218.787,50.348,243.787"/>
+        </shape>
+    </region>
+    <region id="193">
+        <name value="Level19FinishRegion"/>
+        <shape type="circle">
+            <center value="46.011,222.6071"/>
+            <radius value="1.1254"/>
+        </shape>
+    </region>
+    <region id="194">
+        <name value="Level19LandRegion01"/>
+        <shape type="rect">
+            <quad value="23.9213,228.683,25.5485,230.305"/>
+        </shape>
+        <shape type="rect">
+            <quad value="21.371,229.1462,24.2761,229.8193"/>
+        </shape>
+        <shape type="rect">
+            <quad value="21.2092,228.2705,22.2377,230.0488"/>
+        </shape>
+        <shape type="rect">
+            <quad value="19.2993,228.3972,21.4113,230.6074"/>
+        </shape>
+    </region>
+    <region id="195">
+        <name value="Level19DeathRegion03"/>
+        <shape type="rect">
+            <quad value="20.6801,229.7902,23.929,231.1386"/>
+        </shape>
+        <shape type="rect">
+            <quad value="20.0537,229.0563,21.4404,231.0141"/>
+        </shape>
+        <shape type="rect">
+            <quad value="22.0415,227.671,23.9116,229.2087"/>
+        </shape>
+        <shape type="rect">
+            <quad value="19.3842,227.338,22.149,228.4548"/>
+        </shape>
+        <shape type="rect">
+            <quad value="19.0317,227.419,19.4453,229.9626"/>
+        </shape>
+    </region>
+    <region id="197">
+        <name value="level19Pickup2"/>
+        <shape type="circle">
+            <center value="24.7553,229.502"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="198">
+        <name value="level19Pickup1"/>
+        <shape type="circle">
+            <center value="26.9914,243.055"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="196">
+        <name value="Level19PatrolEndRegion"/>
+        <shape type="rect">
+            <quad value="16.5002,231.3967,17.8146,240.7895"/>
+        </shape>
+    </region>
+    <region id="189">
+        <name value="level19OpenGate02"/>
+        <shape type="rect">
+            <quad value="10.1237,224.112,12.1235,226.0117"/>
+        </shape>
+    </region>
+    <region id="190">
+        <name value="level19OpenGate01"/>
+        <shape type="rect">
+            <quad value="10.0656,246.0407,12.0654,247.9404"/>
+        </shape>
+    </region>
+    <region id="200">
+        <name value="Level20AlwaysDeathRegion01"/>
+        <shape type="rect">
+            <quad value="202.033,155.0957,205.4707,157.5104"/>
+        </shape>
+        <shape type="circle">
+            <center value="202.5256,158.5051"/>
+            <radius value="3.45"/>
+        </shape>
+        <shape type="rect">
+            <quad value="202.1435,160.2045,204.994,161.9772"/>
+        </shape>
+        <shape type="circle">
+            <center value="209.3903,159.478"/>
+            <radius value="2.5"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="206.5895,156.847,211.915,160.0886"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="200.9506,156.9262,206.5434,160.0437"/>
+        </shape>
+    </region>
+    <region id="199">
+        <name value="Level20StraightSlideRegion01"/>
+        <shape type="circle">
+            <center value="198.483,156.4721"/>
+            <radius value="3.5498"/>
+        </shape>
+        <shape type="circle">
+            <center value="198.4125,162.544"/>
+            <radius value="3.5498"/>
+        </shape>
+        <shape type="rect">
+            <quad value="200.4267,161.8364,204.9904,164.7897"/>
+        </shape>
+        <shape type="circle">
+            <center value="212.094,163.12"/>
+            <radius value="3"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="209.8078,159.9035"/>
+            <radius value="1.9555"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="207.588,160.6813,209.9836,161.8996"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="200.6855,156.594,202.1965,160.1748"/>
+        </shape>
+    </region>
+    <region id="201">
+        <name value="Level20FinishPatrolRegion"/>
+        <shape type="rect">
+            <quad value="202.9494,155.5046,203.587,160.9882"/>
+        </shape>
+    </region>
+    <region id="202">
+        <name value="Level20LandPriorityRegions01"/>
+        <shape type="rect">
+            <quad value="195.4943,158.238,196.5241,159.2678"/>
+        </shape>
+        <shape type="rect">
+            <quad value="197.5058,157.993,198.5356,159.0227"/>
+        </shape>
+        <shape type="rect">
+            <quad value="195.7336,160.792,196.7634,161.8217"/>
+        </shape>
+        <shape type="rect">
+            <quad value="198.5122,161.3508,199.542,162.3806"/>
+        </shape>
+        <shape type="rect">
+            <quad value="196.4992,163.4943,197.529,164.5241"/>
+        </shape>
+        <shape type="rect">
+            <quad value="200.0993,164.5014,201.1291,165.5312"/>
+        </shape>
+        <shape type="rect">
+            <quad value="201.7565,162.6074,202.7863,163.6372"/>
+        </shape>
+        <shape type="rect">
+            <quad value="204.6162,164.456,205.646,165.4858"/>
+        </shape>
+        <shape type="rect">
+            <quad value="204.6147,162.4887,205.6445,163.5185"/>
+        </shape>
+        <shape type="rect">
+            <quad value="207.5012,162.4821,208.531,163.512"/>
+        </shape>
+        <shape type="rect">
+            <quad value="208.6237,164.514,209.6535,165.5437"/>
+        </shape>
+        <shape type="rect">
+            <quad value="210.6413,162.4716,211.6711,163.5014"/>
+        </shape>
+        <shape type="rect">
+            <quad value="212.229,164.2482,213.2587,165.278"/>
+        </shape>
+        <shape type="rect">
+            <quad value="213.6198,161.875,214.6496,162.9047"/>
+        </shape>
+        <shape type="rect">
+            <quad value="212.2324,160.5104,213.2622,161.5402"/>
+        </shape>
+        <shape type="rect">
+            <quad value="197.9997,155.2424,199.0295,156.2722"/>
+        </shape>
+        <shape type="rect">
+            <quad value="196.2233,154.4958,197.2531,155.5256"/>
+        </shape>
+    </region>
+    <region id="204">
+        <name value="level20OpenGate03"/>
+        <shape type="rect">
+            <quad value="183.103,147.968,185.4025,150.168"/>
+        </shape>
+    </region>
+    <region id="205">
+        <name value="level20OpenGate02"/>
+        <shape type="rect">
+            <quad value="189.885,181.7543,192.1845,183.9543"/>
+        </shape>
+    </region>
+    <region id="206">
+        <name value="level20OpenGate01"/>
+        <shape type="rect">
+            <quad value="240.541,168.9553,242.8405,171.1552"/>
+        </shape>
+    </region>
+    <region id="207">
+        <name value="Level20SpawnRegion"/>
+        <shape type="rect">
+            <quad value="226.3198,181.3127,233.661,183.841"/>
+        </shape>
+    </region>
+    <region id="208">
+        <name value="Level20FinishRegion"/>
+        <shape type="circle">
+            <center value="188.886,138.9392"/>
+            <radius value="1.332"/>
+        </shape>
+    </region>
+    <region id="209">
+        <name value="Level20Region"/>
+        <color value="255,0,0,0"/>
+        <shape type="rect">
+            <quad value="186.7297,135.5205,242.133,182.5205"/>
+        </shape>
+    </region>
+    <region id="203">
+        <name value="Level20Pickup"/>
+        <shape type="circle">
+            <center value="201.9353,158.4736"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="210">
+        <name value="FinalLevelIceRegion01"/>
+        <shape type="circle">
+            <center value="207.9865,209.9472"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <center value="206.1232,209.0771"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <center value="204.4458,208.466"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <center value="213.5051,209.9904"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="rect">
+            <quad value="207.91,207.432,213.3806,212.533"/>
+        </shape>
+        <shape type="circle">
+            <center value="213.4494,214.5593"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <center value="222.42,214.5637"/>
+            <radius value="1.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="223.5473,213.3793"/>
+            <radius value="1.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="224.3591,212.5388"/>
+            <radius value="1.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.3852,218.5454"/>
+            <radius value="1.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.3984,219.5378"/>
+            <radius value="1.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="217.4853,220.4291"/>
+            <radius value="1.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="216.4611,221.4572"/>
+            <radius value="1.5"/>
+        </shape>
+    </region>
+    <region id="211">
+        <name value="FinalLevelDeathRegion02"/>
+        <shape type="circle">
+            <center value="211.9616,213.226"/>
+            <radius value="0.7248"/>
+        </shape>
+        <shape type="rect">
+            <quad value="204.1555,212.5488,212.0036,213.956"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="203.7707,214.233"/>
+            <radius value="1.3376"/>
+        </shape>
+        <shape type="rect">
+            <quad value="190.2631,216.0983,193.4877,217.9453"/>
+        </shape>
+        <shape type="rect">
+            <quad value="190.2695,222.0798,193.4941,223.9267"/>
+        </shape>
+        <shape type="rect">
+            <quad value="190.0942,217.3903,191.4355,222.3015"/>
+        </shape>
+        <shape type="rect">
+            <quad value="192.3923,214.2094,193.488,216.1252"/>
+        </shape>
+    </region>
+    <region id="212">
+        <name value="FinalLevelDeathRegion01"/>
+        <shape type="circle">
+            <negative/>
+            <center value="213.47,214.5595"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="rect">
+            <quad value="212.587,213.0244,216.5378,217.5026"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="211.5554,216.0866,213.3273,217.1103"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="214.8532,212.468,216.0305,214.3867"/>
+        </shape>
+        <shape type="rect">
+            <quad value="208.0217,205.1333,216.1855,207.4064"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="213.49,209.9538"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="214.204,209.941,216.0607,212.1433"/>
+        </shape>
+        <shape type="rect">
+            <quad value="212.2214,206.5175,216.6591,211.4223"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="211.7846,207.4094,213.4152,208.9645"/>
+        </shape>
+        <shape type="circle">
+            <center value="223.199,219.6"/>
+            <radius value="2.5"/>
+        </shape>
+        <shape type="rect">
+            <quad value="223.2136,217.1047,225.14,218.9013"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="215.616,210.8632,217.6645,211.999"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="215.5332,209.9533,217.4511,211.4143"/>
+        </shape>
+        <shape type="rect">
+            <quad value="203.9997,227.1071,208.944,230.0874"/>
+        </shape>
+    </region>
+    <region id="214">
+        <name value="FinalLevelIceRegion02"/>
+        <shape type="circle">
+            <center value="207.5275,222.4902"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <center value="196.0485,215.5002"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="196.8413,217.0573,198.5483,218.7314"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="196.7946,217.8698"/>
+            <radius value="0.8051"/>
+        </shape>
+        <shape type="circle">
+            <center value="194.6,222.952"/>
+            <radius value="1.1008"/>
+        </shape>
+        <shape type="rect">
+            <quad value="193.503,215.2353,194.7756,223.0852"/>
+        </shape>
+        <shape type="rect">
+            <quad value="194.6867,222.533,196.0463,223.998"/>
+        </shape>
+        <shape type="circle">
+            <center value="221.518,216.52"/>
+            <radius value="2.5498"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="223.5942,218.1162"/>
+            <radius value="1.8825"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="224.3298,217.389"/>
+            <radius value="1.8825"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="224.97,216.859"/>
+            <radius value="1.8825"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="222.4013,219.1252"/>
+            <radius value="1.6035"/>
+        </shape>
+    </region>
+    <region id="215">
+        <name value="FinalLevelLandRegion01"/>
+        <shape type="rect">
+            <quad value="191.444,217.9602,193.4946,219.0888"/>
+        </shape>
+        <shape type="rect">
+            <quad value="215.9702,210.9482,218.0207,212.077"/>
+        </shape>
+        <shape type="rect">
+            <quad value="204.931,217.0212,206.043,219.081"/>
+        </shape>
+        <shape type="rect">
+            <quad value="200.903,218.9421,202.023,221.0417"/>
+        </shape>
+        <shape type="rect">
+            <quad value="205.9338,224.9758,207.0537,227.0754"/>
+        </shape>
+        <shape type="rect">
+            <quad value="209.9284,217.9421,211.0483,220.0417"/>
+        </shape>
+        <shape type="rect">
+            <quad value="212.9338,223.0024,214.0537,225.102"/>
+        </shape>
+        <shape type="rect">
+            <quad value="191.44,220.9035,193.5014,222.0734"/>
+        </shape>
+        <shape type="rect">
+            <quad value="224.953,208.9794,226.0068,211.049"/>
+        </shape>
+        <shape type="rect">
+            <quad value="192.4001,218.3542,193.4987,221.0041"/>
+        </shape>
+        <shape type="rect">
+            <quad value="215.9621,209.9567,218.018,211.0263"/>
+        </shape>
+    </region>
+    <region id="216">
+        <name value="FinalLevelSpawnRegion"/>
+        <shape type="rect">
+            <quad value="192.9716,207.327,199.0012,209.8015"/>
+        </shape>
+    </region>
+    <region id="213">
+        <name value="FinalLevelS2PriorityLandRegion01"/>
+        <shape type="circle">
+            <center value="226.462,245.918"/>
+            <radius value="3.5588"/>
+        </shape>
+        <shape type="circle">
+            <center value="223.3276,247.5551"/>
+            <radius value="3.4387"/>
+        </shape>
+        <shape type="circle">
+            <center value="225.34,246.7963"/>
+            <radius value="3.5766"/>
+        </shape>
+        <shape type="circle">
+            <center value="233.893,244.64"/>
+            <radius value="4.7456"/>
+        </shape>
+        <shape type="circle">
+            <center value="227.994,245.1735"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="230.0737,244.7922"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="230.9782,244.3886"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="220.9602,240.1335"/>
+            <radius value="3.4387"/>
+        </shape>
+        <shape type="circle">
+            <center value="221.7866,239.533"/>
+            <radius value="3.4387"/>
+        </shape>
+        <shape type="circle">
+            <center value="227.6091,238.1772"/>
+            <radius value="3.4387"/>
+        </shape>
+        <shape type="circle">
+            <center value="226.083,238.7658"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="224.871,238.868"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="223.567,239.3266"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="229.366,237.6606"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="230.8144,236.8444"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="231.884,236.4716"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <center value="233.4978,236.407"/>
+            <radius value="2.724"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="237.9853,241.8666"/>
+            <radius value="2.8676"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="236.531,241.114"/>
+            <radius value="2.8676"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="236.2705,241.0375"/>
+            <radius value="2.8676"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="236.156,240.3745"/>
+            <radius value="2.8676"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="236.434,239.9416"/>
+            <radius value="2.8676"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="237.6213,239.7968"/>
+            <radius value="2.8676"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="219.9704,245.754"/>
+            <radius value="1.8002"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="220.1447,245.2651"/>
+            <radius value="1.8002"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="220.1936,244.8625"/>
+            <radius value="1.8002"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="219.4355,244.453"/>
+            <radius value="1.8002"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="220.0375,244.4956"/>
+            <radius value="1.8002"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="220.7768,244.029"/>
+            <radius value="1.2885"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="219.2441,248.654"/>
+            <radius value="0.994"/>
+        </shape>
+    </region>
+    <region id="217">
+        <name value="FinalLevelS2IceRegion01"/>
+        <shape type="circle">
+            <center value="219.5007,245.2551"/>
+            <radius value="2.488"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="218.1552,248.1206"/>
+            <radius value="0.9458"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.073,245.4472"/>
+            <radius value="1.4467"/>
+        </shape>
+        <shape type="circle">
+            <center value="217.7551,245.078"/>
+            <radius value="1.4467"/>
+        </shape>
+        <shape type="circle">
+            <center value="217.813,244.622"/>
+            <radius value="1.4467"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.0783,244.426"/>
+            <radius value="1.4467"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.7658,244.2075"/>
+            <radius value="1.4467"/>
+        </shape>
+        <shape type="circle">
+            <center value="220.7766,244.7277"/>
+            <radius value="1.2375"/>
+        </shape>
+        <shape type="circle">
+            <center value="220.7578,244.2031"/>
+            <radius value="1.2375"/>
+        </shape>
+        <shape type="circle">
+            <center value="220.82,244.0126"/>
+            <radius value="1.2375"/>
+        </shape>
+        <shape type="circle">
+            <center value="220.2167,243.9267"/>
+            <radius value="1.2375"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.421,243.8466"/>
+            <radius value="1.2375"/>
+        </shape>
+        <shape type="rect">
+            <quad value="221.169,238.383,234.911,246.4553"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.4738,247.843"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.704,248.4011"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.8078,248.892"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.7187,249.4001"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.5244,249.9128"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="219.2346,250.4035"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.8796,250.8957"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.467,251.3576"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.1777,251.7705"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.0437,252.3676"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.1071,252.9824"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.1701,253.5781"/>
+            <radius value="0.5192"/>
+        </shape>
+        <shape type="circle">
+            <center value="218.22,254.1916"/>
+            <radius value="0.5192"/>
+        </shape>
+    </region>
+    <region id="218">
+        <name value="FinalLevelS2IceRegion02"/>
+        <shape type="circle">
+            <center value="237.8964,241.847"/>
+            <radius value="2.8657"/>
+        </shape>
+        <shape type="circle">
+            <center value="236.2678,240.981"/>
+            <radius value="2.8657"/>
+        </shape>
+        <shape type="circle">
+            <center value="236.173,240.3117"/>
+            <radius value="2.8657"/>
+        </shape>
+        <shape type="circle">
+            <center value="236.4494,239.9648"/>
+            <radius value="2.8657"/>
+        </shape>
+        <shape type="circle">
+            <center value="237.5932,239.776"/>
+            <radius value="2.8657"/>
+        </shape>
+        <shape type="circle">
+            <center value="237.9135,240.2255"/>
+            <radius value="2.8657"/>
+        </shape>
+    </region>
+    <region id="219">
+        <name value="FinalLevelS2LandRegion01"/>
+        <shape type="rect">
+            <quad value="232.7158,235.6772,245.938,251.118"/>
+        </shape>
+    </region>
+    <region id="221">
+        <name value="FinalLevelSlabSwitchRegion"/>
+        <shape type="rect">
+            <quad value="223.0356,223.0983,225.02,224.9724"/>
+        </shape>
+    </region>
+    <region id="220">
+        <name value="FinalLevelRegion"/>
+        <shape type="rect">
+            <quad value="191.997,202.206,236.997,222.2058"/>
+        </shape>
+    </region>
+    <region id="222">
+        <name value="FinalLevelTPswitch01"/>
+        <shape type="rect">
+            <quad value="230.0427,224.116,230.9543,224.9797"/>
+        </shape>
+    </region>
+    <region id="223">
+        <name value="FinalLevelTPswitch02"/>
+        <shape type="rect">
+            <quad value="231.0532,224.1081,231.9648,224.972"/>
+        </shape>
+    </region>
+    <region id="224">
+        <name value="FinalLevelTPswitch03"/>
+        <shape type="rect">
+            <quad value="229.0065,224.1103,229.9182,224.974"/>
+        </shape>
+    </region>
+    <region id="225">
+        <name value="FinalLevelTPswitch04"/>
+        <shape type="rect">
+            <quad value="228.0466,224.1098,228.9582,224.9736"/>
+        </shape>
+    </region>
+    <region id="226">
+        <name value="FinalLevelTPswitch05"/>
+        <shape type="rect">
+            <quad value="232.0588,224.1093,232.9704,224.9731"/>
+        </shape>
+    </region>
+    <region id="227">
+        <name value="FinalLevelTPswitch06"/>
+        <shape type="rect">
+            <quad value="230.0437,223.1071,230.9553,223.971"/>
+        </shape>
+    </region>
+    <region id="228">
+        <name value="FinalLevelTPswitch07"/>
+        <shape type="rect">
+            <quad value="231.0354,223.1228,231.947,223.9865"/>
+        </shape>
+    </region>
+    <region id="229">
+        <name value="FinalLevelTPswitch08"/>
+        <shape type="rect">
+            <quad value="229.0461,223.1003,229.9577,223.964"/>
+        </shape>
+    </region>
+    <region id="230">
+        <name value="FinalLevelTPswitch09"/>
+        <shape type="rect">
+            <quad value="228.0524,223.1228,228.964,223.9865"/>
+        </shape>
+    </region>
+    <region id="231">
+        <name value="FinalLevelTPswitch10"/>
+        <shape type="rect">
+            <quad value="232.063,223.1127,232.9746,223.9765"/>
+        </shape>
+    </region>
+    <region id="232">
+        <name value="FinalLevelS2LandPriorityRegion02"/>
+        <shape type="circle">
+            <negative/>
+            <center value="240.8576,242.573"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="241.3977,242.8876"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="241.8593,243.3566"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="242.2263,243.7004"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="242.5,244.1442"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="242.7702,244.7612"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="242.985,245.2658"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="243.2297,245.8093"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="243.639,246.2968"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="244.1281,246.6437"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="244.7136,246.964"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="245.2937,247.1965"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="245.8671,247.2307"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="246.4946,247.0646"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="247.1494,246.9624"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="247.7622,246.9006"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="248.364,246.8857"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="248.935,246.885"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="249.4677,247.0688"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="249.984,247.3886"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="250.4792,247.8698"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="250.839,248.346"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="251.1647,248.813"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="251.4506,249.208"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="251.806,249.6416"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="252.2932,250.1462"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="rect">
+            <quad value="240.901,235.6157,255.657,253.9426"/>
+        </shape>
+    </region>
+    <region id="233">
+        <name value="FinalLevelS2IceRegion03"/>
+        <shape type="circle">
+            <center value="240.8686,242.579"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="241.4086,242.8937"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="241.8703,243.3627"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="242.2373,243.7065"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="242.511,244.1503"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="242.7812,244.7673"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="242.996,245.272"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="243.2407,245.8154"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="243.65,246.303"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="244.1391,246.65"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="244.7246,246.9702"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="245.3046,247.2026"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="245.8781,247.2368"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="246.5056,247.0708"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="247.1604,246.9685"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="247.7731,246.9067"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="248.375,246.8918"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="248.946,246.891"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="249.4787,247.075"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="249.9948,247.3947"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="250.4902,247.876"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="250.85,248.352"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="251.1757,248.819"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="251.4616,249.214"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="251.817,249.6477"/>
+            <radius value="0.5"/>
+        </shape>
+        <shape type="circle">
+            <center value="252.3041,250.1523"/>
+            <radius value="0.5"/>
+        </shape>
+    </region>
+    <region id="234">
+        <name value="FinalLevelOpenSwitch01"/>
+        <shape type="rect">
+            <quad value="217.055,211.0756,217.9545,211.9753"/>
+        </shape>
+    </region>
+    <region id="235">
+        <name value="FinalLevelOpenSwitch02"/>
+        <shape type="rect">
+            <quad value="205.0405,218.112,205.9401,219.0117"/>
+        </shape>
+    </region>
+    <region id="236">
+        <name value="FinalLevelOpenSwitch03"/>
+        <shape type="rect">
+            <quad value="191.5488,218.0786,192.4484,218.9782"/>
+        </shape>
+    </region>
+    <region id="237">
+        <name value="FinalLevelOpenSwitch04"/>
+        <shape type="rect">
+            <quad value="191.533,221.0593,192.4326,221.959"/>
+        </shape>
+    </region>
+    <region id="238">
+        <name value="FinalLevelOpenSwitch05"/>
+        <shape type="rect">
+            <quad value="200.9853,219.081,201.885,219.9807"/>
+        </shape>
+    </region>
+    <region id="239">
+        <name value="FinalLevelOpenSwitch06"/>
+        <shape type="rect">
+            <quad value="206.0434,226.084,206.943,226.9836"/>
+        </shape>
+    </region>
+    <region id="240">
+        <name value="FinalLevelOpenSwitch07"/>
+        <shape type="rect">
+            <quad value="210.0424,218.0527,210.9421,218.9523"/>
+        </shape>
+    </region>
+    <region id="241">
+        <name value="FinalLevelOpenSwitch08"/>
+        <shape type="rect">
+            <quad value="213.0554,224.1345,213.955,225.0341"/>
+        </shape>
+    </region>
+    <region id="242">
+        <name value="FinalLevelOpenSwitch09"/>
+        <shape type="rect">
+            <quad value="225.0627,209.0646,225.9624,209.9643"/>
+        </shape>
+    </region>
+    <region id="243">
+        <name value="escapedRegion"/>
+        <shape type="rect">
+            <quad value="205.346,227.235,247.346,247.3745"/>
+        </shape>
+    </region>
+    <region id="244">
+        <name value="escapedOrderRegion"/>
+        <shape type="circle">
+            <center value="230,260"/>
+            <radius value="25"/>
+        </shape>
+        <shape type="circle">
+            <center value="220.4716,241.5874"/>
+            <radius value="7.023"/>
+        </shape>
+        <shape type="circle">
+            <center value="223.227,237.9274"/>
+            <radius value="7.023"/>
+        </shape>
+        <shape type="circle">
+            <center value="226.6848,234.669"/>
+            <radius value="7.023"/>
+        </shape>
+        <shape type="circle">
+            <center value="234.642,238.991"/>
+            <radius value="7.023"/>
+        </shape>
+        <shape type="circle">
+            <center value="210.3317,257"/>
+            <radius value="7.023"/>
+        </shape>
+        <shape type="circle">
+            <center value="239.5566,240.596"/>
+            <radius value="7.6533"/>
+        </shape>
+        <shape type="circle">
+            <center value="244.9101,246.3803"/>
+            <radius value="7.6533"/>
+        </shape>
+        <shape type="circle">
+            <center value="248.3115,248.286"/>
+            <radius value="7.6533"/>
+        </shape>
+        <shape type="rect">
+            <quad value="248.792,243.2507,255.9997,255.7504"/>
+        </shape>
+        <shape type="circle">
+            <center value="230.0751,229.2805"/>
+            <radius value="1.9367"/>
+        </shape>
+        <shape type="circle">
+            <center value="228.6416,228.7565"/>
+            <radius value="1.9367"/>
+        </shape>
+        <shape type="circle">
+            <center value="226.8574,228.102"/>
+            <radius value="1.9367"/>
+        </shape>
+        <shape type="circle">
+            <center value="225.0351,229.0476"/>
+            <radius value="1.9367"/>
+        </shape>
+        <shape type="circle">
+            <center value="222.3027,230.59"/>
+            <radius value="1.9367"/>
+        </shape>
+        <shape type="circle">
+            <center value="223.8142,230.2158"/>
+            <radius value="1.9367"/>
+        </shape>
+        <shape type="circle">
+            <center value="215.2255,243.7573"/>
+            <radius value="6.198"/>
+        </shape>
+        <shape type="circle">
+            <center value="212.9904,247.5563"/>
+            <radius value="6.198"/>
+        </shape>
+        <shape type="circle">
+            <center value="209.426,249.5727"/>
+            <radius value="4.5002"/>
+        </shape>
+        <shape type="circle">
+            <center value="206.1867,254"/>
+            <radius value="4.5002"/>
+        </shape>
+        <shape type="circle">
+            <center value="206.9855,250.499"/>
+            <radius value="3.0461"/>
+        </shape>
+        <shape type="circle">
+            <center value="215.6865,237.2531"/>
+            <radius value="2.824"/>
+        </shape>
+    </region>
+    <region id="255">
+        <name value="FinalLevelLandRegion04"/>
+        <shape type="rect">
+            <quad value="216.113,226.21,238.6936,232.6738"/>
+        </shape>
+        <shape type="rect">
+            <quad value="194.7934,231.6384,256,256"/>
+        </shape>
+    </region>
+    <region id="245">
+        <name value="FinalLevelBushRegions01"/>
+        <shape type="circle">
+            <center value="203.279,208.5427"/>
+            <radius value="0.742"/>
+        </shape>
+        <shape type="circle">
+            <center value="209.4785,208.7546"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="211.9177,211.5041"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="214.354,213.5847"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="210.0812,216.3322"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="206.3752,214.8603"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="202.1262,216.3283"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="198.801,214.019"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="196.193,216.4648"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="199.9377,222.0466"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="199.821,224.0646"/>
+            <radius value="0.65"/>
+        </shape>
+        <shape type="circle">
+            <center value="207.617,222.48"/>
+            <radius value="0.65"/>
+        </shape>
+    </region>
+    <region id="246">
+        <name value="testRegion"/>
+        <shape type="rect">
+            <quad value="226.4584,223.5285,227.4582,224.5285"/>
+        </shape>
+    </region>
+    <region id="247">
+        <name value="FinalLevelHostileWarpOutRegion"/>
+        <shape type="rect">
+            <quad value="223.5776,212.8483,229.931,226.0622"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="223.0205,214.7316"/>
+            <radius value="1.016"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="224.0432,213.6425"/>
+            <radius value="1.016"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="225.1208,213.0998"/>
+            <radius value="1.016"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="225.746,213.0986"/>
+            <radius value="1.016"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="223.776,214.218"/>
+            <radius value="0.732"/>
+        </shape>
+    </region>
+    <region id="248">
+        <name value="level08ResetEscortStarter"/>
+        <shape type="rect">
+            <quad value="116.79,169.0246,117.8134,176.0244"/>
+        </shape>
+    </region>
+    <region id="249">
+        <name value="Level08LandRegion022"/>
+        <color value="255,192,192,192"/>
+        <shape type="rect">
+            <quad value="115.005,159.956,116.0341,161.03"/>
+        </shape>
+        <shape type="rect">
+            <quad value="101.9731,161.9514,103.0336,163.0153"/>
+        </shape>
+    </region>
+    <region id="51">
+        <name value="level08Switch2Right"/>
+        <shape type="rect">
+            <quad value="106.9916,160.037,107.9416,160.9868"/>
+        </shape>
+    </region>
+    <region id="250">
+        <name value="level08Switch2Left"/>
+        <shape type="rect">
+            <quad value="105.045,160.0488,105.9948,160.9985"/>
+        </shape>
+    </region>
+    <region id="251">
+        <name value="level08Switch2Down"/>
+        <shape type="rect">
+            <quad value="102.0102,161.985,102.99,162.9348"/>
+        </shape>
+    </region>
+    <region id="252">
+        <name value="level08Switch2Up"/>
+        <shape type="rect">
+            <quad value="102.009,164.075,102.959,165.0246"/>
+        </shape>
+    </region>
+    <region id="253">
+        <name value="level08Switch3Left"/>
+        <shape type="rect">
+            <quad value="110.0361,159.0051,110.986,159.9548"/>
+        </shape>
+    </region>
+    <region id="254">
+        <name value="level08Switch3Right"/>
+        <shape type="rect">
+            <quad value="111.985,159.0251,112.935,159.9748"/>
+        </shape>
+    </region>
+    <region id="256">
+        <name value="level08Switch3Up"/>
+        <shape type="rect">
+            <quad value="115.0173,162.075,115.997,163.0246"/>
+        </shape>
+    </region>
+    <region id="257">
+        <name value="level08Switch3Down"/>
+        <shape type="rect">
+            <quad value="115.005,159.9948,115.9846,160.9445"/>
+        </shape>
+    </region>
+    <region id="181">
+        <name value="Level18DeathRegion01"/>
+        <shape type="circle">
+            <negative/>
+            <center value="240.458,110.5671"/>
+            <radius value="3.5551"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="240.526,99.5087"/>
+            <radius value="5.0998"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="231.4645,99.0322"/>
+            <radius value="2.5905"/>
+        </shape>
+        <shape type="rect">
+            <quad value="227.1633,93.7414,247.861,115.0756"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="233.2702,97.9746,236.4414,100.1037"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="229.9335,99.8107,233.0627,108.8107"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="238.9265,102.7692,242.1003,108.2575"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="238.9396,111.6533,242.0776,115.3281"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="230.3481,112.4255,232.444,115.2573"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="231.455,111.5341"/>
+            <radius value="3.6198"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="232.814,104.977,239.247,107.1267"/>
+        </shape>
+        <shape type="rect">
+            <quad value="227.5278,119.6948,229.9772,126.5422"/>
+        </shape>
+        <shape type="rect">
+            <quad value="222.7985,122.0795,223.4794,125.0375"/>
+        </shape>
+        <shape type="rect">
+            <quad value="228.8225,115.014,230.342,118.014"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="226.2856,104.9133,228.593,107.1677"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="226.895,95.8005,228.1506,105.1357"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="230.9375,94.7944,232.0964,96.6657"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="227.8327,94.8125,231.272,96.1518"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="227.7277,95.5771,229.07,97.1083"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="228.4235,115.983,230.524,117.1123"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="226.5156,114.923,228.3845,115.5205"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="226.8613,106.8422,228.0703,109.1318"/>
+        </shape>
+    </region>
+    <region id="258">
+        <name value="Level18Pickup2"/>
+        <shape type="circle">
+            <center value="227.5,105.9956"/>
+            <radius value="0.6098"/>
+        </shape>
+    </region>
+    <region id="260">
+        <name value="Level11RevIceRegion01"/>
+        <shape type="circle">
+            <center value="118.4133,91.5451"/>
+            <radius value="0.985"/>
+        </shape>
+        <shape type="circle">
+            <center value="117.3457,90.3952"/>
+            <radius value="0.985"/>
+        </shape>
+        <shape type="circle">
+            <center value="116.4663,89.5522"/>
+            <radius value="0.985"/>
+        </shape>
+    </region>
+    <region id="261">
+        <name value="BonusLevel01Region"/>
+        <color value="255,0,255,64"/>
+        <shape type="rect">
+            <quad value="165.8305,13.98,176.8305,53.98"/>
+        </shape>
+    </region>
+    <region id="262">
+        <name value="BonusLevel01Teleport"/>
+        <shape type="circle">
+            <center value="167.5092,15.532"/>
+            <radius value="0.4831"/>
+        </shape>
+    </region>
+    <region id="263">
+        <name value="BonusLevel01IceRegion01"/>
+        <shape type="circle">
+            <center value="171.2507,35.196"/>
+            <radius value="2.606"/>
+        </shape>
+    </region>
+    <region id="264">
+        <name value="Level08DeathRegion01"/>
+        <shape type="rect">
+            <quad value="115.6926,172.0275,117.1518,176.8146"/>
+        </shape>
+        <shape type="rect">
+            <quad value="115.6977,167.6494,117.123,170.9526"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.0212,171.0385,114.9663,172.5578"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.0266,173.541,114.9587,174.9296"/>
+        </shape>
+    </region>
+    <region id="265">
+        <name value="Level08Escort2Starter"/>
+        <shape type="rect">
+            <quad value="113.9895,172.3027,114.9853,173.701"/>
+        </shape>
+    </region>
+    <region id="266">
+        <name value="Level08Escort1Starter"/>
+        <shape type="rect">
+            <quad value="113.992,174.7968,114.9877,176.195"/>
+        </shape>
+    </region>
+    <region id="267">
+        <name value="Level08Escort3Starter"/>
+        <shape type="rect">
+            <quad value="113.9924,169.8256,114.9882,171.2238"/>
+        </shape>
+    </region>
+    <region id="268">
+        <name value="Level08LandRegion02"/>
+        <shape type="rect">
+            <quad value="113.93,172.5734,115.1296,173.5397"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.974,169.9965,115.6992,176.0908"/>
+        </shape>
+        <shape type="rect">
+            <quad value="113.7097,174.9133,115.4211,175.9011"/>
+        </shape>
+    </region>
+    <region id="269">
+        <name value="level11Pickup2"/>
+        <shape type="circle">
+            <center value="113.506,107.5275"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="270">
+        <name value="Level11DeathRegion4"/>
+        <shape type="circle">
+            <center value="116.812,92.2321"/>
+            <radius value="0.687"/>
+        </shape>
+        <shape type="circle">
+            <center value="116.4882,91.8005"/>
+            <radius value="0.687"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.9094,91.3098"/>
+            <radius value="0.687"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.633,91.046"/>
+            <radius value="0.687"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.2751,90.747"/>
+            <radius value="0.687"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.0134,90.434"/>
+            <radius value="0.687"/>
+        </shape>
+        <shape type="circle">
+            <center value="114.6503,90.0571"/>
+            <radius value="0.687"/>
+        </shape>
+        <shape type="rect">
+            <quad value="118.018,91.6716,119.7592,93.7373"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="118.9716,92.1408"/>
+            <radius value="0.9035"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="118.2468,92.047"/>
+            <radius value="0.4743"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="118.8454,91.7834,119.961,93.0561"/>
+        </shape>
+    </region>
+    <region id="271">
+        <name value="Level11LandRegion03"/>
+        <shape type="rect">
+            <quad value="117.77,92.392,118.02,93.7917"/>
+        </shape>
+    </region>
+    <region id="273">
+        <name value="skreg00"/>
+        <shape type="rect">
+            <quad value="232.2453,78.832,254.0346,85.9714"/>
+        </shape>
+        <shape type="circle">
+            <center value="231.8981,83.0776"/>
+            <radius value="2.9711"/>
+        </shape>
+        <shape type="rect">
+            <quad value="227.017,83.9448,233.7983,89.8552"/>
+        </shape>
+        <shape type="circle">
+            <center value="223.1423,81.571"/>
+            <radius value="9.5375"/>
+        </shape>
+        <shape type="rect">
+            <quad value="210.053,78.137,219.1003,98.0881"/>
+        </shape>
+        <shape type="rect">
+            <quad value="207.8012,77.975,212.391,85.5214"/>
+        </shape>
+        <shape type="rect">
+            <quad value="205.8107,77.8225,208.9873,83.0764"/>
+        </shape>
+        <shape type="rect">
+            <quad value="248.21,78.686,256,124.8234"/>
+        </shape>
+        <shape type="rect">
+            <quad value="217.8103,124.452,255.9768,144.0468"/>
+        </shape>
+        <shape type="circle">
+            <center value="229.5212,142.4792"/>
+            <radius value="8.4846"/>
+        </shape>
+        <shape type="rect">
+            <quad value="239.8027,44.4438,256,80.7424"/>
+        </shape>
+        <shape type="circle">
+            <center value="244.3388,157.1857"/>
+            <radius value="10.0263"/>
+        </shape>
+        <shape type="rect">
+            <quad value="233.4091,140.588,256,153.1054"/>
+        </shape>
+        <shape type="rect">
+            <quad value="244.7138,148.6467,256,165.3813"/>
+        </shape>
+        <shape type="rect">
+            <quad value="217.8076,89.5083,226.276,96.8723"/>
+        </shape>
+    </region>
+    <region id="272">
+        <name value="skreg01"/>
+        <shape type="rect">
+            <quad value="76.591,181.2075,88.0397,231.335"/>
+        </shape>
+        <shape type="rect">
+            <quad value="73.5935,197.0197,79.2294,209.403"/>
+        </shape>
+        <shape type="rect">
+            <quad value="75.0773,194.7546,77.6352,197.734"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="80.6821,176.159,90.0583,198.8852"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="78.4965,231.6293"/>
+            <radius value="3.7456"/>
+        </shape>
+        <shape type="circle">
+            <center value="77.0478,208.4091"/>
+            <radius value="3.243"/>
+        </shape>
+        <shape type="circle">
+            <center value="78.1271,209.749"/>
+            <radius value="3.062"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="75.4816,212.2424,77.4711,228.7797"/>
+        </shape>
+        <shape type="circle">
+            <center value="77.8286,193.4565"/>
+            <radius value="3.0944"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="86.5102,222.6757"/>
+            <radius value="2.9677"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="86.5996,216.7756"/>
+            <radius value="2.9677"/>
+        </shape>
+        <shape type="circle">
+            <center value="90.492,229.1584"/>
+            <radius value="3.741"/>
+        </shape>
+        <shape type="rect">
+            <quad value="89.458,229.8925,99.3376,232.7775"/>
+        </shape>
+        <shape type="rect">
+            <quad value="94.9128,231.4177,100.5305,237.5468"/>
+        </shape>
+        <shape type="rect">
+            <quad value="99.932,232.59,103.9113,238.016"/>
+        </shape>
+        <shape type="circle">
+            <center value="93.4252,231.5327"/>
+            <radius value="3.486"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="78.6435,230.2485,86.962,234.3994"/>
+        </shape>
+        <shape type="circle">
+            <center value="73.7221,205.314"/>
+            <radius value="5.3395"/>
+        </shape>
+        <shape type="rect">
+            <quad value="65.2722,202.4172,74.3132,210.2741"/>
+        </shape>
+        <shape type="rect">
+            <quad value="50.7058,201.3425,68.3427,210.1245"/>
+        </shape>
+        <shape type="rect">
+            <quad value="50.8046,204.728,63.8605,221.623"/>
+        </shape>
+        <shape type="rect">
+            <quad value="52.9594,212.5588,58.5346,248.589"/>
+        </shape>
+        <shape type="circle">
+            <center value="57.0144,222.1391"/>
+            <radius value="5.3034"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="43.2373,208.9492,55.9965,215.9416"/>
+        </shape>
+        <shape type="rect">
+            <quad value="103.3105,232.0056,114.1511,239.0122"/>
+        </shape>
+        <shape type="circle">
+            <center value="99.184,232.675"/>
+            <radius value="4.307"/>
+        </shape>
+        <shape type="circle">
+            <center value="93.602,229.3991"/>
+            <radius value="5.5546"/>
+        </shape>
+        <shape type="circle">
+            <center value="91.174,227.436"/>
+            <radius value="3.7272"/>
+        </shape>
+        <shape type="rect">
+            <quad value="41.3852,199.6706,54.9401,209.266"/>
+        </shape>
+        <shape type="rect">
+            <quad value="24.4267,207.3718,45.2253,211.6994"/>
+        </shape>
+    </region>
+    <region id="277">
+        <name value="Level08StraightIceRegion01"/>
+        <shape type="circle">
+            <center value="129,169"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="129.5866,169.5705"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="130.0087,169.9831"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="130.6132,170.5544"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.0041,170.944"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.3205,171.3103"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.7556,171.763"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="132.1523,172.138"/>
+            <radius value="1.075"/>
+        </shape>
+    </region>
+    <region id="276">
+        <name value="Level08AlwaysDeathRegion05"/>
+        <shape type="rect">
+            <quad value="127.0136,165.783,134.039,175.207"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="128.0058,168.0051"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="125.7045,166.9873,127.8466,169.0871"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="131.5224,171.532"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="131.9941,172.013"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="132.887,172.8447"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="133.7365,173.68"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="133.9196,172.9768,135.042,175.0764"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="132.47,172.4824"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="133.1894,173.1728"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="132.734,172.7705"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="133.9404,173.9807"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="125.7221,166.9626,128.2363,167.928"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="129.003,169.0068"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="129.5895,169.5773"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="130.0117,169.99"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="130.6162,170.5612"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="131.007,170.951"/>
+            <radius value="1.075"/>
+        </shape>
+    </region>
+    <region id="274">
+        <name value="lvl20SmashGate02"/>
+        <shape type="rect">
+            <quad value="186.2587,146.181,187.4155,151.8977"/>
+        </shape>
+    </region>
+    <region id="278">
+        <name value="lvl20SmashGate01"/>
+        <shape type="rect">
+            <quad value="188.5546,177.605,193.5456,179.9165"/>
+        </shape>
+    </region>
+    <region id="279">
+        <name value="lvl20SmashGate03"/>
+        <shape type="rect">
+            <quad value="193.088,136.555,194.4077,141.7307"/>
+        </shape>
+    </region>
+    <region id="280">
+        <name value="Level08LandRegion05"/>
+        <shape type="rect">
+            <quad value="119.845,172.9272,120.592,175.6086"/>
+        </shape>
+    </region>
+    <region id="259">
+        <name value="Level11LandRegion01"/>
+        <shape type="rect">
+            <quad value="112.956,102.0124,114.0424,108.086"/>
+        </shape>
+        <shape type="rect">
+            <quad value="113.9726,100.991,115.0498,103.0673"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.9736,97.999,116.046,102.0705"/>
+        </shape>
+        <shape type="rect">
+            <quad value="115.9597,97.9853,119.0417,99.0854"/>
+        </shape>
+        <shape type="rect">
+            <quad value="117.9748,94.9833,119.054,98.059"/>
+        </shape>
+        <shape type="rect">
+            <quad value="118.927,94.9833,121.0402,96.0305"/>
+        </shape>
+        <shape type="rect">
+            <quad value="120.6735,94.7153,122.2685,95.0417"/>
+        </shape>
+        <shape type="rect">
+            <quad value="121.9572,94.9494,122.2927,96.2802"/>
+        </shape>
+        <shape type="rect">
+            <quad value="121.9572,95.9755,123.9206,96.3037"/>
+        </shape>
+        <shape type="rect">
+            <quad value="123.7055,95.743,124.6552,96.044"/>
+        </shape>
+        <shape type="rect">
+            <quad value="124.3376,93.7172,124.6701,96.0512"/>
+        </shape>
+        <shape type="rect">
+            <quad value="117.7155,93.7084,124.404,94.046"/>
+        </shape>
+        <shape type="rect">
+            <quad value="117.7155,92.4047,118.041,93.7915"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="115.6787,91.4584,117.7214,94.2827"/>
+        </shape>
+        <shape type="circle">
+            <center value="117.0158,93.104"/>
+            <radius value="1.2094"/>
+        </shape>
+        <shape type="circle">
+            <center value="123.8256,96.0051"/>
+            <radius value="0.2038"/>
+        </shape>
+        <shape type="circle">
+            <center value="124.443,95.8186"/>
+            <radius value="0.1767"/>
+        </shape>
+        <shape type="rect">
+            <quad value="121.8764,94.7106,122.2822,95.0407"/>
+        </shape>
+        <shape type="circle">
+            <center value="120.9311,94.9846"/>
+            <radius value="0.1767"/>
+        </shape>
+        <shape type="circle">
+            <center value="120.7788,95.0773"/>
+            <radius value="0.1767"/>
+        </shape>
+        <shape type="circle">
+            <center value="122.1772,96.0126"/>
+            <radius value="0.178"/>
+        </shape>
+        <shape type="circle">
+            <center value="124.4213,93.9467"/>
+            <radius value="0.1767"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="117.98,92.3706,118.2998,93.7502"/>
+        </shape>
+        <shape type="rect">
+            <quad value="117.725,92.38,117.9946,93.7883"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="117.451,92.047,117.7514,94.1442"/>
+        </shape>
+        <shape type="rect">
+            <quad value="136.9753,78.9753,138.025,82.025"/>
+        </shape>
+    </region>
+    <region id="275">
+        <name value="Level08PriorityLandRegion04"/>
+        <shape type="circle">
+            <center value="128,168"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="rect">
+            <quad value="125.6987,166.9821,127.8408,169.082"/>
+        </shape>
+        <shape type="circle">
+            <center value="133.7307,173.6748"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="rect">
+            <quad value="133.9138,172.9716,135.0361,175.0712"/>
+        </shape>
+        <shape type="circle">
+            <center value="133.1835,173.1677"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="133.9345,173.9755"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="rect">
+            <quad value="125.7163,166.9575,128.2304,167.9228"/>
+        </shape>
+        <shape type="circle">
+            <center value="132.8864,172.8581"/>
+            <radius value="1.075"/>
+        </shape>
+        <shape type="circle">
+            <center value="132.65,172.65"/>
+            <radius value="1.0998"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.984,172.9086"/>
+            <radius value="0.4396"/>
+        </shape>
+        <shape type="circle">
+            <center value="132.4194,172.296"/>
+            <radius value="1.0498"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.9511,172.6386"/>
+            <radius value="0.59"/>
+        </shape>
+    </region>
+    <region id="284">
+        <name value="Level11LowPDeathRegion2"/>
+        <shape type="rect">
+            <quad value="135.9636,62.7927,138.9621,66.7761"/>
+        </shape>
+        <shape type="rect">
+            <quad value="138.234,61.3083,143.2255,64.112"/>
+        </shape>
+        <shape type="rect">
+            <quad value="142.892,61.3002,149.6574,63.9816"/>
+        </shape>
+        <shape type="rect">
+            <quad value="147.7868,60.9274,150.9848,63.9748"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.596,63.4985"/>
+            <radius value="1.9523"/>
+        </shape>
+        <shape type="rect">
+            <quad value="144.6711,62.699,152.162,66.8674"/>
+        </shape>
+    </region>
+    <region id="281">
+        <name value="Level11RevIceRegion77"/>
+        <shape type="circle">
+            <center value="135.585,66.667"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="135.8188,66.2817"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="136.1213,65.9504"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="136.4733,65.5554"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="136.799,65.2138"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="137.1052,64.895"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="137.3305,64.6613"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="137.7197,64.298"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.052,63.978"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.3381,63.6628"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.593,63.4301"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="138.8674,63.1591"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.1342,62.9538"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="circle">
+            <center value="139.32,62.8093"/>
+            <radius value="0.75"/>
+        </shape>
+        <shape type="rect">
+            <quad value="139.0187,62.2133,140.0886,63.433"/>
+        </shape>
+        <shape type="rect">
+            <quad value="139.2202,62.0915,140.092,62.5744"/>
+        </shape>
+    </region>
+    <region id="283">
+        <name value="Level11IceRegion77"/>
+        <shape type="rect">
+            <quad value="140.0766,62.0273,144.7978,63.4326"/>
+        </shape>
+    </region>
+    <region id="282">
+        <name value="Level11StraightIceRegion77"/>
+        <shape type="rect">
+            <quad value="144.7717,62.0256,146.7504,63.434"/>
+        </shape>
+        <shape type="circle">
+            <center value="146.2697,62.872"/>
+            <radius value="0.712"/>
+        </shape>
+        <shape type="circle">
+            <center value="146.9235,63.0541"/>
+            <radius value="0.802"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.054,63.5703"/>
+            <radius value="0.4243"/>
+        </shape>
+        <shape type="rect">
+            <quad value="146.9755,63.675,150.0253,63.9946"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="150.8808,63.7045"/>
+            <radius value="1.0231"/>
+        </shape>
+        <shape type="circle">
+            <center value="148.9255,63.9736"/>
+            <radius value="0.9746"/>
+        </shape>
+        <shape type="circle">
+            <center value="148.4316,63.6433"/>
+            <radius value="0.9746"/>
+        </shape>
+        <shape type="circle">
+            <center value="148.0593,63.4313"/>
+            <radius value="0.9746"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.5747,63.2194"/>
+            <radius value="0.9746"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.2175,62.71"/>
+            <radius value="0.5852"/>
+        </shape>
+        <shape type="circle">
+            <center value="146.8312,62.6013"/>
+            <radius value="0.5852"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="146.6594,63.9946,150.77,65.9255"/>
+        </shape>
+    </region>
+    <region id="285">
+        <name value="Level11RevIceRegion78"/>
+        <shape type="rect">
+            <quad value="144.2731,65.996,153.273,68.023"/>
+        </shape>
+        <shape type="circle">
+            <center value="145.8784,66.7583"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="146.4697,66.5483"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.0356,66.2404"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.3764,65.8774"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.6882,65.3615"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.8083,64.8916"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.8752,64.4475"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="147.886,64.0705"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="149.032,64.2055"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="149.1442,64.6618"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="149.332,65.1181"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="149.5424,65.5083"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="149.858,65.9655"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="150.2946,66.3676"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="150.661,66.6108"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="151.2148,66.8386"/>
+            <radius value="0.9155"/>
+        </shape>
+        <shape type="circle">
+            <center value="148.5805,65.9187"/>
+            <radius value="0.9306"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="146.0246,61.6884,150.191,63.8996"/>
+        </shape>
+    </region>
+    <region id="21">
+        <name value="level02iceRegion04"/>
+        <shape type="rect">
+            <quad value="47.1091,142.3352,49.4328,145.585"/>
+        </shape>
+        <shape type="rect">
+            <quad value="46.814,140.9143,49.2866,142.5334"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.781,140.8308"/>
+            <radius value="1.4494"/>
+        </shape>
+        <shape type="circle">
+            <center value="47.2182,140.3408"/>
+            <radius value="1.8381"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.709,139.3095"/>
+            <radius value="1.8381"/>
+        </shape>
+        <shape type="circle">
+            <center value="46.1718,138.09"/>
+            <radius value="1.7431"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.7727,137.184"/>
+            <radius value="1.61"/>
+        </shape>
+        <shape type="circle">
+            <center value="45.3061,136.33"/>
+            <radius value="1.3847"/>
+        </shape>
+        <shape type="circle">
+            <center value="44.8784,135.7941"/>
+            <radius value="1.1884"/>
+        </shape>
+        <shape type="circle">
+            <center value="44.1193,135.1672"/>
+            <radius value="1.191"/>
+        </shape>
+        <shape type="circle">
+            <center value="43.3752,134.6936"/>
+            <radius value="1.191"/>
+        </shape>
+        <shape type="circle">
+            <center value="42.3864,134.1066"/>
+            <radius value="1.3891"/>
+        </shape>
+        <shape type="circle">
+            <center value="41.6162,133.4606"/>
+            <radius value="1.255"/>
+        </shape>
+        <shape type="rect">
+            <quad value="39.94,133.5522,41.6843,135.1142"/>
+        </shape>
+        <shape type="circle">
+            <center value="39.0002,133.5808"/>
+            <radius value="2.6574"/>
+        </shape>
+        <shape type="circle">
+            <center value="38.5817,134.3571"/>
+            <radius value="2.5273"/>
+        </shape>
+        <shape type="circle">
+            <center value="40.8452,132.9228"/>
+            <radius value="1.1791"/>
+        </shape>
+    </region>
+    <region id="19">
+        <name value="facingsReg"/>
+        <shape type="circle">
+            <center value="3.4562,3.423"/>
+            <radius value="2.6044"/>
+        </shape>
+    </region>
+    <region id="27">
+        <name value="level06LandPriorityRegion01"/>
+        <shape type="circle">
+            <center value="84.8154,212.2038"/>
+            <radius value="1.1853"/>
+        </shape>
+    </region>
+    <region id="144">
+        <name value="level06RevIceRegion01"/>
+        <shape type="circle">
+            <center value="83.9853,212.9902"/>
+            <radius value="1.1853"/>
+        </shape>
+        <shape type="circle">
+            <center value="83.4135,213.559"/>
+            <radius value="1.1853"/>
+        </shape>
+        <shape type="circle">
+            <center value="83.123,213.864"/>
+            <radius value="1.1853"/>
+        </shape>
+    </region>
+    <region id="286">
+        <name value="Level06LowPriorityDeathRegion01"/>
+        <shape type="rect">
+            <quad value="80.8237,208.839,86.7504,214.0576"/>
+        </shape>
+    </region>
+    <region id="287">
+        <name value="level06Pickup"/>
+        <shape type="circle">
+            <center value="84.8012,212.2204"/>
+            <radius value="0.566"/>
+        </shape>
+    </region>
+    <region id="288">
+        <name value="lvl02DeathRegion02"/>
+        <shape type="rect">
+            <quad value="141.719,134.7634,142.6445,139.9047"/>
+        </shape>
+        <shape type="diamond">
+            <center value="142.2204,134.9104"/>
+            <width value="0.8872"/>
+            <height value="0.5725"/>
+        </shape>
+        <shape type="rect">
+            <quad value="141.9968,133.5314,142.6535,135.0397"/>
+        </shape>
+        <shape type="rect">
+            <quad value="133.5773,133.436,135.517,141.0058"/>
+        </shape>
+    </region>
+    <region id="289">
+        <name value="lvl02IceRegion05"/>
+        <shape type="diamond">
+            <center value="164.4577,141.5151"/>
+            <width value="2.2531"/>
+            <height value="2.1613"/>
+        </shape>
+        <shape type="diamond">
+            <center value="164.5637,133.5212"/>
+            <width value="1.7248"/>
+            <height value="2.2214"/>
+        </shape>
+    </region>
+    <region id="290">
+        <name value="lvl02DeathRegion03"/>
+        <shape type="rect">
+            <quad value="112.8012,134.311,113.3242,137.7817"/>
+        </shape>
+        <shape type="diamond">
+            <center value="112.7297,134.9384"/>
+            <width value="0.5356"/>
+            <height value="1.0734"/>
+        </shape>
+        <shape type="rect">
+            <quad value="112.6066,137.1816,113.2624,138.4018"/>
+        </shape>
+        <shape type="rect">
+            <quad value="112.3444,137.5244,113.1054,139.2944"/>
+        </shape>
+        <shape type="circle">
+            <center value="112.9123,134.3923"/>
+            <radius value="0.2592"/>
+        </shape>
+        <shape type="rect">
+            <quad value="111.5451,140.5888,112.9587,141.3105"/>
+        </shape>
+        <shape type="circle">
+            <center value="111.796,140.5385"/>
+            <radius value="0.9602"/>
+        </shape>
+        <shape type="rect">
+            <quad value="111.024,144.5715,114.5454,145.8107"/>
+        </shape>
+    </region>
+    <region id="291">
+        <name value="lvl02LowPriorityLandReg01"/>
+        <shape type="circle">
+            <center value="112.1455,143.18"/>
+            <radius value="1.3896"/>
+        </shape>
+        <shape type="circle">
+            <center value="112.1425,142.928"/>
+            <radius value="1.3896"/>
+        </shape>
+        <shape type="rect">
+            <quad value="111.9992,141.4604,113.1345,142.2131"/>
+        </shape>
+        <shape type="rect">
+            <quad value="112.0961,141.2221,113.4123,142.2524"/>
+        </shape>
+        <shape type="circle">
+            <center value="113.1328,143.5126"/>
+            <radius value="1.047"/>
+        </shape>
+        <shape type="rect">
+            <quad value="112.0693,143.4184,113.1752,144.5612"/>
+        </shape>
+        <shape type="rect">
+            <quad value="112.4841,141.6926,114.1691,143.531"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="114.23,141.3774"/>
+            <radius value="0.9482"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="113.9416,141.0578"/>
+            <radius value="0.9482"/>
+        </shape>
+        <shape type="rect">
+            <negative/>
+            <quad value="112.9953,140.1984,113.3933,141.385"/>
+        </shape>
+    </region>
+    <region id="292">
+        <name value="lvl02Ice002"/>
+        <shape type="circle">
+            <center value="131.7687,140.5087"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="circle">
+            <center value="131.098,141.0043"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="circle">
+            <center value="130.2766,141.5861"/>
+            <radius value="0.8532"/>
+        </shape>
+        <shape type="rect">
+            <quad value="116.8591,141.0021,130.3195,142.3813"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.2077,140.9594,118.0576,142.3474"/>
+        </shape>
+        <shape type="rect">
+            <quad value="113.1596,138.499,114.5693,141.045"/>
+        </shape>
+        <shape type="rect">
+            <quad value="113.3894,135.563,114.6125,138.602"/>
+        </shape>
+        <shape type="rect">
+            <quad value="113.3715,134.1538,114.748,137.599"/>
+        </shape>
+        <shape type="rect">
+            <quad value="113.657,132.7822,114.8874,135.5305"/>
+        </shape>
+        <shape type="circle">
+            <center value="113.656,133.094"/>
+            <radius value="1.185"/>
+        </shape>
+        <shape type="circle">
+            <center value="110.1074,132.3381"/>
+            <radius value="3.1237"/>
+        </shape>
+        <shape type="circle">
+            <center value="108.224,135.255"/>
+            <radius value="1.3247"/>
+        </shape>
+        <shape type="circle">
+            <center value="108.415,133.823"/>
+            <radius value="1.8994"/>
+        </shape>
+        <shape type="circle">
+            <center value="109.5156,133.7995"/>
+            <radius value="2.8654"/>
+        </shape>
+        <shape type="circle">
+            <center value="111.5805,134.0781"/>
+            <radius value="1.0737"/>
+        </shape>
+        <shape type="rect">
+            <quad value="111.5168,129.8398,113.8647,132.1506"/>
+        </shape>
+        <shape type="circle">
+            <center value="111.2416,130.5556"/>
+            <radius value="1.226"/>
+        </shape>
+        <shape type="circle">
+            <center value="113.749,129.9016"/>
+            <radius value="0.9401"/>
+        </shape>
+        <shape type="circle">
+            <center value="114.303,129.3142"/>
+            <radius value="0.9401"/>
+        </shape>
+        <shape type="circle">
+            <center value="114.8723,128.3303"/>
+            <radius value="0.9401"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.0183,127.9016"/>
+            <radius value="0.9401"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.731,121.3793,116.105,125.2807"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.955,120.7585,116.3098,124.2866"/>
+        </shape>
+        <shape type="circle">
+            <center value="116.0937,120.631"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="115.6376,121.3574"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="116.7685,119.6674"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="117.5417,118.9492"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="118.391,118.4833"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="119.2583,117.9943"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="120.369,117.5783"/>
+            <radius value="0.9707"/>
+        </shape>
+    </region>
+    <region id="322">
+        <name value="lvl02Ice003"/>
+        <shape type="circle">
+            <center value="121.5935,117.1975"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="122.6096,117.0187"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="circle">
+            <center value="123.7541,117.025"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="124.7956,117.3151"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="125.359,118.056"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="125.4724,118.823"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="125.6008,119.6655"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="125.5422,120.4421"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="125.5566,121.109"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="124.9733,121.4797"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="123.992,121.6484"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="123.032,121.9514"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="122.3095,122.473"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="121.885,123.2204"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="circle">
+            <center value="121.642,124.084"/>
+            <radius value="0.8745"/>
+        </shape>
+        <shape type="rect">
+            <quad value="120.796,124.0441,122.2541,125.7036"/>
+        </shape>
+        <shape type="circle">
+            <center value="121.0295,117.3984"/>
+            <radius value="0.9707"/>
+        </shape>
+        <shape type="rect">
+            <quad value="114.5644,123.325,115.9907,127.6518"/>
+        </shape>
+        <shape type="rect">
+            <quad value="111.0888,129.4807,112.976,130.3371"/>
+        </shape>
+        <shape type="circle">
+            <center value="114.3393,141.5163"/>
+            <radius value="0.8317"/>
+        </shape>
+        <shape type="circle">
+            <center value="114.0607,141.3854"/>
+            <radius value="0.8317"/>
+        </shape>
+        <shape type="circle">
+            <center value="113.813,141.0151"/>
+            <radius value="0.8317"/>
+        </shape>
+        <shape type="rect">
+            <quad value="112.989,140.9594,113.2666,141.3671"/>
+        </shape>
+        <shape type="circle">
+            <center value="108.8012,135.2026"/>
+            <radius value="1.4707"/>
+        </shape>
+        <shape type="rect">
+            <quad value="120.797,124.8027,122.1413,126.015"/>
+        </shape>
+    </region>
+    <region id="1">
+        <name value="lvl01LandP01"/>
+        <shape type="circle">
+            <center value="127.067,116.8276"/>
+            <radius value="0.9172"/>
+        </shape>
+        <shape type="diamond">
+            <center value="129.9077,145.5095"/>
+            <width value="4.8525"/>
+            <height value="2.384"/>
+        </shape>
+        <shape type="rect">
+            <quad value="130.775,145.954,133.7746,148.045"/>
+        </shape>
+        <shape type="diamond">
+            <center value="127.7778,144.2277"/>
+            <width value="1.1525"/>
+            <height value="1.196"/>
+        </shape>
+        <shape type="rect">
+            <quad value="126.9626,142.346,129.025,144.2268"/>
+        </shape>
+        <shape type="rect">
+            <quad value="120.7036,125.9902,123.0534,127.0097"/>
+        </shape>
+    </region>
+    <region id="293">
+        <name value="lvl01LowPdeath"/>
+        <color value="255,255,255,0"/>
+        <shape type="rect">
+            <quad value="125.376,142.6821,132.457,148.703"/>
+        </shape>
+    </region>
+    <region id="294">
+        <name value="lvl14ReqMapRegion"/>
+        <shape type="rect">
+            <quad value="185.468,11.3,204.282,38.0444"/>
+        </shape>
+        <shape type="diamond">
+            <center value="202.9118,43.5454"/>
+            <width value="32.2011"/>
+            <height value="18.7683"/>
+        </shape>
+        <shape type="rect">
+            <quad value="209.481,44.4597,234.3007,58.1447"/>
+        </shape>
+        <shape type="rect">
+            <quad value="208.517,51.2192,225.6718,59.9816"/>
+        </shape>
+        <shape type="diamond">
+            <negative/>
+            <center value="231.298,58.1145"/>
+            <width value="8.7712"/>
+            <height value="18.1176"/>
+        </shape>
+    </region>
+</Regions>

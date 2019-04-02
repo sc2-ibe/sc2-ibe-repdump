@@ -76,6 +76,7 @@ class GameSession(object):
         self.cLevelId = None
         self.clInitAt = None
         self.clUnits = []
+        self.clPowerups = []
         self.gameStartedAt = None
         self.gameEscapedAt = None
         self.levels = OrderedDict()
@@ -168,10 +169,11 @@ class GameEvaluation(object):
         if gameloop == None:
             gameloop = self.gameloop
         secs = gameloop / 16
-        out += '%d:%02d:%02d %06d' % (
+        out += '%d:%02d:%02d,%d %06d' % (
             secs / 3600,
             secs % 3600 / 60,
             secs % 60,
+            (gameloop % 16 / 16.0) * 10,
             gameloop,
         )
 
@@ -217,14 +219,24 @@ class GameEvaluation(object):
         if self.session.cLevelId == 0:
             completedAt = gameloopEnd
         else:
-            completedAt = gameloopEnd - (16 * 3 * self.timeFactor) - (16 * 1.5 * self.timeFactor)
-        ticks = completedAt - self.session.clInitAt
+            completedAt = gameloopEnd
+            if self.mapId == 'IBE2':
+                completedAt -= (16.0 * 3.0 * self.timeFactor)
+            completedAt -= (16.0 * 1.5 * self.timeFactor)
+
+        startedAt = self.session.clInitAt
+        if self.mapId == 'IBE1':
+            startedAt += 16.0 * 1.0 * self.timeFactor
+            if self.session.cLevelId == 0:
+                startedAt += 16.0 * 8.0
+
+        ticks = completedAt - startedAt
         secs = ticks / (16.0 * self.timeFactor)
         if self.session.cLevelId in self.session.levels:
             raise Exception('Level %d already completed - missmatch?' % self.session.cLevelId)
 
         powerupsBy = []
-        for item in self.unState.fetchUnits(unitName='PickupChronoRiftCharge', createdAt=self.session.clInitAt, includeRemoved=True):
+        for item in self.session.clPowerups:
             if item['removed'] == -1 or item['removed'] >= gameloopEnd:
                 continue
             playersPosition = self.getPlayersClosest(item['removed'], item['posX'], item['posY'])
@@ -246,7 +258,8 @@ class GameEvaluation(object):
             self.session.playerStats[playerId]['level'] += 1
 
         self.session.levels[self.session.cLevelId] = {
-            'started_at': self.session.clInitAt,
+            'created_at': self.session.clInitAt,
+            'started_at': startedAt,
             'completed_at': completedAt,
             'completed_by': completedBy,
             'powerups_by': powerupsBy,
@@ -261,6 +274,7 @@ class GameEvaluation(object):
             ', '.join(map(lambda x: self.playerMap[x]['name'], completedBy))
         ))
         self.session.clearMoveOrders()
+        self.session.clPowerups = []
 
     def process(self):
         while True:
@@ -279,18 +293,20 @@ class GameEvaluation(object):
                     if unit['unitTypeName'] == 'IceBaneling':
                         if self.session.gameStartedAt is None:
                             self.session.gameStartedAt = ev['_gameloop']
-                            self.logGame('GAME STARTED')
+                            self.logGame(' === GAME STARTED === ')
                         self.session.banelings[unit['controlPlayerId']] = unit
                         self.session.createPlayer(unit['controlPlayerId'])
                         self.logGame('P%0d IceBaneling born' % (unit['controlPlayerId']), playerId=unit['controlPlayerId'])
                     elif unit['unitTypeName'] == 'Beacon_ZergSmall2':
                         self.session.playerStats[unit['controlPlayerId']]['deaths'] += 1
-                        self.logGame('P%0d IceBaneling died' % (unit['controlPlayerId']), playerId=unit['controlPlayerId'])
+                        # self.logGame('P%0d IceBaneling died' % (unit['controlPlayerId']), playerId=unit['controlPlayerId'])
                     elif unit['unitTypeName'] == 'ShapeTorus4':
                         self.levelCompleted(ev['_gameloop'])
                         self.session.gameEscapedAt = ev['_gameloop']
                         self.logGame('GAME ESCAPED')
                         break
+                    elif unit['unitTypeName'] == 'PickupChronoRiftCharge':
+                        self.session.clPowerups.append(unit)
 
                     if (self.session.cLevelId == None or len(self.session.clUnits) == 0) and unit['controlPlayerId'] in [15]:
                         if (
@@ -307,13 +323,20 @@ class GameEvaluation(object):
                             )
                         ):
                             continue
+                        if self.mapId == 'IBE1' and (
+                            unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 190 and unit['posY'] == 170
+                        ):
+                            continue
 
                         if not len(self.session.clUnits):
-                            if self.session.cLevelId is not None:
+                            if self.session.cLevelId is not None and self.mapId == 'IBE2':
                                 self.levelCompleted(ev['_gameloop'])
                             self.session.cLevelId = None
                             self.session.clInitAt = ev['_gameloop']
-                            self.logGame('Level init')
+                            if len(self.session.levels):
+                                self.logGame('Level init, diff=%d' % (ev['_gameloop'] - self.session.levels.values()[-1]['completed_at']))
+                            else:
+                                self.logGame('Level init')
 
                             if self.mapId == 'IBE2':
                                 if (
@@ -333,7 +356,17 @@ class GameEvaluation(object):
                         self.session.clear()
                         self.logGame('GAME FAILED')
 
-                    if self.trEvents.peek['_event'] != 'NNet.Replay.Tracker.SUnitDiedEvent' and self.session.cLevelId != None and len(self.session.clUnits) > 0:
+                    doCleanup = False
+                    # === HARDCODED RULES ===
+                    if self.session.cLevelId != None and len(self.session.clUnits) > 0:
+                        if self.mapId == 'IBE1' and self.session.cLevelId == 20:
+                            if unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 222 and unit['posY'] == 170:
+                                doCleanup = True
+                    # === HARDCODED RULES ===
+
+                    if self.session.cLevelId != None and len(self.session.clUnits) > 0:
+                        if self.mapId == 'IBE2' and self.trEvents.peek['_event'] != 'NNet.Replay.Tracker.SUnitDiedEvent':
+                            continue
                         # if self.session.cLevelId == 0:
                         #     continue
                         # self.logGame('u %f' % (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))))
@@ -345,18 +378,37 @@ class GameEvaluation(object):
                             )
                         ):
                             continue
+                        elif self.mapId == 'IBE1':
+                            if self.session.cLevelId == 20:
+                                if unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 222 and unit['posY'] == 170:
+                                    doCleanup = True
+                                # self.unState.fetchUnits(playerIds=[15], unitName='RedstoneLavaCritter')
                         if (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
-                            self.logGame('Level cleanup')
-                            self.session.clUnits = []
+                            doCleanup = True
+
+                    if doCleanup:
+                        self.logGame('Level cleanup')
+                        self.session.clUnits = []
+                        if self.mapId == 'IBE1' and self.session.cLevelId != 0:
+                            self.levelCompleted(ev['_gameloop'])
 
                 elif ev['_event'] == 'NNet.Game.SCameraUpdateEvent' and ev['m_target'] != None:
                     posX = ev['m_target']['x'] / 256.0
                     posY = ev['m_target']['y'] / 256.0
                     if self.session.cLevelId == None and len(self.session.clUnits):
-                        if self.gmEvents.peek['_event'] == 'NNet.Game.SCameraUpdateEvent' and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
-                            continue
+                        if self.gmEvents.peek['_event'] == 'NNet.Game.SCameraUpdateEvent':
+                            if self.mapId == 'IBE1' and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
+                                continue
+                            elif self.mapId == 'IBE2' and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
+                                continue
                         # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), userId=ev['_userid']['m_userId'])
+                        if self.mapId == 'IBE1' and len(self.session.levels) == 20 and self.mapInfo.findClosestLevel('spawn', posX, posY) != 0:
+                            continue
                         self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', posX, posY)
+                        tmpCenter = self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].getCenter()
+                        if math.hypot(tmpCenter['x'] - posX, tmpCenter['y'] - posY) > 10.0:
+                            self.session.cLevelId = None
+                            continue
                         self.logGame('camera lvl %d' % self.session.cLevelId)
                         # self.logGame('%d' % len(self.unState.fetchUnits(playerIds=[15])))
 
@@ -370,12 +422,12 @@ class GameEvaluation(object):
                 elif ev['_event'] == 'NNet.Game.SCmdEvent':
                     # ev['m_cmdFlags']
                     playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
-                    if ev['m_abil'] is None:
+                    if ev['m_abil'] is None and 'TargetPoint' in ev['m_data']:
                         posX = ev['m_data']['TargetPoint']['x'] / 4096.0
                         posY = ev['m_data']['TargetPoint']['y'] / 4096.0
                         self.session.registerMoveOrder(ev['_gameloop'], playerId, posX, posY)
                         # self.logGame('Target update [ %5.1f ; %5.1f ]' % (posX, posY), userId=ev['_userid']['m_userId'])
-                    else:
+                    elif ev['m_abil'] is not None:
                         if ev['m_abil']['m_abilLink'] not in self.session.abilRawUsage[playerId]:
                             self.session.abilRawUsage[playerId][ev['m_abil']['m_abilLink']] = []
                         if (
@@ -509,6 +561,8 @@ class GameEvaluation(object):
         for chalId in self.session.levels:
             result['challenges'][chalId] = OrderedDict()
             result['challenges'][chalId]['completed_by'] = self.session.levels[chalId]['completed_by']
+            if len(result['challenges'][chalId]['completed_by']) <= 0:
+                result['challenges'][chalId]['completed_by'] = [15]
             result['challenges'][chalId]['completed_by'] = map(lambda x: [x, x], result['challenges'][chalId]['completed_by'])
             result['challenges'][chalId]['buttons_by'] = []
             # TODO: buttons_by
