@@ -674,6 +674,24 @@ def main():
         map_info = None
         logging.info('Unknown map title: "%s"' % (general['game_title']))
 
+    if map_info['id'] in ['RIBE1']:
+        logging.critical('RIBE1 not yet supported')
+        sys.exit(ExitCodes.INTERNAL_ERROR)
+
+    # CV support added on 21 January 2019
+    # Patch 4.8.2.71663 - 22 January 2019
+    if map_info['id'].startswith('IBE-CV') and baseBuild < 71663:
+        logging.critical('Old IBE-CV not yet supported')
+        sys.exit(ExitCodes.INTERNAL_ERROR)
+
+    # BTB support added on 24 February 2019
+    # https://gitlab.com/sc2-ibe/btb/commit/3e3ec2e0a049b1a0d0bbbf3217dbcaf96aa96708
+    # Patch 4.8.3.72282 - 19 February 2019
+    # Patch 4.8.2.71663 - 22 January 2019
+    if map_info['id'].startswith('BTB') and baseBuild < 71663:
+        logging.critical('Old BTB not yet supported')
+        sys.exit(ExitCodes.INTERNAL_ERROR)
+
     results_all = []
     deltaResult = None
     if map_info:
@@ -716,6 +734,11 @@ def main():
 
         if args.evaluate and map_info['id'] in ['IBE1', 'IBE2']:
             deltaResult = game_result
+            # deltaResult was added in: IBE1 v1.46 released in Oct 30, 2013
+            # Patch 2.0.12.26825 - 11 November 2013
+            if not deltaResult and baseBuild < 26825:
+                logging.critical('IBE version before deltaResult')
+                sys.exit(ExitCodes.INTERNAL_ERROR)
             gstate = GameEvaluation(
                 map_info['id'],
                 general['player_slots'],
