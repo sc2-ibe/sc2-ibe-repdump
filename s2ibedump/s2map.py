@@ -190,7 +190,7 @@ class MapInfo(object):
     def __init__(self, mapId):
         self.levelRegions = readRegions(os.path.join(
             os.path.dirname(os.path.realpath(__file__)),
-            '%s/Regions' % mapId.lower()
+            'data/%s/Regions' % mapId.lower()
         ), mapId)
 
     def findClosestLevel(self, regionName, posX, posY):
