@@ -352,14 +352,10 @@ class GeneralSection(OrderedDict):
         self['battle_net'] = bool(initd['m_syncLobbyState']['m_gameDescription']['m_gameOptions']['m_battleNet'])
         self['author_handle'] = initd['m_syncLobbyState']['m_gameDescription']['m_mapAuthorName']
         if self['author_handle']:
-            region = int(self['author_handle'].split('-')[0])
+            self['server_region'] = int(self['author_handle'].split('-')[0])
         else:
             # test mode
-            region = 0
-        self['server_region'] = {
-            'id': region,
-            'name': [None, 'NA', 'EU', 'Asia', None, 'CN', 'SEA'][region]
-        }
+            self['server_region'] = 0
 
     def processGameEvents(self, gameevents):
         self['resumed_replay'] = False
@@ -618,6 +614,7 @@ def main():
 
     if s2rep:
         general['author_handle'] = s2rep.raw_data['replay.initData']['game_description']['map_author_name']
+        general['server_region'] = int(general['author_handle'].split('-')[0])
         general['battle_net'] = bool(s2rep.raw_data['replay.initData']['game_description']['game_options']['battle_net'])
         general['player_slots'] = []
         for p in s2rep.players:
