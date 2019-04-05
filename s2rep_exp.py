@@ -2,16 +2,20 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
+from pprint import pprint, pformat, saferepr
 import sys
 import os
 import json
 from collections import OrderedDict
 import mpyq
 from s2protocol import versions
+import sc2reader
 import hashlib
 import argparse
 import logging
 from s2ibedump.evaluation import GameEvaluation
+from s2ibedump.objects import PLAYER_TYPE_MAP, GAME_SPEED_MAP, PlayerSlot
+from s2ibedump.helpers import getPlayerSlot, toJson
 
 
 class DReader(object):
@@ -267,24 +271,6 @@ def decode_game_result(dstream, player_slots):
     return gmr
 
 
-PLAYER_TYPE_MAP = [
-    'FREE',
-    'NONE',
-    'USER',
-    'COMPUTER',
-    'NEUTRAL',
-    'HOSTILE',
-]
-
-GAME_SPEED_MAP = [
-    'SLOWER',   # 0
-    'SLOW',     # 1
-    'NORMAL',   # 2
-    'FAST',     # 3
-    'FASTER',   # 4
-]
-
-
 class GeneralSection(OrderedDict):
     def __init__(self):
         OrderedDict.__init__(self)
@@ -301,9 +287,6 @@ class GeneralSection(OrderedDict):
         self.setdefault('resumed_replay', None)
         self.setdefault('player_slots', [])
 
-    def addMetadata(self, metadata):
-        self['elapsed_real_time'] = metadata['Duration']
-
     def addHeader(self, header):
         self['elapsed_game_loops'] = header['m_elapsedGameLoops']
         self['client_version'] = '.'.join([
@@ -319,7 +302,7 @@ class GeneralSection(OrderedDict):
         self['elapsed_game_time'] = round(self['elapsed_game_loops'] / 16.0)
         self['timestamp'] = (details['m_timeUTC'] / 10000000) - 11644473600
 
-    def setupPlayers(self, initd, details, tracker, metadata=None):
+    def setupPlayers(self, initd, details):
         slots = {}
         working_slots = {}
 
@@ -365,20 +348,8 @@ class GeneralSection(OrderedDict):
             pslot['color']['b'] = row['m_color']['m_b']
             pslot['color']['a'] = row['m_color']['m_a']
 
-        for ev in tracker:
-            if ev['_event'] != 'NNet.Replay.Tracker.SPlayerSetupEvent':
-                break
-            if ev['m_slotId'] is None:
-                continue
-            pslot = slots[ev['m_slotId']]
-            pslot['player_id'] = ev['m_playerId']
-
-        if metadata:
-            for i, row in enumerate(metadata['Players']):
-                self['player_slots'][i]['apm'] = row['APM']
-
     def addInitData(self, initd):
-        self['battle_net'] = initd['m_syncLobbyState']['m_gameDescription']['m_gameOptions']['m_battleNet']
+        self['battle_net'] = bool(initd['m_syncLobbyState']['m_gameDescription']['m_gameOptions']['m_battleNet'])
         self['author_handle'] = initd['m_syncLobbyState']['m_gameDescription']['m_mapAuthorName']
         if self['author_handle']:
             region = int(self['author_handle'].split('-')[0])
@@ -544,6 +515,11 @@ def hash_result(general, map_id, result):
     return hashlib.sha1(','.join(map(to_str, inp))).hexdigest()
 
 
+class ExitCodes(object):
+    INTERNAL_ERROR = 1
+    NOT_SUPPORTED = 2
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('replay_file', help='.SC2Replay file to load')
@@ -571,13 +547,14 @@ def main():
     else:
         logging.getLogger().setLevel(logging.ERROR)
 
-    archive = mpyq.MPQArchive(args.replay_file)
+
+    archive = mpyq.MPQArchive(args.replay_file, listfile=False)
 
     def read_contents(archive, content):
         contents = archive.read_file(content)
         if not contents:
             logging.critical('Archive missing file: "%s"' % content)
-            sys.exit(1)
+            sys.exit(ExitCodes.NOT_SUPPORTED)
         return contents
 
     # HEADER
@@ -586,15 +563,45 @@ def main():
 
     # The header's baseBuild determines which protocol to use
     baseBuild = header['m_version']['m_baseBuild']
+    logging.debug('Protocol build: %s' % baseBuild)
     try:
         protocol = versions.build(baseBuild)
     except Exception as e:
-        logging.warn('Unsupported base build: %s (%s)' % (baseBuild, str(e)))
-        protocol = versions.latest()
-        logging.warn('Attempting to use newest possible instead: %s' % protocol.__name__)
+        logging.warn('Unsupported protocol: (%s)' % str(e))
+        if baseBuild > 32283 and baseBuild < 51702:
+            protocol = versions.build(51702)
+        elif baseBuild < 70154:
+            sys.exit(ExitCodes.INTERNAL_ERROR)
+        else:
+            protocol = versions.latest()
+        logging.warn('Attempting to use %s instead' % protocol.__name__)
+
+    # not supported by s2protocol, but might be fixable
+    if protocol.tracker_eventid_typeid is None:
+        logging.critical('"protocol.tracker_eventid_typeid" missing')
+        sys.exit(ExitCodes.INTERNAL_ERROR)
 
     details = protocol.decode_replay_details(read_contents(archive, 'replay.details'))
-    initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))
+    if len(details['m_cacheHandles']) == 0:
+        logging.critical('Test mode detected - map was run from editor')
+        sys.exit(ExitCodes.NOT_SUPPORTED)
+
+    archive.files = archive.read_file('(listfile)').splitlines()
+    try:
+        archive.files.index('replay.tracker.events')
+    except ValueError:
+        logging.critical('"%s" missing' % 'replay.tracker.events')
+        sys.exit(ExitCodes.NOT_SUPPORTED)
+
+    s2rep = None
+    try:
+        s2rep = sc2reader.load_replay(args.replay_file, load_level=2)
+    except Exception as e:
+        import traceback
+        logging.error(traceback.format_exc())
+        # logging.error('sc2reader failed, falling back to legacy reader..')
+        sys.exit(ExitCodes.INTERNAL_ERROR)
+
     try:
         if archive.files.index('replay.gamemetadata.json'):
             metadata = json.loads(read_contents(archive, 'replay.gamemetadata.json'))
@@ -608,9 +615,18 @@ def main():
     logging.info('Building general section..')
     general.addHeader(header)
     general.addDetails(details)
-    general.addInitData(initd)
-    if metadata:
-        general.addMetadata(metadata)
+
+    if s2rep:
+        general['author_handle'] = s2rep.raw_data['replay.initData']['game_description']['map_author_name']
+        general['battle_net'] = bool(s2rep.raw_data['replay.initData']['game_description']['game_options']['battle_net'])
+        general['player_slots'] = []
+        for p in s2rep.players:
+            general['player_slots'].append(PlayerSlot.fromParticipant(p))
+    else:
+        logging.info('Setting up players..')
+        initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))
+        general.addInitData(initd)
+        general.setupPlayers(initd, details, metadata)
 
     NAME_MAP = {
         'Ice Baneling Escape': 'IBE1',
@@ -659,12 +675,28 @@ def main():
         logging.info('Unknown map title: "%s"' % (general['game_title']))
 
     results_all = []
+    deltaResult = None
     if map_info:
         logging.debug('Reading tracker events..')
         tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
 
-        logging.info('Setting up players..')
-        general.setupPlayers(initd, details, tracker, metadata)
+        # fix player_id
+        for ev in tracker:
+            if ev['_event'] != 'NNet.Replay.Tracker.SPlayerSetupEvent':
+                break
+            if ev['m_slotId'] is None:
+                continue
+            getPlayerSlot(general['player_slots'], slot_id=ev['m_slotId'])['player_id'] = ev['m_playerId']
+
+        # get APM from metadata
+        if metadata:
+            try:
+                for item in metadata['Players']:
+                    if 'APM' not in item:
+                        continue
+                    getPlayerSlot(general['player_slots'], player_id=item['PlayerID'])['apm'] = item['APM']
+            except KeyError:
+                pass
 
         logging.info('Seeking game result..')
         for initial_event in seek_payload_in_tracker(tracker):
@@ -682,7 +714,6 @@ def main():
             else:
                 game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
 
-        deltaResult = None
         if args.evaluate and map_info['id'] in ['IBE1', 'IBE2']:
             deltaResult = game_result
             gstate = GameEvaluation(
@@ -693,7 +724,8 @@ def main():
                 1.4 if deltaResult and deltaResult['game_speed'] == 4 else 1.0
             )
             gstate.process()
-            game_result = gstate.rebuildGameResult(deltaResult)
+            if deltaResult:
+                game_result = gstate.rebuildGameResult(deltaResult)
 
         # process gamevents to determine if replay was resumed
         # do so only in case of successful runs
@@ -711,7 +743,7 @@ def main():
     if deltaResult:
         osects['delta_result'] = deltaResult
     osects['hash'] = hash_result(general, map_id, deltaResult if deltaResult is not None else game_result)
-    print(json.dumps(osects, indent=4, sort_keys=False))
+    print(toJson(osects))
 
 
 if __name__ == '__main__':
