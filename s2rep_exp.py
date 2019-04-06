@@ -671,13 +671,13 @@ def main():
         map_info = None
         logging.info('Unknown map title: "%s"' % (general['game_title']))
 
-    if map_info['id'] in ['RIBE1']:
+    if map_info and map_info['id'] in ['RIBE1']:
         logging.critical('RIBE1 not yet supported')
         sys.exit(ExitCodes.INTERNAL_ERROR)
 
     # CV support added on 21 January 2019
     # Patch 4.8.2.71663 - 22 January 2019
-    if map_info['id'].startswith('IBE-CV') and baseBuild < 71663:
+    if map_info and map_info['id'].startswith('IBE-CV') and baseBuild < 71663:
         logging.critical('Old IBE-CV not yet supported')
         sys.exit(ExitCodes.INTERNAL_ERROR)
 
@@ -685,7 +685,7 @@ def main():
     # https://gitlab.com/sc2-ibe/btb/commit/3e3ec2e0a049b1a0d0bbbf3217dbcaf96aa96708
     # Patch 4.8.3.72282 - 19 February 2019
     # Patch 4.8.2.71663 - 22 January 2019
-    if map_info['id'].startswith('BTB') and baseBuild < 71663:
+    if map_info and map_info['id'].startswith('BTB') and baseBuild < 71663:
         logging.critical('Old BTB not yet supported')
         sys.exit(ExitCodes.INTERNAL_ERROR)
 
