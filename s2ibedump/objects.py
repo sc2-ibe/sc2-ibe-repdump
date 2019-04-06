@@ -50,7 +50,8 @@ class PlayerSlot(object):
         result.name = p.name
         result.type = PLAYER_TYPE_MAP[p.slot_data['control']]
         result.is_human = p.is_human
-        result.handle = p.toon_handle
+        if p.is_human:
+            result.handle = p.toon_handle
         result.toon = {
             'region': p.detail_data['bnet']['region'],
             'realm': p.detail_data['bnet']['subregion'],
