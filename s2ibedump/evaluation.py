@@ -324,7 +324,7 @@ class GameEvaluation(object):
                     self.unState.onEvent(ev)
                 self.gameloop = ev['_gameloop']
 
-                if ev['_gameloop'] <= 0:
+                if ev['_gameloop'] <= 0 and self.mapId != 'IBE1':
                     continue
 
                 if ev['_event'] == 'NNet.Replay.Tracker.SUnitBornEvent':
@@ -436,7 +436,7 @@ class GameEvaluation(object):
                     posX = ev['m_target']['x'] / 256.0
                     posY = ev['m_target']['y'] / 256.0
                     playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
-                    if self.session.gameStartedAt:
+                    if self.session.gameStartedAt is not None:
                         self.session.registerCameraUpdate(ev['_gameloop'], playerId, posX, posY)
                         # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), playerId=playerId)
                     if self.session.cLevelId == None and len(self.session.clUnits):
