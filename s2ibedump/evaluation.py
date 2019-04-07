@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-from pprint import pprint
+from pprint import pprint, pformat
 import logging
 import math
 from collections import OrderedDict
@@ -365,10 +365,14 @@ class GameEvaluation(object):
                         if self.mapId == 'IBE1' and self.session.cLevelId == 20:
                             if unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 222 and unit['posY'] == 170:
                                 doCleanup = True
+                            else:
+                                continue
                         # IBE2
                         elif self.mapId == 'IBE2' and self.session.cLevelId == 26:
                             if unit['unitTypeName'] == 'RedstoneLavaCritter':
                                 doCleanup = True
+                            else:
+                                continue
                     # === HARDCODED RULES ===
 
                     if self.session.cLevelId != None and len(self.session.clUnits) > 0:
@@ -406,6 +410,8 @@ class GameEvaluation(object):
                             self.session.cLevelId = None
                             continue
                         self.logGame('camera lvl %d' % self.session.cLevelId)
+                        # self.logGame(pformat(self.unState.fetchUnits(playerIds=[15])))
+                        # self.logGame(pformat(self.session.getLivingUnits()))
                         # self.logGame('%d' % len(self.unState.fetchUnits(playerIds=[15])))
 
                 elif ev['_event'] == 'NNet.Game.SCmdUpdateTargetPointEvent':
