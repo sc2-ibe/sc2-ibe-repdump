@@ -294,7 +294,7 @@ class GameEvaluation(object):
                         if self.session.gameStartedAt is None:
                             self.session.gameStartedAt = ev['_gameloop']
                             self.logGame(' === GAME STARTED === ')
-                            self.logGame('timefactor=%f', self.timeFactor)
+                            self.logGame('timefactor=%f' % self.timeFactor)
                         self.session.banelings[unit['controlPlayerId']] = unit
                         self.session.createPlayer(unit['controlPlayerId'])
                         self.logGame('P%0d IceBaneling born' % (unit['controlPlayerId']), playerId=unit['controlPlayerId'])
@@ -354,8 +354,9 @@ class GameEvaluation(object):
                     unit = self.unState.units[ev['m_unitTagIndex']]
 
                     if unit['unitTypeName'] == 'IceBaneling2' and self.session.gameStartedAt is not None:
-                        self.session.clear()
-                        self.logGame('GAME FAILED')
+                        if len(self.unState.fetchUnits(unitName='IceBaneling2')) == 0:
+                            self.session.clear()
+                            self.logGame('GAME FAILED')
 
                     doCleanup = False
                     # === HARDCODED RULES ===
