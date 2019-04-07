@@ -736,10 +736,6 @@ def main():
                 sys.exit(ExitCodes.INTERNAL_ERROR)
 
             if (deltaResult and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1']):
-                if map_info['id'] == 'RIBE1':
-                    logging.critical('RIBE1 not yet supported')
-                    sys.exit(ExitCodes.INTERNAL_ERROR)
-
                 gstate = GameEvaluation(
                     map_info['id'],
                     general['player_slots'],

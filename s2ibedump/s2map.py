@@ -100,7 +100,7 @@ def readRegions(filename, gver):
     root = tree.getroot()
 
     levels = {}
-    if gver == 'IBE1':
+    if gver in ['IBE1', 'RIBE1']:
         for key in range(0, 21):
             levels[key] = {
                 'finPlayers': lambda x: 1,
@@ -128,7 +128,7 @@ def readRegions(filename, gver):
         elif gver == 'IBE2' and regionName == 'lvl0Reveal1':
             lId = 0
             regionKind = 'region'
-        elif gver == 'IBE1':
+        elif gver in ['IBE1', 'RIBE1']:
             if regionName == 'FinalLevelRegion':
                 lId = 0
                 regionKind = 'region'
@@ -180,7 +180,7 @@ def readRegions(filename, gver):
         levels[8]['finPlayers'] = lambda x: 2 if x>= 8 else 3 if x >= 5 else 1
         levels[9]['finPlayers'] = lambda x: 3 if x>= 3 else 2 if x >= 2 else 1
         levels[17]['finPlayers'] = lambda x: 2 if x >= 2 else 1
-    elif gver == 'IBE1':
+    elif gver in ['IBE1', 'RIBE1']:
         levels[0]['finPlayers'] = lambda x: 0
 
     return levels

@@ -264,7 +264,7 @@ class GameEvaluation(object):
             completedAt -= (16.0 * 1.5 * self.timeFactor)
 
         startedAt = self.session.clInitAt
-        if self.mapId == 'IBE1':
+        if self.mapId in ['IBE1', 'RIBE1']:
             startedAt += 16.0 * 1.0 * self.timeFactor
             if self.session.cLevelId == 0:
                 startedAt += 16.0 * 8.0
@@ -364,7 +364,7 @@ class GameEvaluation(object):
                             )
                         ):
                             continue
-                        if self.mapId == 'IBE1' and (
+                        if self.mapId in ['IBE1', 'RIBE1'] and (
                             unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 190 and unit['posY'] == 170
                         ):
                             continue
@@ -402,7 +402,7 @@ class GameEvaluation(object):
                     # === HARDCODED RULES ===
                     if self.session.cLevelId != None and len(self.session.clUnits) > 0:
                         # IBE1
-                        if self.mapId == 'IBE1' and self.session.cLevelId == 20:
+                        if self.mapId in ['IBE1', 'RIBE1'] and self.session.cLevelId == 20:
                             if unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 222 and unit['posY'] == 170:
                                 doCleanup = True
                             else:
@@ -429,7 +429,7 @@ class GameEvaluation(object):
                     if doCleanup:
                         self.logGame('Level cleanup')
                         self.session.clUnits = []
-                        if self.mapId == 'IBE1' and self.session.cLevelId != 0:
+                        if self.mapId in ['IBE1', 'RIBE1'] and self.session.cLevelId != 0:
                             self.levelCompleted(ev['_gameloop'])
 
                 elif ev['_event'] == 'NNet.Game.SCameraUpdateEvent' and ev['m_target'] != None:
@@ -441,11 +441,11 @@ class GameEvaluation(object):
                         # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), playerId=playerId)
                     if self.session.cLevelId == None and len(self.session.clUnits):
                         if self.gmEvents.peek['_event'] == 'NNet.Game.SCameraUpdateEvent':
-                            if self.mapId == 'IBE1' and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
+                            if self.mapId in ['IBE1', 'RIBE1'] and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
                                 continue
                             elif self.mapId == 'IBE2' and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
                                 continue
-                        if self.mapId == 'IBE1' and len(self.session.levels) == 20 and self.mapInfo.findClosestLevel('spawn', posX, posY) != 0:
+                        if self.mapId in ['IBE1', 'RIBE1'] and len(self.session.levels) == 20 and self.mapInfo.findClosestLevel('spawn', posX, posY) != 0:
                             continue
 
                         initCam = self.session.findInitialCamPosition()
