@@ -84,13 +84,19 @@ class GameSession(object):
         self.playerStats = OrderedDict()
         self.abilRawUsage = OrderedDict()
         self.moveOrders = OrderedDict()
+        self.cameraUpdates = OrderedDict()
 
     def clearMoveOrders(self):
         for i in range(10):
             self.moveOrders[i + 1] = []
 
+    def clearCameraUpdates(self):
+        for i in range(10):
+            self.cameraUpdates[i + 1] = []
+
     def createPlayer(self, playerId):
         self.moveOrders[playerId] = []
+        self.cameraUpdates[playerId] = []
         self.playerStats[playerId] = {
             'deaths': 0,
             'level': 1,
@@ -119,6 +125,39 @@ class GameSession(object):
             'x': posX,
             'y': posY,
         })
+
+    def registerCameraUpdate(self, gameloop, playerId, posX, posY):
+        try:
+            self.cameraUpdates[playerId].append({
+                'gameloop': gameloop,
+                'x': posX,
+                'y': posY,
+            })
+        except KeyError:
+            pass
+
+    def findInitialCamPosition(self):
+        tPosMap = {}
+        for playerId in self.cameraUpdates:
+            for item in self.cameraUpdates[playerId]:
+                poskey = '%5.1f;%5.1f' % (item['x'], item['y'])
+                if poskey not in tPosMap:
+                    tPosMap[poskey] = {
+                        'playerIds': {},
+                        'x': item['x'],
+                        'y': item['y'],
+                    }
+                if playerId not in tPosMap[poskey]['playerIds']:
+                    tPosMap[poskey]['playerIds'][playerId] = item['gameloop']
+
+        bestPick = None
+        bestCounter = None
+        for poskey in tPosMap:
+            if bestPick is None or len(tPosMap[poskey]['playerIds']) > bestCounter:
+                bestPick = poskey
+                bestCounter = len(tPosMap[poskey]['playerIds'])
+
+        return tPosMap[bestPick]
 
     def estimatePlayerPosition(self, playerId, atGameloop, startPos):
         currPos = {
@@ -274,6 +313,7 @@ class GameEvaluation(object):
             ', '.join(map(lambda x: self.playerMap[x]['name'], completedBy))
         ))
         self.session.clearMoveOrders()
+        self.session.clearCameraUpdates()
         self.session.clPowerups = []
 
     def process(self):
@@ -395,7 +435,10 @@ class GameEvaluation(object):
                 elif ev['_event'] == 'NNet.Game.SCameraUpdateEvent' and ev['m_target'] != None:
                     posX = ev['m_target']['x'] / 256.0
                     posY = ev['m_target']['y'] / 256.0
-                    # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), userId=ev['_userid']['m_userId'])
+                    playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
+                    if self.session.gameStartedAt:
+                        self.session.registerCameraUpdate(ev['_gameloop'], playerId, posX, posY)
+                        # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), playerId=playerId)
                     if self.session.cLevelId == None and len(self.session.clUnits):
                         if self.gmEvents.peek['_event'] == 'NNet.Game.SCameraUpdateEvent':
                             if self.mapId == 'IBE1' and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
@@ -404,7 +447,10 @@ class GameEvaluation(object):
                                 continue
                         if self.mapId == 'IBE1' and len(self.session.levels) == 20 and self.mapInfo.findClosestLevel('spawn', posX, posY) != 0:
                             continue
-                        self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', posX, posY)
+
+                        initCam = self.session.findInitialCamPosition()
+                        # self.logGame(pformat(initCam))
+                        self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', initCam['x'], initCam['y'])
                         tmpCenter = self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].getCenter()
                         if math.hypot(tmpCenter['x'] - posX, tmpCenter['y'] - posY) > 10.0:
                             self.session.cLevelId = None
