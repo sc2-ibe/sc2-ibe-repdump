@@ -671,10 +671,6 @@ def main():
         map_info = None
         logging.info('Unknown map title: "%s"' % (general['game_title']))
 
-    if map_info and map_info['id'] in ['RIBE1']:
-        logging.critical('RIBE1 not yet supported')
-        sys.exit(ExitCodes.INTERNAL_ERROR)
-
     # CV support added on 21 January 2019
     # Patch 4.8.2.71663 - 22 January 2019
     if map_info and map_info['id'].startswith('IBE-CV') and baseBuild < 71663:
@@ -729,23 +725,31 @@ def main():
             else:
                 game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
 
-        if args.evaluate and map_info['id'] in ['IBE1', 'IBE2']:
+        if args.evaluate and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1']:
             deltaResult = game_result
+            game_result = None
+
             # deltaResult was added in: IBE1 v1.46 released in Oct 30, 2013
             # Patch 2.0.12.26825 - 11 November 2013
-            if not deltaResult and baseBuild < 26825:
+            if not deltaResult and baseBuild < 26825 and map_info['id'] == 'IBE1':
                 logging.critical('IBE version before deltaResult')
                 sys.exit(ExitCodes.INTERNAL_ERROR)
-            gstate = GameEvaluation(
-                map_info['id'],
-                general['player_slots'],
-                protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events')),
-                protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events')),
-                1.4 if deltaResult and deltaResult['game_speed'] == 4 else 1.0
-            )
-            gstate.process()
-            if deltaResult:
-                game_result = gstate.rebuildGameResult(deltaResult)
+
+            if (deltaResult and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1']):
+                if map_info['id'] == 'RIBE1':
+                    logging.critical('RIBE1 not yet supported')
+                    sys.exit(ExitCodes.INTERNAL_ERROR)
+
+                gstate = GameEvaluation(
+                    map_info['id'],
+                    general['player_slots'],
+                    protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events')),
+                    protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events')),
+                    1.4 if deltaResult and deltaResult['game_speed'] == 4 else 1.0
+                )
+                gstate.process()
+                if deltaResult:
+                    game_result = gstate.rebuildGameResult(deltaResult)
 
         # process gamevents to determine if replay was resumed
         # do so only in case of successful runs
