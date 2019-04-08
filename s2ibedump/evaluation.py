@@ -619,7 +619,7 @@ class GameEvaluation(object):
                         elif self.mapId.startswith('IBE-CV'):
                             if self.session.cLevelId == self.mapInfo.finalLevel:
                                 self.logGame(self.session.getLatestCameraPos())
-                                escaped = self.session.getLatestCameraPos()['pitch'] != 60.0
+                                escaped = self.session.getLatestCameraPos()['pitch'] != 60.0 and self.session.getLatestCameraPos()['yaw'] != 90.0
                                 if escaped:
                                     self.levelCompleted(ev['_gameloop'])
                                     self.session.gameEscapedAt = ev['_gameloop']
