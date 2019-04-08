@@ -291,6 +291,22 @@ class GameEvaluation(object):
 
         return playersPosition
 
+    def fetchMatchingLevelRegion(self):
+        obstacleLevelRegions = []
+
+        for chalId in self.mapInfo.levelRegions:
+            tmpLevel = {
+                'chalId': chalId,
+                'obstacles': [],
+            }
+            for obstacle in self.session.clUnits:
+                if self.mapInfo.levelRegions[chalId]['region'].containsPoint(obstacle['posX'], obstacle['posY']):
+                    tmpLevel['obstacles'].append(obstacle)
+            obstacleLevelRegions.append(tmpLevel)
+
+        obstacleLevelRegions.sort(key=lambda x: len(x['obstacles']), reverse=True)
+        return obstacleLevelRegions
+
     def levelCompleted(self, gameloopEnd):
         if self.session.cLevelId == 0:
             completedAt = gameloopEnd
@@ -465,6 +481,9 @@ class GameEvaluation(object):
                                 self.logGame('Extra level-up acquired: %s' % map(lambda x: self.playerMap[x]['name'], self.getActivePlayers()))
 
                         self.session.clUnits.append(unit)
+                    elif self.session.cLevelId is not None and self.mapId.startswith('IBE-CV'):
+                        if ev['_gameloop'] == self.session.clInitAt and unit['controlPlayerId'] in [self.mapInfo.obstaclePlayerId]:
+                            self.session.clUnits.append(unit)
 
                 elif ev['_event'] == 'NNet.Replay.Tracker.SUnitDiedEvent':
                     unit = self.unState.units[ev['m_unitTagIndex']]
@@ -472,6 +491,8 @@ class GameEvaluation(object):
                     if unit['unitTypeName'] == 'IceBaneling2' and self.session.gameStartedAt is not None:
                         if len(self.unState.fetchUnits(unitName='IceBaneling2')) == 0:
                             self.session.clear()
+                            if self.mapId.startswith('IBE-CV'):
+                                self.timeFactor = None
                             self.logGame('GAME FAILED')
 
                     doCleanup = False
@@ -503,6 +524,14 @@ class GameEvaluation(object):
                             doCleanup = True
 
                     if doCleanup:
+                        # find matching region containing alive creatures instead of relaying on user camera update
+                        if self.mapId.startswith('IBE-CV') and len(self.session.clUnits):
+                            matchingRegion = self.fetchMatchingLevelRegion()[0]
+                            if len(matchingRegion['obstacles']) > 10 and matchingRegion['chalId'] not in [2]:
+                                self.session.cLevelId = matchingRegion['chalId']
+                                self.logGame('Level region match %d' % (self.session.cLevelId))
+                                # self.logGame(pformat(matchingRegion))
+
                         self.logGame('Level cleanup')
                         self.session.clUnits = []
                         if self.mapId in ['IBE1', 'RIBE1'] and self.session.cLevelId != 0:
