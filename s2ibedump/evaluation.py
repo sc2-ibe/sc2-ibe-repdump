@@ -743,7 +743,8 @@ class GameEvaluation(object):
                 )
                 result['challenges'][chalId]['order'] = self.session.levels[chalId]['order']
 
-            if len(self.session.levels) != len(self.mapInfo.levelRegions):
+            requiredLevels = filter(lambda x: True if 'optional' not in x else False, self.mapInfo.levelRegions.values())
+            if len(self.session.levels) < len(requiredLevels):
                 raise Exception('Levels completed count doesn\'t match with total count: [%d,%d]' % (len(self.session.levels), len(self.mapInfo.levelRegions)))
         else:
             result['challenges'] = copy.deepcopy(sefResult['challenges'])

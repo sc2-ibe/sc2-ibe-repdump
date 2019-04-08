@@ -307,6 +307,13 @@ def readRegions(filename, gver):
             'spawn': regionFromId(130),
             'finish': regionFromId(182),
         }
+        levels[28] = {
+            'optional': True,
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(238),
+            'spawn': regionFromId(237),
+            'finish': regionFromId(239),
+        }
         return levels
 
     for region in root:
