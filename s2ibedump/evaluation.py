@@ -274,6 +274,16 @@ class GameEvaluation(object):
     def playerFromUser(self, userId):
         return self.userMap[userId]
 
+    def isPlayerAlive(self, playerId, gameloop):
+        beacons = self.unState.fetchUnits(playerIds=[playerId], unitName='Beacon_ZergSmall2', includeRemoved=True)
+        validBeacons = []
+        for item in beacons:
+            if item['removed'] != -1 and item['removed'] <= self.session.clInitAt:
+                continue
+            if item['createdAt'] <= gameloop:
+                validBeacons.append(item)
+        return len(validBeacons) == 0
+
     def getActivePlayers(self):
         r = []
         for playerId in self.playerMap:
@@ -293,10 +303,14 @@ class GameEvaluation(object):
             playersPosition.append({
                 'playerId': playerId,
                 'distance': distance,
+                'alive': self.isPlayerAlive(playerId, gameloop),
             })
 
         def closest(item):
-            return item['distance']
+            d = item['distance']
+            if not item['alive']:
+                d += 4.0
+            return d
 
         playersPosition.sort(key=closest)
 
