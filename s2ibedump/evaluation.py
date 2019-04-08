@@ -146,7 +146,7 @@ class GameSession(object):
         except KeyError:
             pass
 
-    def findInitialCamPosition(self):
+    def findInitialCamPosition(self, fetchLatest=False):
         tPosMap = OrderedDict()
         for playerId in self.cameraUpdates:
             for item in self.cameraUpdates[playerId]:
@@ -163,7 +163,11 @@ class GameSession(object):
         bestPick = None
         bestCounter = None
         for poskey in tPosMap:
-            if bestPick is None or len(tPosMap[poskey]['playerIds']) >= bestCounter:
+            if (
+                (bestPick is None) or
+                (len(tPosMap[poskey]['playerIds']) > bestCounter) or
+                (fetchLatest == True and len(tPosMap[poskey]['playerIds']) >= bestCounter)
+            ):
                 bestPick = poskey
                 bestCounter = len(tPosMap[poskey]['playerIds'])
 
@@ -494,7 +498,7 @@ class GameEvaluation(object):
                                 self.logGame('Level init')
 
                             if self.mapId.startswith('IBE-CV'):
-                                initCam = self.session.findInitialCamPosition()
+                                initCam = self.session.findInitialCamPosition(fetchLatest=self.mapId.startswith('IBE-CV'))
                                 # self.logGame(pformat(initCam))
                                 self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', initCam['x'], initCam['y'])
                                 self.logGame('camera lvl %d' % self.session.cLevelId)
