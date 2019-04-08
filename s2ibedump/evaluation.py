@@ -267,6 +267,9 @@ class GameEvaluation(object):
 
         logging.debug(out)
 
+    def playerFromUser(self, userId):
+        return self.userMap[userId]
+
     def getActivePlayers(self):
         r = []
         for playerId in self.playerMap:
@@ -400,8 +403,15 @@ class GameEvaluation(object):
                     self.unState.onEvent(ev)
                 self.gameloop = ev['_gameloop']
 
-                if ev['_event'] == 'NNet.Game.SGameUserLeaveEvent':
-                    playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
+                if ev['_event'] == 'NNet.Replay.Tracker.SPlayerSetupEvent':
+                    # self.logGame(pformat(ev))
+                    pass
+                elif ev['_event'] == 'NNet.Game.SGameUserLeaveEvent':
+                    userId = ev['_userid']['m_userId']
+                    if userId >= 10:
+                        self.logGame('userid 10, wtf?')
+                        continue
+                    playerId = self.playerFromUser(userId)['player_id']
                     self.playersLeft[playerId] = ev['_gameloop']
                     self.logGame('player left', playerId=playerId)
 
@@ -599,11 +609,15 @@ class GameEvaluation(object):
                                 self.levelCompleted(ev['_gameloop'])
 
                 elif ev['_event'] == 'NNet.Game.SCameraUpdateEvent' and ev['m_target'] != None:
+                    userId = ev['_userid']['m_userId']
+                    if userId >= 10:
+                        self.logGame('userid 10, wtf?')
+                        continue
                     posX = ev['m_target']['x'] / 256.0
                     posY = ev['m_target']['y'] / 256.0
                     yaw = ev['m_yaw'] / 2048.0 * 360.0 if ev['m_yaw'] else None
                     pitch = ev['m_pitch'] / 2048.0 * 360.0 if ev['m_pitch'] else None
-                    playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
+                    playerId = self.playerFromUser(userId)['player_id']
                     if self.session.gameStartedAt is not None:
                         self.session.registerCameraUpdate(ev['_gameloop'], playerId, posX, posY, yaw, pitch)
                         # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), playerId=playerId)
