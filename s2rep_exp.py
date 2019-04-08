@@ -764,10 +764,11 @@ def main():
                 )
                 gstate.process()
                 game_result = gstate.rebuildGameResult(deltaResult=deltaResult, sefResult=sefResult)
+                general['resumed_replay'] = bool(gstate.hijackReplayGameEvent)
 
         # process gamevents to determine if replay was resumed
         # do so only in case of successful runs
-        if game_result:
+        if game_result and general['resumed_replay'] is None:
             logging.info('Processing game events..')
             gameevents = protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events'))
             general.processGameEvents(gameevents)

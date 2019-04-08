@@ -223,6 +223,7 @@ class GameEvaluation(object):
         self.playersLeft = {}
         self.userMap = {}
         self.playerMap = {}
+        self.hijackReplayGameEvent = None
         for x in self.playerSlots:
             if isinstance(x['user_id'], int):
                 self.userMap[x['user_id']] = x
@@ -588,6 +589,9 @@ class GameEvaluation(object):
                     playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
                     self.playersLeft[playerId] = ev['_gameloop']
                     self.logGame('player left', playerId=playerId)
+
+                elif ev['_event'] == 'NNet.Game.SHijackReplayGameEvent':
+                    self.hijackReplayGameEvent = ev['_gameloop']
 
             except StopIteration:
                 break
