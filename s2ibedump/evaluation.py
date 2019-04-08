@@ -334,8 +334,26 @@ class GameEvaluation(object):
 
         ticks = completedAt - startedAt
         secs = ticks / (16.0 * self.timeFactor)
+
+        finishCenter = self.mapInfo.levelRegions[self.session.cLevelId]['finish'].getCenter()
+        playersPosition = self.getPlayersClosest(completedAt, finishCenter['x'], finishCenter['y'])
+        bcount = len(self.getActivePlayers())
+        rcount = self.mapInfo.levelRegions[self.session.cLevelId]['finPlayers'](bcount)
+        self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition[0]))
+
+        if self.mapId.startswith('IBE-CV') and self.session.cLevelId in [28] and playersPosition[0]['distance'] > 5.0:
+            self.logGame('Level failed')
+            self.levelDone()
+            return
+
         if self.session.cLevelId in self.session.levels:
             raise Exception('Level %d already completed - missmatch?' % self.session.cLevelId)
+
+        completedBy = []
+        for i in range(rcount):
+            playerId = playersPosition[i]['playerId']
+            completedBy.append(playerId)
+            self.session.playerStats[playerId]['level'] += 1
 
         powerupsBy = []
         for item in self.session.clPowerups:
@@ -346,18 +364,6 @@ class GameEvaluation(object):
             powerupsBy.append(playerId)
             self.session.playerStats[playerId]['level'] += 1
             self.logGame('Powerup acquired - removedAt=%d %s' % (item['removed'], playersPosition[0]))
-
-        finishCenter = self.mapInfo.levelRegions[self.session.cLevelId]['finish'].getCenter()
-        playersPosition = self.getPlayersClosest(completedAt, finishCenter['x'], finishCenter['y'])
-        bcount = len(self.getActivePlayers())
-        rcount = self.mapInfo.levelRegions[self.session.cLevelId]['finPlayers'](bcount)
-        self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition[0]))
-
-        completedBy = []
-        for i in range(rcount):
-            playerId = playersPosition[i]['playerId']
-            completedBy.append(playerId)
-            self.session.playerStats[playerId]['level'] += 1
 
         self.session.levels[self.session.cLevelId] = {
             'created_at': self.session.clInitAt,
@@ -375,6 +381,9 @@ class GameEvaluation(object):
             secs,
             ', '.join(map(lambda x: self.playerMap[x]['name'], completedBy))
         ))
+        self.levelDone()
+
+    def levelDone(self):
         self.session.clearMoveOrders()
         self.session.clearCameraUpdates()
         self.session.clPowerups = []
@@ -520,8 +529,15 @@ class GameEvaluation(object):
                         # self.logGame('u %f' % (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))))
                         if self.mapId == 'IBE2' and len(self.unState.fetchUnits(playerIds=[15], unitName="PhoenixLow")):
                             continue
-                        if (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
-                            doCleanup = True
+                        if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
+                            if (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
+                                doCleanup = True
+                        elif self.mapId.startswith('IBE-CV'):
+                            if (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
+                                doCleanup = True
+                            # self.logGame(self.session.getLivingUnits())
+                            # if len(self.session.getLivingUnits()) == 0:
+                            #     doCleanup = True
 
                     if doCleanup:
                         # find matching region containing alive creatures instead of relaying on user camera update
