@@ -257,7 +257,7 @@ class GameEvaluation(object):
             out += ' <%s>' % self.userMap[userId]['name']
 
         if playerId != None:
-            out += ' <%s>' % self.playerMap[playerId]['name']
+            out += ' P%02d <%s>' % (playerId, self.playerMap[playerId]['name'])
 
         out += ' %s' % msg
 
@@ -396,6 +396,14 @@ class GameEvaluation(object):
                     self.unState.onEvent(ev)
                 self.gameloop = ev['_gameloop']
 
+                if ev['_event'] == 'NNet.Game.SGameUserLeaveEvent':
+                    playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
+                    self.playersLeft[playerId] = ev['_gameloop']
+                    self.logGame('player left', playerId=playerId)
+
+                elif ev['_event'] == 'NNet.Game.SHijackReplayGameEvent':
+                    self.hijackReplayGameEvent = ev['_gameloop']
+
                 if ev['_gameloop'] <= 0 and self.mapId != 'IBE1':
                     continue
 
@@ -408,10 +416,10 @@ class GameEvaluation(object):
                             self.logGame(' === GAME STARTED === ')
                         self.session.banelings[unit['controlPlayerId']] = unit
                         self.session.createPlayer(unit['controlPlayerId'])
-                        self.logGame('P%0d IceBaneling born' % (unit['controlPlayerId']), playerId=unit['controlPlayerId'])
+                        self.logGame('IceBaneling born', playerId=unit['controlPlayerId'])
                     elif unit['unitTypeName'] == 'Beacon_ZergSmall2':
                         self.session.playerStats[unit['controlPlayerId']]['deaths'] += 1
-                        # self.logGame('P%0d IceBaneling died' % (unit['controlPlayerId']), playerId=unit['controlPlayerId'])
+                        # self.logGame('IceBaneling died', playerId=unit['controlPlayerId'])
                     elif unit['unitTypeName'] == 'ShapeTorus4':
                         self.levelCompleted(ev['_gameloop'])
                         self.session.gameEscapedAt = ev['_gameloop']
@@ -481,7 +489,7 @@ class GameEvaluation(object):
                                     extraLevelup = True
                             elif (
                                 self.mapId.startswith('IBE-CV') and
-                                len(self.session.levels) % 5 == 0
+                                len(self.session.levels) > 0 and len(self.session.levels) % 5 == 0
                             ):
                                 extraLevelup = True
                             if extraLevelup:
@@ -629,14 +637,6 @@ class GameEvaluation(object):
                             'flags': ev['m_cmdFlags'],
                             'gameloop': ev['_gameloop'],
                         })
-
-                elif ev['_event'] == 'NNet.Game.SGameUserLeaveEvent':
-                    playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
-                    self.playersLeft[playerId] = ev['_gameloop']
-                    self.logGame('player left', playerId=playerId)
-
-                elif ev['_event'] == 'NNet.Game.SHijackReplayGameEvent':
-                    self.hijackReplayGameEvent = ev['_gameloop']
 
             except StopIteration:
                 break
