@@ -431,6 +431,11 @@ class GameEvaluation(object):
                         self.session.banelings[unit['controlPlayerId']] = unit
                         self.session.createPlayer(unit['controlPlayerId'])
                         self.logGame('IceBaneling born', playerId=unit['controlPlayerId'])
+
+                        if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
+                            peekEv = self.trEvents.peek
+                            if peekEv['_event'] != 'NNet.Replay.Tracker.SUnitBornEvent' or peekEv['m_unitTypeName'] != 'IceBaneling':
+                                pass
                     elif unit['unitTypeName'] == 'Beacon_ZergSmall2':
                         self.session.playerStats[unit['controlPlayerId']]['deaths'] += 1
                         # self.logGame('IceBaneling died', playerId=unit['controlPlayerId'])
@@ -507,7 +512,7 @@ class GameEvaluation(object):
                             ):
                                 extraLevelup = True
                             if extraLevelup:
-                                for playerId in self.getActivePlayers():
+                                for playerId in self.session.banelings:
                                     self.session.playerStats[playerId]['level'] += 1
                                 self.logGame('Extra level-up acquired: %s' % map(lambda x: self.playerMap[x]['name'], self.getActivePlayers()))
 
