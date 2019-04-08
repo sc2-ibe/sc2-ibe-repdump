@@ -750,6 +750,7 @@ def main():
                 # don't evaluate if it's recent enough version
                 if baseBuild >= 71663 and (sefResult is None or sefResult['schema_version'] >= 5):
                     doEvaluate = False
+                    game_result = sefResult
 
             if doEvaluate:
                 timeFactor = None
