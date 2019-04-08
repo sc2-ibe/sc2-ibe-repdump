@@ -3,6 +3,8 @@
 
 from __future__ import print_function
 from pprint import pprint, pformat
+import sys
+import copy
 import logging
 import math
 from collections import OrderedDict
@@ -73,6 +75,8 @@ class GameSession(object):
         self.clear()
 
     def clear(self):
+        self.gameSpeed = None
+        self.gameDiff = None
         self.cLevelId = None
         self.clInitAt = None
         self.clUnits = []
@@ -126,21 +130,23 @@ class GameSession(object):
             'y': posY,
         })
 
-    def registerCameraUpdate(self, gameloop, playerId, posX, posY):
+    def registerCameraUpdate(self, gameloop, playerId, posX, posY, yaw, pitch):
         try:
             self.cameraUpdates[playerId].append({
                 'gameloop': gameloop,
                 'x': posX,
                 'y': posY,
+                'yaw': yaw,
+                'pitch': pitch,
             })
         except KeyError:
             pass
 
     def findInitialCamPosition(self):
-        tPosMap = {}
+        tPosMap = OrderedDict()
         for playerId in self.cameraUpdates:
             for item in self.cameraUpdates[playerId]:
-                poskey = '%5.1f;%5.1f' % (item['x'], item['y'])
+                poskey = '%03d;%03d' % (int(round(item['x'] / 4.0)), int(round(item['y'] / 4.0)))
                 if poskey not in tPosMap:
                     tPosMap[poskey] = {
                         'playerIds': {},
@@ -153,11 +159,42 @@ class GameSession(object):
         bestPick = None
         bestCounter = None
         for poskey in tPosMap:
-            if bestPick is None or len(tPosMap[poskey]['playerIds']) > bestCounter:
+            if bestPick is None or len(tPosMap[poskey]['playerIds']) >= bestCounter:
                 bestPick = poskey
                 bestCounter = len(tPosMap[poskey]['playerIds'])
 
+        # pprint(tPosMap, stream=sys.stderr)
+
         return tPosMap[bestPick]
+
+    def getLatestCameraPos(self, playerId=None):
+        latestPositions = {}
+        for currPlayerId in self.cameraUpdates:
+            if playerId is not None and currPlayerId != playerId:
+                continue
+            for item in self.cameraUpdates[currPlayerId]:
+                if currPlayerId not in latestPositions:
+                    latestPositions[currPlayerId] = {
+                        'playerId': currPlayerId,
+                        'yaw': 90.0,
+                        'pitch': 60.0,
+                    }
+                latestPositions[currPlayerId]['gameloop'] = item['gameloop']
+                if item['x']:
+                    latestPositions[currPlayerId]['x'] = item['x']
+                if item['y']:
+                    latestPositions[currPlayerId]['y'] = item['y']
+                if item['yaw']:
+                    latestPositions[currPlayerId]['yaw'] = item['yaw']
+                if item['pitch']:
+                    latestPositions[currPlayerId]['pitch'] = item['pitch']
+
+        if playerId is not None:
+            return latestPositions[playerId]
+
+        items = latestPositions.values()
+        items.sort(key=lambda x: x['gameloop'], reverse=True)
+        return items[0]
 
     def estimatePlayerPosition(self, playerId, atGameloop, startPos):
         currPos = {
@@ -187,9 +224,8 @@ class GameEvaluation(object):
         self.userMap = {}
         self.playerMap = {}
         for x in self.playerSlots:
-            if not isinstance(x['user_id'], int):
-                continue
-            self.userMap[x['user_id']] = x
+            if isinstance(x['user_id'], int):
+                self.userMap[x['user_id']] = x
             self.playerMap[x['player_id']] = x
 
     def next(self):
@@ -261,7 +297,17 @@ class GameEvaluation(object):
             completedAt = gameloopEnd
             if self.mapId == 'IBE2':
                 completedAt -= (16.0 * 3.0 * self.timeFactor)
-            completedAt -= (16.0 * 1.5 * self.timeFactor)
+
+            if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
+                completedAt -= (16.0 * 1.5 * self.timeFactor)
+            elif self.mapId.startswith('IBE-CV'):
+                if self.session.cLevelId != 27:
+                    completedAt -= math.ceil(16.0 * 2.0 * self.timeFactor)
+                    completedAt -= math.ceil(16.0 * 1.5 * self.timeFactor)
+                else:
+                    completedAt -= math.ceil(16.0 * 1.5)
+                    completedAt -= math.ceil(16.0 * 0.2)
+                completedAt -= 1
 
         startedAt = self.session.clInitAt
         if self.mapId in ['IBE1', 'RIBE1']:
@@ -288,7 +334,7 @@ class GameEvaluation(object):
         playersPosition = self.getPlayersClosest(completedAt, finishCenter['x'], finishCenter['y'])
         bcount = len(self.getActivePlayers())
         rcount = self.mapInfo.levelRegions[self.session.cLevelId]['finPlayers'](bcount)
-        self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition))
+        self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition[0]))
 
         completedBy = []
         for i in range(rcount):
@@ -334,7 +380,6 @@ class GameEvaluation(object):
                         if self.session.gameStartedAt is None:
                             self.session.gameStartedAt = ev['_gameloop']
                             self.logGame(' === GAME STARTED === ')
-                            self.logGame('timefactor=%f' % self.timeFactor)
                         self.session.banelings[unit['controlPlayerId']] = unit
                         self.session.createPlayer(unit['controlPlayerId'])
                         self.logGame('P%0d IceBaneling born' % (unit['controlPlayerId']), playerId=unit['controlPlayerId'])
@@ -349,7 +394,13 @@ class GameEvaluation(object):
                     elif unit['unitTypeName'] == 'PickupChronoRiftCharge':
                         self.session.clPowerups.append(unit)
 
-                    if (self.session.cLevelId == None or len(self.session.clUnits) == 0) and unit['controlPlayerId'] in [15]:
+                    if self.mapId in ['IBE-CV', 'IBE-CV-PRO'] and (
+                        unit['unitTypeName'] == 'sfBushLarge' and unit['posX'] == 193 and unit['posY'] == 225
+                    ):
+                        self.session.gameDiff = 2
+                        self.logGame('Extreme mode detected')
+
+                    if (self.session.cLevelId == None or len(self.session.clUnits) == 0) and unit['controlPlayerId'] in [self.mapInfo.obstaclePlayerId]:
                         if (
                             self.mapId == 'IBE2' and
                             (
@@ -377,16 +428,40 @@ class GameEvaluation(object):
                             if len(self.session.levels):
                                 self.logGame('Level init, diff=%d' % (ev['_gameloop'] - self.session.levels.values()[-1]['completed_at']))
                             else:
+                                if not self.timeFactor:
+                                    if self.mapId.startswith('IBE-CV'):
+                                        if (ev['_gameloop'] - self.session.gameStartedAt) == 16:
+                                            self.timeFactor = 1.0
+                                            self.session.gameSpeed = 2
+                                        else:
+                                            self.timeFactor = 1.201935
+                                            self.session.gameSpeed = 3
+                                        self.session.gameDiff = 1
+                                    self.logGame('timefactor=%f' % self.timeFactor)
                                 self.logGame('Level init')
 
+                            if self.mapId.startswith('IBE-CV'):
+                                initCam = self.session.findInitialCamPosition()
+                                # self.logGame(pformat(initCam))
+                                self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', initCam['x'], initCam['y'])
+                                self.logGame('camera lvl %d' % self.session.cLevelId)
+
+                            extraLevelup = False
                             if self.mapId == 'IBE2':
                                 if (
                                     (len(self.session.levels) in [10, 20]) or
                                     (len(self.getActivePlayers()) >= 8 and len(self.session.levels) in [5, 15])
                                 ):
-                                    for playerId in self.getActivePlayers():
-                                        self.session.playerStats[playerId]['level'] += 1
-                                    self.logGame('Extra level-up acquired: %s' % map(lambda x: self.playerMap[x]['name'], self.getActivePlayers()))
+                                    extraLevelup = True
+                            elif (
+                                self.mapId.startswith('IBE-CV') and
+                                len(self.session.levels) % 5 == 0
+                            ):
+                                extraLevelup = True
+                            if extraLevelup:
+                                for playerId in self.getActivePlayers():
+                                    self.session.playerStats[playerId]['level'] += 1
+                                self.logGame('Extra level-up acquired: %s' % map(lambda x: self.playerMap[x]['name'], self.getActivePlayers()))
 
                         self.session.clUnits.append(unit)
 
@@ -431,19 +506,33 @@ class GameEvaluation(object):
                         self.session.clUnits = []
                         if self.mapId in ['IBE1', 'RIBE1'] and self.session.cLevelId != 0:
                             self.levelCompleted(ev['_gameloop'])
+                        elif self.mapId.startswith('IBE-CV'):
+                            if self.session.cLevelId == 27:
+                                self.logGame(self.session.getLatestCameraPos())
+                                escaped = self.session.getLatestCameraPos()['pitch'] < 60.0
+                                if escaped:
+                                    self.levelCompleted(ev['_gameloop'])
+                                    self.session.gameEscapedAt = ev['_gameloop']
+                                    self.session.gameEscapedAt -= math.ceil(16.0 * 1.5)
+                                    self.session.gameEscapedAt -= math.ceil(16.0 * 0.2)
+                                    self.session.gameEscapedAt -= 1
+                                    self.logGame('GAME ESCAPED')
+                                    break
+                            else:
+                                self.levelCompleted(ev['_gameloop'])
 
                 elif ev['_event'] == 'NNet.Game.SCameraUpdateEvent' and ev['m_target'] != None:
                     posX = ev['m_target']['x'] / 256.0
                     posY = ev['m_target']['y'] / 256.0
+                    yaw = ev['m_yaw'] / 2048.0 * 360.0 if ev['m_yaw'] else None
+                    pitch = ev['m_pitch'] / 2048.0 * 360.0 if ev['m_pitch'] else None
                     playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
                     if self.session.gameStartedAt is not None:
-                        self.session.registerCameraUpdate(ev['_gameloop'], playerId, posX, posY)
+                        self.session.registerCameraUpdate(ev['_gameloop'], playerId, posX, posY, yaw, pitch)
                         # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), playerId=playerId)
                     if self.session.cLevelId == None and len(self.session.clUnits):
                         if self.gmEvents.peek['_event'] == 'NNet.Game.SCameraUpdateEvent':
-                            if self.mapId in ['IBE1', 'RIBE1'] and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
-                                continue
-                            elif self.mapId == 'IBE2' and (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
+                            if (self.gmEvents.peek['_gameloop'] - self.session.clInitAt) < 10:
                                 continue
                         if self.mapId in ['IBE1', 'RIBE1'] and len(self.session.levels) == 20 and self.mapInfo.findClosestLevel('spawn', posX, posY) != 0:
                             continue
@@ -553,7 +642,7 @@ class GameEvaluation(object):
 
         return matchedLinks
 
-    def rebuildGameResult(self, deltaResult):
+    def rebuildGameResult(self, deltaResult=None, sefResult=None):
         ABIL_NAMES = [
             "BOOST",
             "CREEP",
@@ -567,63 +656,98 @@ class GameEvaluation(object):
         ]
 
         result = OrderedDict()
-        result['game_diff'] = deltaResult['game_diff']
-        result['game_speed'] = deltaResult['game_speed']
-        result['framework_version'] = None
-        result['game_version'] = deltaResult['minor_version']
-        result['escape_time'] = deltaResult['escape_time']
-        result['escaped'] = deltaResult['escaped']
+
+        if deltaResult:
+            result['game_diff'] = deltaResult['game_diff']
+            result['game_speed'] = deltaResult['game_speed']
+            result['framework_version'] = None
+            result['game_version'] = deltaResult['minor_version']
+            result['escape_time'] = deltaResult['escape_time']
+            result['escaped'] = deltaResult['escaped']
+        elif sefResult:
+            result['game_diff'] = sefResult['game_diff']
+            result['game_speed'] = sefResult['game_speed']
+            result['framework_version'] = sefResult['framework_version']
+            result['game_version'] = sefResult['game_version']
+            result['escape_time'] = sefResult['escape_time']
+            result['escaped'] = sefResult['escaped']
+        else:
+            result['game_diff'] = self.session.gameDiff
+            result['game_speed'] = self.session.gameSpeed
+            result['framework_version'] = 0
+            result['game_version'] = 1
+            result['escape_time'] = None
+            if self.session.gameEscapedAt is not None:
+                result['escape_time'] = round((self.session.gameEscapedAt - self.session.gameStartedAt) / self.timeFactor / 16.0, 2)
+            result['escaped'] = True if result['escape_time'] is not None else None
+
+            if not result['escaped']:
+                return None
 
         result['started_at_rt'] = None
         result['started_at_gt'] = round(self.session.gameStartedAt / 16.0, 2)
 
-        result['challenges_completed'] = len(self.session.levels)
-        result['challenges_total'] = len(self.mapInfo.levelRegions)
+        if not sefResult:
+            result['players'] = OrderedDict()
+            for playerId in self.playerMap:
+                result['players'][playerId] = OrderedDict()
+                # result['players'][playerId]['left'] = deltaResult['players'][playerId]['left']
+                result['players'][playerId]['left'] = True if playerId in self.playersLeft else False
+                if playerId in self.session.playerStats:
+                    result['players'][playerId]['level'] = self.session.playerStats[playerId]['level']
+                    result['players'][playerId]['deaths'] = self.session.playerStats[playerId]['deaths']
+                    result['players'][playerId]['revives'] = None
+                    # TODO: revives
 
-        result['players'] = OrderedDict()
-        for playerId in self.playerMap:
-            result['players'][playerId] = OrderedDict()
-            # result['players'][playerId]['left'] = deltaResult['players'][playerId]['left']
-            result['players'][playerId]['left'] = True if playerId in self.playersLeft else False
-            if playerId in self.session.playerStats:
-                result['players'][playerId]['level'] = self.session.playerStats[playerId]['level']
-                result['players'][playerId]['deaths'] = self.session.playerStats[playerId]['deaths']
-                result['players'][playerId]['revives'] = None
-                # TODO: revives
+                    result['players'][playerId]['abilities_used'] = OrderedDict()
+                    for i, name in enumerate(ABIL_NAMES):
+                        result['players'][playerId]['abilities_used'][ABIL_NAMES[i]] = None
 
-                result['players'][playerId]['abilities_used'] = OrderedDict()
-                for i, name in enumerate(ABIL_NAMES):
-                    result['players'][playerId]['abilities_used'][ABIL_NAMES[i]] = None
-                matchedAbils = self.determineAbilityLinks(deltaResult)
-                for abilLink in matchedAbils:
-                    abilName = ABIL_NAMES[matchedAbils[abilLink]['abilId']]
-                    try:
-                        result['players'][playerId]['abilities_used'][abilName] = len(self.session.abilRawUsage[playerId][abilLink])
-                    except KeyError:
-                        result['players'][playerId]['abilities_used'][abilName] = 0
-            else:
-                result['players'][playerId]['level'] = None
-                result['players'][playerId]['deaths'] = None
+                    if deltaResult:
+                        matchedAbils = self.determineAbilityLinks(deltaResult)
+                        for abilLink in matchedAbils:
+                            abilName = ABIL_NAMES[matchedAbils[abilLink]['abilId']]
+                            try:
+                                result['players'][playerId]['abilities_used'][abilName] = len(self.session.abilRawUsage[playerId][abilLink])
+                            except KeyError:
+                                result['players'][playerId]['abilities_used'][abilName] = 0
+                else:
+                    result['players'][playerId]['level'] = None
+                    result['players'][playerId]['deaths'] = None
+        else:
+            result['players'] = copy.deepcopy(sefResult['players'])
 
-        result['challenges'] = OrderedDict()
-        for chalId in self.session.levels:
-            result['challenges'][chalId] = OrderedDict()
-            result['challenges'][chalId]['completed_by'] = self.session.levels[chalId]['completed_by']
-            if len(result['challenges'][chalId]['completed_by']) <= 0:
-                result['challenges'][chalId]['completed_by'] = [15]
-            result['challenges'][chalId]['completed_by'] = map(lambda x: [x, x], result['challenges'][chalId]['completed_by'])
-            result['challenges'][chalId]['buttons_by'] = []
-            # TODO: buttons_by
-            result['challenges'][chalId]['powerups_by'] = self.session.levels[chalId]['powerups_by']
-            result['challenges'][chalId]['powerups_by'] = map(lambda x: [x, x], result['challenges'][chalId]['powerups_by'])
-            result['challenges'][chalId]['completed_time'] = round(self.session.levels[chalId]['completed_time'], 2)
-            result['challenges'][chalId]['time_offset_start'] = round(
-                (self.session.levels[chalId]['started_at'] - self.session.gameStartedAt) / (16.0 * self.timeFactor),
-                2
-            )
-            result['challenges'][chalId]['order'] = self.session.levels[chalId]['order']
+        if not sefResult:
+            result['challenges_completed'] = len(self.session.levels)
+            result['challenges_total'] = len(self.mapInfo.levelRegions)
 
-        if len(self.session.levels) != len(self.mapInfo.levelRegions):
-            raise Exception('Levels completed count doesn\'t match with total count')
+            result['challenges'] = OrderedDict()
+            for chalId in self.session.levels:
+                result['challenges'][chalId] = OrderedDict()
+                result['challenges'][chalId]['completed_by'] = self.session.levels[chalId]['completed_by']
+                if len(result['challenges'][chalId]['completed_by']) <= 0:
+                    result['challenges'][chalId]['completed_by'] = [15]
+                result['challenges'][chalId]['completed_by'] = map(lambda x: [x, x], result['challenges'][chalId]['completed_by'])
+                result['challenges'][chalId]['buttons_by'] = []
+                # TODO: buttons_by
+                result['challenges'][chalId]['powerups_by'] = self.session.levels[chalId]['powerups_by']
+                result['challenges'][chalId]['powerups_by'] = map(lambda x: [x, x], result['challenges'][chalId]['powerups_by'])
+                result['challenges'][chalId]['completed_time'] = round(self.session.levels[chalId]['completed_time'], 2)
+                result['challenges'][chalId]['time_offset_start'] = round(
+                    (self.session.levels[chalId]['started_at'] - self.session.gameStartedAt) / (16.0 * self.timeFactor),
+                    2
+                )
+                result['challenges'][chalId]['order'] = self.session.levels[chalId]['order']
+
+            if len(self.session.levels) != len(self.mapInfo.levelRegions):
+                raise Exception('Levels completed count doesn\'t match with total count: [%d,%d]' % (len(self.session.levels), len(self.mapInfo.levelRegions)))
+        else:
+            result['challenges'] = copy.deepcopy(sefResult['challenges'])
+            if sefResult['schema_version'] < 5:
+                for chalId in result['challenges']:
+                    result['challenges'][chalId]['completed_by'][0][1] = self.session.levels[chalId]['completed_by'][0]
+                    for powerupKey, powerupItem in enumerate(result['challenges'][chalId]['powerups_by']):
+                        if len(self.session.levels[chalId]['powerups_by']) > powerupKey:
+                            powerupItem[1] = self.session.levels[chalId]['powerups_by'][powerupKey]
 
         return result

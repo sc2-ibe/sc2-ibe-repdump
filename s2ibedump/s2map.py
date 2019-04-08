@@ -99,6 +99,34 @@ def readRegions(filename, gver):
     tree = ET.parse(filename)
     root = tree.getroot()
 
+    def shapeFromRegion(region):
+        shapeType = region.find('shape').attrib['type']
+        shape = region.find('shape')
+        if shapeType == 'rect':
+            rg = RectangleShape(*map(
+                lambda x: float(x),
+                shape.find('quad').attrib['value'].split(',')
+            ))
+        elif shapeType == 'circle':
+            center = map(
+                lambda x: float(x),
+                shape.find('center').attrib['value'].split(',')
+            )
+            rg = CircleShape(center[0], center[1], float(shape.find('radius').attrib['value']))
+        elif shapeType == 'diamond':
+            center = map(
+                lambda x: float(x),
+                shape.find('center').attrib['value'].split(',')
+            )
+            rg = DiamondShape(center[0], center[1], float(shape.find('width').attrib['value']), float(shape.find('height').attrib['value']))
+        return rg
+
+    def regionFromId(regId):
+        for region in root:
+            if int(region.attrib['id']) == regId:
+                return shapeFromRegion(region)
+        return None
+
     levels = {}
     if gver in ['IBE1', 'RIBE1']:
         for key in range(0, 21):
@@ -116,6 +144,170 @@ def readRegions(filename, gver):
                 'spawn': None,
                 'finish': None,
             }
+    elif gver in ['IBE-CV', 'IBE-CV-PRO']:
+        levels[1] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(9),
+            'spawn': regionFromId(1),
+            'finish': regionFromId(2),
+        }
+        levels[2] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(193),
+            'spawn': regionFromId(6),
+            'finish': regionFromId(14),
+        }
+        levels[3] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(22),
+            'spawn': regionFromId(7),
+            'finish': regionFromId(15),
+        }
+        levels[4] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(23),
+            'spawn': regionFromId(8),
+            'finish': regionFromId(16),
+        }
+        levels[5] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(24),
+            'spawn': regionFromId(10),
+            'finish': regionFromId(17),
+        }
+        levels[6] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(25),
+            'spawn': regionFromId(11),
+            'finish': regionFromId(18),
+        }
+        levels[7] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(26),
+            'spawn': regionFromId(12),
+            'finish': regionFromId(19),
+        }
+        levels[8] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(27),
+            'spawn': regionFromId(13),
+            'finish': regionFromId(20),
+        }
+        levels[9] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(30),
+            'spawn': regionFromId(29),
+            'finish': regionFromId(28),
+        }
+        levels[10] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(33),
+            'spawn': regionFromId(31),
+            'finish': regionFromId(32),
+        }
+        levels[11] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(50),
+            'spawn': regionFromId(48),
+            'finish': regionFromId(49),
+        }
+        levels[12] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(57),
+            'spawn': regionFromId(56),
+            'finish': regionFromId(58),
+        }
+        levels[13] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(71),
+            'spawn': regionFromId(70),
+            'finish': regionFromId(62),
+        }
+        levels[14] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(75),
+            'spawn': regionFromId(73),
+            'finish': regionFromId(74),
+        }
+        levels[15] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(78),
+            'spawn': regionFromId(76),
+            'finish': regionFromId(77),
+        }
+        levels[16] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(88),
+            'spawn': regionFromId(86),
+            'finish': regionFromId(87),
+        }
+        levels[17] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(107),
+            'spawn': regionFromId(108),
+            'finish': regionFromId(109),
+        }
+        levels[18] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(115),
+            'spawn': regionFromId(113),
+            'finish': regionFromId(114),
+        }
+        levels[19] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(126),
+            'spawn': regionFromId(125),
+            'finish': regionFromId(124),
+        }
+        levels[20] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(154),
+            'spawn': regionFromId(153),
+            'finish': regionFromId(155),
+        }
+        levels[21] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(159),
+            'spawn': regionFromId(157),
+            'finish': regionFromId(158),
+        }
+        levels[22] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(165),
+            'spawn': regionFromId(164),
+            'finish': regionFromId(163),
+        }
+        levels[23] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(168),
+            'spawn': regionFromId(167),
+            'finish': regionFromId(166),
+        }
+        levels[24] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(173),
+            'spawn': regionFromId(171),
+            'finish': regionFromId(172),
+        }
+        levels[25] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(180),
+            'spawn': regionFromId(178),
+            'finish': regionFromId(179),
+        }
+        levels[26] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(34),
+            'spawn': regionFromId(4),
+            'finish': regionFromId(5),
+        }
+        levels[27] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(181),
+            'spawn': regionFromId(130),
+            'finish': regionFromId(182),
+        }
+        return levels
 
     for region in root:
         regionName = region.find('name').attrib['value']
@@ -146,26 +338,7 @@ def readRegions(filename, gver):
             lId = m.groups()[1]
             regionKind = m.groups()[2]
 
-        rg = None
-        shapeType = region.find('shape').attrib['type']
-        shape = region.find('shape')
-        if shapeType == 'rect':
-            rg = RectangleShape(*map(
-                lambda x: float(x),
-                shape.find('quad').attrib['value'].split(',')
-            ))
-        elif shapeType == 'circle':
-            center = map(
-                lambda x: float(x),
-                shape.find('center').attrib['value'].split(',')
-            )
-            rg = CircleShape(center[0], center[1], float(shape.find('radius').attrib['value']))
-        elif shapeType == 'diamond':
-            center = map(
-                lambda x: float(x),
-                shape.find('center').attrib['value'].split(',')
-            )
-            rg = DiamondShape(center[0], center[1], float(shape.find('width').attrib['value']), float(shape.find('height').attrib['value']))
+        rg = shapeFromRegion(region)
 
         if gver == 'IBE2' and lId == '0607':
             levels[6][regionKind.lower()] = rg
@@ -188,10 +361,16 @@ def readRegions(filename, gver):
 
 class MapInfo(object):
     def __init__(self, mapId):
+        fname = mapId.lower()
+        if mapId == 'IBE-CV-PRO':
+            fname = 'ibe-cv'
         self.levelRegions = readRegions(os.path.join(
             os.path.dirname(os.path.realpath(__file__)),
-            'data/%s/Regions' % mapId.lower()
+            'data/%s/Regions' % fname
         ), mapId)
+        self.obstaclePlayerId = 15
+        if mapId.startswith('IBE-CV'):
+            self.obstaclePlayerId = 0
 
     def findClosestLevel(self, regionName, posX, posY):
         currLvlId = None

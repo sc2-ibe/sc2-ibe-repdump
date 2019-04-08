@@ -501,9 +501,10 @@ def hash_result(general, map_id, result):
 
     if result:
         inp.append(result['escape_time'])
-        inp.append(result['team']['deaths'])
-        inp.append(result['team']['revives'])
-        inp.append(result['team']['bonus_levelups'])
+        if 'team' in result:
+            inp.append(result['team']['deaths'])
+            inp.append(result['team']['revives'])
+            inp.append(result['team']['bonus_levelups'])
 
     def to_str(val):
         return str(val)
@@ -671,11 +672,12 @@ def main():
         map_info = None
         logging.info('Unknown map title: "%s"' % (general['game_title']))
 
-    # CV support added on 21 January 2019
-    # Patch 4.8.2.71663 - 22 January 2019
-    if map_info and map_info['id'].startswith('IBE-CV') and baseBuild < 71663:
-        logging.critical('Old IBE-CV not yet supported')
-        sys.exit(ExitCodes.INTERNAL_ERROR)
+    # IBE-CV Patch: Faster changed to Fast - 31 July 2017
+    # https://gitlab.com/sc2-ibe/sef/commit/d9f2fe206748daf55270e7a2d108358736aa079f
+    # SC2 Patch: 3.17.1.57218 - 7 September 2017
+    if map_info and map_info['id'].startswith('IBE-CV') and baseBuild < 57218:
+        logging.critical('Old IBE-CV not supported')
+        sys.exit(ExitCodes.NOT_SUPPORTED)
 
     # BTB support added on 24 February 2019
     # https://gitlab.com/sc2-ibe/btb/commit/3e3ec2e0a049b1a0d0bbbf3217dbcaf96aa96708
@@ -687,6 +689,7 @@ def main():
 
     results_all = []
     deltaResult = None
+    sefResult = None
     if map_info:
         logging.debug('Reading tracker events..')
         tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
@@ -719,15 +722,17 @@ def main():
                 if args.include_loss:
                     results_all.append(game_result)
                 if game_result['escaped']:
+                    sefResult = game_result
                     break
                 else:
                     game_result = None
             else:
                 game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
+                deltaResult = game_result
 
-        if args.evaluate and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1']:
-            deltaResult = game_result
+        if args.evaluate and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1', 'IBE-CV', 'IBE-CV-PRO']:
             game_result = None
+            doEvaluate = True
 
             # deltaResult was added in: IBE1 v1.46 released in Oct 30, 2013
             # Patch 2.0.12.26825 - 11 November 2013
@@ -735,17 +740,30 @@ def main():
                 logging.critical('IBE version before deltaResult')
                 sys.exit(ExitCodes.INTERNAL_ERROR)
 
-            if (deltaResult and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1']):
+            # don't evaluate IBE games without deltaResult
+            if not deltaResult and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1']:
+                doEvaluate = False
+
+            # CV support added on 21 January 2019
+            # Patch 4.8.2.71663 - 22 January 2019
+            if map_info['id'].startswith('IBE-CV'):
+                # don't evaluate if it's recent enough version
+                if baseBuild >= 71663 and (sefResult is None or sefResult['schema_version'] >= 5):
+                    doEvaluate = False
+
+            if doEvaluate:
+                timeFactor = None
+                if deltaResult:
+                    timeFactor = 1.4 if deltaResult['game_speed'] == 4 else 1.0
                 gstate = GameEvaluation(
                     map_info['id'],
                     general['player_slots'],
                     protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events')),
                     protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events')),
-                    1.4 if deltaResult and deltaResult['game_speed'] == 4 else 1.0
+                    timeFactor
                 )
                 gstate.process()
-                if deltaResult:
-                    game_result = gstate.rebuildGameResult(deltaResult)
+                game_result = gstate.rebuildGameResult(deltaResult=deltaResult, sefResult=sefResult)
 
         # process gamevents to determine if replay was resumed
         # do so only in case of successful runs
@@ -762,7 +780,16 @@ def main():
         osects['results'] = results_all
     if deltaResult:
         osects['delta_result'] = deltaResult
-    osects['hash'] = hash_result(general, map_id, deltaResult if deltaResult is not None else game_result)
+    if sefResult:
+        osects['sef_result'] = sefResult
+
+    if deltaResult is not None:
+        osects['hash'] = hash_result(general, map_id, deltaResult)
+    elif sefResult is not None:
+        osects['hash'] = hash_result(general, map_id, sefResult)
+    else:
+        osects['hash'] = hash_result(general, map_id, game_result)
+
     print(toJson(osects))
 
 
