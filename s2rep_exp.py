@@ -730,7 +730,7 @@ def main():
                 game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
                 deltaResult = game_result
 
-        if args.evaluate and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1', 'IBE-CV', 'IBE-CV-PRO']:
+        if args.evaluate and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1', 'IBE-CV', 'IBE-CV-PRO', 'IBE-CV-EZ']:
             game_result = None
             doEvaluate = True
 

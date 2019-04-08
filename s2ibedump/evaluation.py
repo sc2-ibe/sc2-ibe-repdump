@@ -343,7 +343,7 @@ class GameEvaluation(object):
             if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
                 completedAt -= (16.0 * 1.5 * self.timeFactor)
             elif self.mapId.startswith('IBE-CV'):
-                if self.session.cLevelId != 27:
+                if self.session.cLevelId != self.mapInfo.finalLevel:
                     completedAt -= math.ceil(16.0 * 2.0 * self.timeFactor)
                     completedAt -= math.ceil(16.0 * 1.5 * self.timeFactor)
                 else:
@@ -617,7 +617,7 @@ class GameEvaluation(object):
                         if self.mapId in ['IBE1', 'RIBE1'] and self.session.cLevelId != 0:
                             self.levelCompleted(ev['_gameloop'])
                         elif self.mapId.startswith('IBE-CV'):
-                            if self.session.cLevelId == 27:
+                            if self.session.cLevelId == self.mapInfo.finalLevel:
                                 self.logGame(self.session.getLatestCameraPos())
                                 escaped = self.session.getLatestCameraPos()['pitch'] != 60.0
                                 if escaped:

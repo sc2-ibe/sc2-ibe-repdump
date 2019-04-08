@@ -315,6 +315,98 @@ def readRegions(filename, gver):
             'finish': regionFromId(239),
         }
         return levels
+    elif gver == 'IBE-CV-EZ':
+        levels[1] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(9),
+            'spawn': regionFromId(1),
+            'finish': regionFromId(2),
+        }
+        levels[2] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(193),
+            'spawn': regionFromId(6),
+            'finish': regionFromId(14),
+        }
+        levels[3] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(25),
+            'spawn': regionFromId(11),
+            'finish': regionFromId(18),
+        }
+        levels[4] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(23),
+            'spawn': regionFromId(8),
+            'finish': regionFromId(16),
+        }
+        levels[5] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(24),
+            'spawn': regionFromId(10),
+            'finish': regionFromId(17),
+        }
+        levels[6] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(27),
+            'spawn': regionFromId(13),
+            'finish': regionFromId(20),
+        }
+        levels[7] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(30),
+            'spawn': regionFromId(29),
+            'finish': regionFromId(28),
+        }
+        levels[8] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(33),
+            'spawn': regionFromId(31),
+            'finish': regionFromId(32),
+        }
+        levels[9] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(57),
+            'spawn': regionFromId(56),
+            'finish': regionFromId(58),
+        }
+        levels[10] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(165),
+            'spawn': regionFromId(164),
+            'finish': regionFromId(163),
+        }
+        levels[11] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(168),
+            'spawn': regionFromId(167),
+            'finish': regionFromId(166),
+        }
+        levels[12] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(107),
+            'spawn': regionFromId(108),
+            'finish': regionFromId(109),
+        }
+        levels[13] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(115),
+            'spawn': regionFromId(113),
+            'finish': regionFromId(114),
+        }
+        levels[14] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(154),
+            'spawn': regionFromId(153),
+            'finish': regionFromId(155),
+        }
+        levels[15] = {
+            'finPlayers': lambda x: 1,
+            'region': regionFromId(181),
+            'spawn': regionFromId(130),
+            'finish': regionFromId(182),
+        }
+        return levels
 
     for region in root:
         regionName = region.find('name').attrib['value']
@@ -368,6 +460,7 @@ def readRegions(filename, gver):
 
 class MapInfo(object):
     def __init__(self, mapId):
+        self.mapId = mapId
         fname = mapId.lower()
         if mapId == 'IBE-CV-PRO':
             fname = 'ibe-cv'
@@ -378,6 +471,14 @@ class MapInfo(object):
         self.obstaclePlayerId = 15
         if mapId.startswith('IBE-CV'):
             self.obstaclePlayerId = 0
+
+        self.finalLevel = None
+        if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
+            self.finalLevel = 0
+        elif self.mapId in ['IBE-CV', 'IBE-CV-PRO']:
+            self.finalLevel = 27
+        elif self.mapId in ['IBE-CV-EZ']:
+            self.finalLevel = 15
 
     def findClosestLevel(self, regionName, posX, posY):
         currLvlId = None
