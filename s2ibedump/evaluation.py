@@ -40,7 +40,7 @@ class UnitState(object):
     def __init__(self):
         self.units = {}
 
-    def fetchUnits(self, playerIds=None, unitName=None, createdAt=None, includeRemoved=False):
+    def fetchUnits(self, playerIds=None, unitName=None, posX=None, posY=None, createdAt=None, includeRemoved=False):
         r = []
         for key in self.units:
             if self.units[key]['removed'] >= 0 and not includeRemoved:
@@ -50,6 +50,10 @@ class UnitState(object):
             if playerIds != None and self.units[key]['controlPlayerId'] not in playerIds:
                 continue
             if unitName != None and self.units[key]['unitTypeName'] != unitName:
+                continue
+            if posX != None and self.units[key]['posX'] != posX:
+                continue
+            if posY != None and self.units[key]['posY'] != posY:
                 continue
             r.append(self.units[key])
         return r
@@ -515,6 +519,8 @@ class GameEvaluation(object):
                     doCleanup = False
                     # === HARDCODED RULES ===
                     if self.session.cLevelId != None and len(self.session.clUnits) > 0:
+                        currLevelOverride = None
+
                         # IBE1
                         if self.mapId in ['IBE1', 'RIBE1'] and self.session.cLevelId == 20:
                             if unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 222 and unit['posY'] == 170:
@@ -527,6 +533,23 @@ class GameEvaluation(object):
                                 doCleanup = True
                             else:
                                 continue
+                        # IBE-CV IBE-CV-PRO
+                        elif self.mapId in ['IBE-CV', 'IBE-CV-PRO']:
+                            if self.session.cLevelId != 2:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="HammerSecurity",
+                                    posX=41,
+                                    posY=58,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True)
+                                )
+                                # self.logGame('len %d' % obstCount)
+                                if obstCount:
+                                    currLevelOverride = 2
+
+                        if currLevelOverride is not None:
+                            self.session.cLevelId = currLevelOverride
+                            self.logGame('Level override %d' % (self.session.cLevelId))
                     # === HARDCODED RULES ===
 
                     if self.session.cLevelId != None and len(self.session.clUnits) > 0:
@@ -551,10 +574,10 @@ class GameEvaluation(object):
                         # find matching region containing alive creatures instead of relaying on user camera update
                         if self.mapId.startswith('IBE-CV') and len(self.session.clUnits):
                             matchingRegion = self.fetchMatchingLevelRegion()[0]
+                            # self.logGame(pformat(matchingRegion))
                             if len(matchingRegion['obstacles']) > 10 and matchingRegion['chalId'] not in [2]:
                                 self.session.cLevelId = matchingRegion['chalId']
                                 self.logGame('Level region match %d' % (self.session.cLevelId))
-                                # self.logGame(pformat(matchingRegion))
 
                         self.logGame('Level cleanup')
                         self.session.clUnits = []
