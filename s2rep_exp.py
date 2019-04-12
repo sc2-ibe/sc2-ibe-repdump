@@ -674,12 +674,19 @@ def main():
         tracker = protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events'))
 
         # fix player_id
+        trackerPlayerSetup = False
         for ev in tracker:
             if ev['_event'] != 'NNet.Replay.Tracker.SPlayerSetupEvent':
                 break
+            trackerPlayerSetup = True
             if ev['m_slotId'] is None:
                 continue
             getPlayerSlot(general['player_slots'], slot_id=ev['m_slotId'])['player_id'] = ev['m_playerId']
+
+        if not trackerPlayerSetup:
+            logging.warn('SPlayerSetupEvent event not present')
+            for item in general['player_slots']:
+                item['player_id'] = item['slot_id'] + 1
 
         # get APM from metadata
         if metadata:
