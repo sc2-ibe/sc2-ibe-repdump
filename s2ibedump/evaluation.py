@@ -476,6 +476,11 @@ class GameEvaluation(object):
                 elif ev['_event'] == 'NNet.Game.SHijackReplayGameEvent':
                     self.hijackReplayGameEvent = ev['_gameloop']
 
+                elif ev['_event'] == 'NNet.Game.SGameUserJoinEvent':
+                    self.logGame('unhandled SGameUserJoinEvent')
+                    self.logGame(pformat(ev))
+                    break
+
                 if ev['_gameloop'] <= 0 and self.mapId != 'IBE1':
                     continue
 
@@ -485,7 +490,7 @@ class GameEvaluation(object):
                     if unit['unitTypeName'] == 'IceBaneling' and unit['controlPlayerId'] != 0:
                         if self.session.gameStartedAt is None:
                             self.session.gameStartedAt = ev['_gameloop']
-                            self.logGame(' === GAME STARTED === ')
+                            self.logGame(' === GAME STARTED === %s' % self.mapId)
                         self.session.banelings[unit['controlPlayerId']] = unit
                         self.session.createPlayer(unit['controlPlayerId'])
                         self.logGame('IceBaneling born', playerId=unit['controlPlayerId'])
