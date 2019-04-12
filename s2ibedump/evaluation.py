@@ -278,7 +278,9 @@ class GameEvaluation(object):
         beacons = self.unState.fetchUnits(playerIds=[playerId], unitName='Beacon_ZergSmall2', includeRemoved=True)
         validBeacons = []
         for item in beacons:
-            if item['removed'] != -1 and item['removed'] <= self.session.clInitAt:
+            if item['removed'] != -1 and item['removed'] <= gameloop:
+                continue
+            if item['createdAt'] <= self.session.clInitAt:
                 continue
             if item['createdAt'] <= gameloop:
                 validBeacons.append(item)
@@ -295,6 +297,8 @@ class GameEvaluation(object):
     def getPlayersClosest(self, gameloop, targetX, targetY):
         playersPosition = []
         for playerId in self.session.banelings:
+            if not self.isPlayerAlive(playerId, gameloop):
+                continue
             position = self.session.estimatePlayerPosition(playerId, gameloop, self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].getCenter())
             distance = math.hypot(
                 position['x'] - targetX,
@@ -309,7 +313,7 @@ class GameEvaluation(object):
         def closest(item):
             d = item['distance']
             if not item['alive']:
-                d += 4.0
+                d += 40.0
             return d
 
         playersPosition.sort(key=closest)
@@ -364,7 +368,12 @@ class GameEvaluation(object):
         playersPosition = self.getPlayersClosest(completedAt, finishCenter['x'], finishCenter['y'])
         bcount = len(self.getActivePlayers())
         rcount = self.mapInfo.levelRegions[self.session.cLevelId]['finPlayers'](bcount)
-        self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition[0]))
+        # self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition), gameloop=completedAt)
+
+        if len(playersPosition) == 0:
+            self.logGame('Level failed')
+            self.levelDone()
+            return
 
         if self.mapId.startswith('IBE-CV') and self.session.cLevelId in [28] and playersPosition[0]['distance'] > 5.0:
             self.logGame('Level failed')
@@ -388,7 +397,7 @@ class GameEvaluation(object):
             playerId = playersPosition[0]['playerId']
             powerupsBy.append(playerId)
             self.session.playerStats[playerId]['level'] += 1
-            self.logGame('Powerup acquired - removedAt=%d %s' % (item['removed'], playersPosition[0]))
+            self.logGame('Powerup acquired - removedAt=%d %s' % (item['removed'], playersPosition[0]), gameloop=item['removed'])
 
         self.session.levels[self.session.cLevelId] = {
             'created_at': self.session.clInitAt,
@@ -405,7 +414,7 @@ class GameEvaluation(object):
             self.session.cLevelId,
             secs,
             ', '.join(map(lambda x: self.playerMap[x]['name'], completedBy))
-        ))
+        ), gameloop=completedAt)
         self.levelDone()
 
     def levelDone(self):
