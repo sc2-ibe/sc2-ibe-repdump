@@ -14,3 +14,15 @@ def getPlayerSlot(players, slot_id=None, player_id=None, user_id=None):
         elif user_id is not None and user_id == item.user_id:
             return item
     return None
+
+
+def unitTag(unitTagIndex, unitTagRecycle):
+    return (unitTagIndex << 18) + unitTagRecycle
+
+
+def unitTagIndex(unitTag):
+    return (unitTag >> 18) & 0x00003fff
+
+
+def unitTagRecycle(unitTag):
+    return (unitTag) & 0x0003ffff

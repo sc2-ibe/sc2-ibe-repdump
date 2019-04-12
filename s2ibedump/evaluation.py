@@ -9,6 +9,7 @@ import logging
 import math
 from collections import OrderedDict
 from .s2map import MapInfo, CmdFlags
+from .helpers import unitTagIndex
 
 
 class EventStream(object):
@@ -93,6 +94,7 @@ class GameSession(object):
         self.abilRawUsage = OrderedDict()
         self.moveOrders = OrderedDict()
         self.cameraUpdates = OrderedDict()
+        self.playerSelection = OrderedDict()
 
     def clearMoveOrders(self):
         for i in range(10):
@@ -110,6 +112,7 @@ class GameSession(object):
             'level': 1,
         }
         self.abilRawUsage[playerId] = OrderedDict()
+        self.playerSelection[playerId] = []
 
     def getLivingUnits(self):
         r = []
@@ -128,11 +131,16 @@ class GameSession(object):
         return r
 
     def registerMoveOrder(self, gameloop, playerId, posX, posY):
-        self.moveOrders[playerId].append({
-            'gameloop': gameloop,
-            'x': posX,
-            'y': posY,
-        })
+        tmpPlayerSelection = self.playerSelection[playerId]
+        if len(tmpPlayerSelection) == 0:
+            tmpPlayerSelection = [playerId]
+        for selectedPlayerId in tmpPlayerSelection:
+            self.moveOrders[selectedPlayerId].append({
+                'gameloop': gameloop,
+                'x': posX,
+                'y': posY,
+                'ctrlPlayerId': playerId,
+            })
 
     def registerCameraUpdate(self, gameloop, playerId, posX, posY, yaw, pitch):
         try:
@@ -216,6 +224,14 @@ class GameSession(object):
             currPos['y'] = morder['y']
         return currPos
 
+    def getPlayerCtrl(self, playerId, atGameloop):
+        ctrlPlayerId = playerId
+        for morder in self.moveOrders[playerId]:
+            if morder['gameloop'] > atGameloop:
+                break
+            ctrlPlayerId = morder['ctrlPlayerId']
+        return ctrlPlayerId
+
 
 class GameEvaluation(object):
     def __init__(self, mapId, playerSlots, trEvents, gmEvents, defaultGameSpeed):
@@ -298,8 +314,8 @@ class GameEvaluation(object):
     def getPlayersClosest(self, gameloop, targetX, targetY):
         playersPosition = []
         for playerId in self.session.banelings:
-            if not self.isPlayerAlive(playerId, gameloop):
-                continue
+            # if not self.isPlayerAlive(playerId, gameloop):
+            #     continue
             position = self.session.estimatePlayerPosition(playerId, gameloop, self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].getCenter())
             distance = math.hypot(
                 position['x'] - targetX,
@@ -307,13 +323,15 @@ class GameEvaluation(object):
             )
             playersPosition.append({
                 'playerId': playerId,
+                'ctrlPlayerId': self.session.getPlayerCtrl(playerId, gameloop),
                 'distance': distance,
                 'alive': self.isPlayerAlive(playerId, gameloop),
+                'onSpawn': self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].containsPoint(position['x'], position['y'])
             })
 
         def closest(item):
             d = item['distance']
-            if not item['alive']:
+            if not item['alive'] or item['onSpawn']:
                 d += 40.0
             return d
 
@@ -373,12 +391,12 @@ class GameEvaluation(object):
 
         if len(playersPosition) == 0:
             self.logGame('Level failed')
-            self.levelDone()
+            self.levelDone(gameloopEnd)
             return
 
         if self.mapId.startswith('IBE-CV') and self.session.cLevelId in [28] and playersPosition[0]['distance'] > 5.0:
             self.logGame('Level failed')
-            self.levelDone()
+            self.levelDone(gameloopEnd)
             return
 
         if self.session.cLevelId in self.session.levels:
@@ -386,19 +404,27 @@ class GameEvaluation(object):
 
         completedBy = []
         for i in range(rcount):
-            playerId = playersPosition[i]['playerId']
-            completedBy.append(playerId)
-            self.session.playerStats[playerId]['level'] += 1
+            completedBy.append([
+                playersPosition[i]['playerId'],
+                playersPosition[i]['ctrlPlayerId']
+            ])
+            self.session.playerStats[playersPosition[i]['playerId']]['level'] += 1
 
         powerupsBy = []
         for item in self.session.clPowerups:
             if item['removed'] == -1 or item['removed'] >= gameloopEnd:
                 continue
             playersPosition = self.getPlayersClosest(item['removed'], item['posX'], item['posY'])
-            playerId = playersPosition[0]['playerId']
-            powerupsBy.append(playerId)
-            self.session.playerStats[playerId]['level'] += 1
-            self.logGame('Powerup acquired - removedAt=%d %s' % (item['removed'], playersPosition[0]), gameloop=item['removed'])
+            powerupsBy.append([
+                playersPosition[0]['playerId'],
+                playersPosition[0]['ctrlPlayerId']
+            ])
+            self.session.playerStats[playersPosition[0]['playerId']]['level'] += 1
+            self.logGame(
+                'Powerup acquired - removedAt=%d %s' % (item['removed'], playersPosition[0]),
+                gameloop=item['removed'],
+                playerId=playersPosition[0]['ctrlPlayerId']
+            )
 
         self.session.levels[self.session.cLevelId] = {
             'created_at': self.session.clInitAt,
@@ -414,14 +440,14 @@ class GameEvaluation(object):
             len(self.mapInfo.levelRegions),
             self.session.cLevelId,
             secs,
-            ', '.join(map(lambda x: self.playerMap[x]['name'], completedBy))
+            ', '.join(map(lambda x: '%s [%s]' % (self.playerMap[x[0]]['name'], self.playerMap[x[1]]['name']), completedBy))
         ), gameloop=completedAt)
-        self.levelDone()
+        self.levelDone(gameloopEnd)
 
-    def levelDone(self):
+    def levelDone(self, gameLoop):
         self.session.clearMoveOrders()
         self.session.clearCameraUpdates()
-        self.session.clPowerups = []
+        self.session.clPowerups = filter(lambda x: x['createdAt'] == gameLoop, self.session.clPowerups)
 
     def process(self):
         while True:
@@ -466,7 +492,12 @@ class GameEvaluation(object):
                                 pass
                     elif unit['unitTypeName'] == 'Beacon_ZergSmall2' and unit['controlPlayerId'] != 0:
                         self.session.playerStats[unit['controlPlayerId']]['deaths'] += 1
-                        # self.logGame('IceBaneling died', playerId=unit['controlPlayerId'])
+                        self.logGame('IceBaneling died', playerId=unit['controlPlayerId'])
+                        for ctrlPlayerId in self.session.playerSelection:
+                            try:
+                                self.session.playerSelection[ctrlPlayerId].remove(unit['controlPlayerId'])
+                            except ValueError:
+                                pass
                     elif unit['unitTypeName'] == 'ShapeTorus4':
                         self.levelCompleted(ev['_gameloop'])
                         self.session.gameEscapedAt = ev['_gameloop']
@@ -522,7 +553,7 @@ class GameEvaluation(object):
                                     if self.session.gameSpeed == 2:
                                         self.timeFactor = 1.0
                                         # 256 normal
-                                    if self.session.gameSpeed == 3:
+                                    elif self.session.gameSpeed == 3:
                                         self.timeFactor = 1.201935
                                         # 256/213 = 1.20187793427
                                         # 213 fast?
@@ -720,6 +751,21 @@ class GameEvaluation(object):
                             'gameloop': ev['_gameloop'],
                         })
 
+                elif ev['_event'] == 'NNet.Game.SSelectionDeltaEvent':
+                    playerId = self.playerFromUser(ev['_userid']['m_userId'])['player_id']
+                    unitTags = ev['m_delta']['m_addUnitTags']
+                    selectedPlayers = []
+                    for utag in unitTags:
+                        unit = self.unState.units[unitTagIndex(utag)]
+                        if unit['controlPlayerId'] in [0, 15]:
+                            continue
+                        selectedPlayers.append(unit['controlPlayerId'])
+                    self.session.playerSelection[playerId] = selectedPlayers
+                    # if len(selectedPlayers) == 0:
+                    #     self.logGame('Selection cleared', playerId=playerId)
+                    # else:
+                    #     self.logGame('Selection updated %s' % str(map(lambda x: 'P%02d %s' % (x, self.playerMap[x]['name']), selectedPlayers)), playerId=playerId)
+
             except StopIteration:
                 break
 
@@ -857,12 +903,10 @@ class GameEvaluation(object):
                 result['challenges'][chalId] = OrderedDict()
                 result['challenges'][chalId]['completed_by'] = self.session.levels[chalId]['completed_by']
                 if len(result['challenges'][chalId]['completed_by']) <= 0:
-                    result['challenges'][chalId]['completed_by'] = [15]
-                result['challenges'][chalId]['completed_by'] = map(lambda x: [x, x], result['challenges'][chalId]['completed_by'])
+                    result['challenges'][chalId]['completed_by'] = [[15, 15]]
                 result['challenges'][chalId]['buttons_by'] = []
                 # TODO: buttons_by
                 result['challenges'][chalId]['powerups_by'] = self.session.levels[chalId]['powerups_by']
-                result['challenges'][chalId]['powerups_by'] = map(lambda x: [x, x], result['challenges'][chalId]['powerups_by'])
                 result['challenges'][chalId]['completed_time'] = round(self.session.levels[chalId]['completed_time'], 2)
                 result['challenges'][chalId]['time_offset_start'] = round(
                     (self.session.levels[chalId]['started_at'] - self.session.gameStartedAt) / (16.0 * self.timeFactor),
@@ -877,9 +921,9 @@ class GameEvaluation(object):
             result['challenges'] = copy.deepcopy(sefResult['challenges'])
             if sefResult['schema_version'] < 5:
                 for chalId in result['challenges']:
-                    result['challenges'][chalId]['completed_by'][0][1] = self.session.levels[chalId]['completed_by'][0]
+                    result['challenges'][chalId]['completed_by'][0][1] = self.session.levels[chalId]['completed_by'][0][1]
                     for powerupKey, powerupItem in enumerate(result['challenges'][chalId]['powerups_by']):
                         if len(self.session.levels[chalId]['powerups_by']) > powerupKey:
-                            powerupItem[1] = self.session.levels[chalId]['powerups_by'][powerupKey]
+                            powerupItem[1] = self.session.levels[chalId]['powerups_by'][powerupKey][1]
 
         return result

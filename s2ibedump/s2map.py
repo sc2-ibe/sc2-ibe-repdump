@@ -106,6 +106,12 @@ class CircleShape(object):
             'y': self.centerY,
         }
 
+    def containsPoint(self, posX, posY):
+        if math.hypot(posX - self.centerX, posY - self.centerY) < self.radius:
+            return True
+        else:
+            return False
+
 
 class DiamondShape(object):
     def __init__(self, centerX, centerY, width, height):
@@ -122,6 +128,12 @@ class DiamondShape(object):
             'x': self.centerX,
             'y': self.centerY,
         }
+
+    def containsPoint(self, posX, posY):
+        if math.hypot(posX - self.centerX, posY - self.centerY) < min([self.width, self.height]):
+            return True
+        else:
+            return False
 
 
 def readRegions(filename, gver):
