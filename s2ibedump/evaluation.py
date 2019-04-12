@@ -555,8 +555,9 @@ class GameEvaluation(object):
                             if len(self.session.levels):
                                 tdiff = ev['_gameloop'] - self.session.levels.values()[-1]['completed_at']
                                 self.logGame('Level init, tdiff=%d' % (tdiff))
-                                if self.mapId == 'IBE1' and len(self.session.levels) == 1 and tdiff < 90:
+                                if self.mapId == 'IBE1':
                                     self.session.gameDiff = 1
+                                if self.mapId == 'IBE1' and len(self.session.levels) == 1 and tdiff < 90:
                                     self.session.gameSpeed = 2
                                     self.timeFactor = 1.0
                                     self.logGame('Speed changed to normal, timefactor=%f' % self.timeFactor)
