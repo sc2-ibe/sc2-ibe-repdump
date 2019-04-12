@@ -258,7 +258,7 @@ class GameEvaluation(object):
     def next(self):
         trEv = self.trEvents.peek
         gmEv = self.gmEvents.peek
-        if trEv and trEv['_gameloop'] <= gmEv['_gameloop']:
+        if trEv and (not gmEv or trEv['_gameloop'] <= gmEv['_gameloop']):
             return self.trEvents.next()
         elif gmEv:
             return self.gmEvents.next()
