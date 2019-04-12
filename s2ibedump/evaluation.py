@@ -252,7 +252,8 @@ class GameEvaluation(object):
         for x in self.playerSlots:
             if isinstance(x['user_id'], int):
                 self.userMap[x['user_id']] = x
-            self.playerMap[x['player_id']] = x
+            if x['player_id'] is not None:
+                self.playerMap[x['player_id']] = x
 
     def next(self):
         trEv = self.trEvents.peek
@@ -466,8 +467,11 @@ class GameEvaluation(object):
                         self.logGame('userid 10, wtf?')
                         continue
                     playerId = self.playerFromUser(userId)['player_id']
-                    self.playersLeft[playerId] = ev['_gameloop']
-                    self.logGame('player left', playerId=playerId)
+                    if playerId:
+                        self.playersLeft[playerId] = ev['_gameloop']
+                        self.logGame('player left', playerId=playerId)
+                    else:
+                        self.logGame('user left', userId=userId)
 
                 elif ev['_event'] == 'NNet.Game.SHijackReplayGameEvent':
                     self.hijackReplayGameEvent = ev['_gameloop']
@@ -693,7 +697,10 @@ class GameEvaluation(object):
                     posY = ev['m_target']['y'] / 256.0
                     yaw = ev['m_yaw'] / 2048.0 * 360.0 if ev['m_yaw'] else None
                     pitch = ev['m_pitch'] / 2048.0 * 360.0 if ev['m_pitch'] else None
-                    playerId = self.playerFromUser(userId)['player_id']
+                    playerInfo = self.playerFromUser(userId)
+                    if playerInfo['is_observer']:
+                        continue
+                    playerId = playerInfo['player_id']
                     if self.session.gameStartedAt is not None:
                         self.session.registerCameraUpdate(ev['_gameloop'], playerId, posX, posY, yaw, pitch)
                         # self.logGame('Camera update [ %5.1f ; %5.1f ]' % (posX, posY), playerId=playerId)

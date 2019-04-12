@@ -623,6 +623,8 @@ def main():
         general['player_slots'] = []
         for p in s2rep.players:
             general['player_slots'].append(PlayerSlot.fromParticipant(p))
+        for p in s2rep.observers:
+            general['player_slots'].append(PlayerSlot.fromObserver(p))
     else:
         logging.info('Setting up players..')
         initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))

@@ -31,6 +31,8 @@ class PlayerSlot(object):
         self.name = None
         self.clan = None
         self.type = None
+        self.is_human = None
+        self.is_observer = None
         self.handle = None
         self.toon = None
         self.color = None
@@ -52,6 +54,7 @@ class PlayerSlot(object):
         result.is_human = p.is_human
         if p.is_human:
             result.handle = p.toon_handle
+        result.is_observer = False
         result.toon = {
             'region': p.detail_data['bnet']['region'],
             'realm': p.detail_data['bnet']['subregion'],
@@ -64,4 +67,14 @@ class PlayerSlot(object):
             'a': p.color.a,
         }
         result.color_name = p.color.name
+        return result
+
+    @classmethod
+    def fromObserver(cls, p):
+        result = PlayerSlot()
+        result.slot_id = p.sid
+        result.user_id = p.uid
+        result.clan = p.clan_tag
+        result.name = p.name
+        result.is_observer = True
         return result
