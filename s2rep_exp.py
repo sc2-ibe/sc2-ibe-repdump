@@ -576,11 +576,6 @@ def main():
             protocol = versions.latest()
         logging.warn('Attempting to use %s instead' % protocol.__name__)
 
-    # not supported by s2protocol, but might be fixable
-    if protocol.tracker_eventid_typeid is None:
-        logging.critical('"protocol.tracker_eventid_typeid" missing')
-        sys.exit(ExitCodes.INTERNAL_ERROR)
-
     details = protocol.decode_replay_details(read_contents(archive, 'replay.details'))
     if len(details['m_cacheHandles']) == 0:
         logging.critical('Test mode detected - map was run from editor')
@@ -592,6 +587,13 @@ def main():
     except ValueError:
         logging.critical('"%s" missing' % 'replay.tracker.events')
         sys.exit(ExitCodes.NOT_SUPPORTED)
+
+    # tracker section should be present in replays from build 25604 and above
+    # May 7th 2013
+    # https://liquipedia.net/starcraft2/Patch_2.0.8
+    if protocol.tracker_eventid_typeid is None:
+        logging.critical('"protocol.tracker_eventid_typeid" missing')
+        protocol.decode_replay_tracker_events = versions.build(26490).decode_replay_tracker_events
 
     s2rep = None
     try:
@@ -723,11 +725,10 @@ def main():
             # deltaResult was added in: IBE1 v1.46 released in Oct 30, 2013
             # Patch 2.0.12.26825 - 11 November 2013
             if not deltaResult and baseBuild < 26825 and map_info['id'] == 'IBE1':
-                logging.critical('IBE version before deltaResult')
-                sys.exit(ExitCodes.INTERNAL_ERROR)
+                logging.warning('IBE version before deltaResult')
 
-            # don't evaluate IBE games without deltaResult
-            if not deltaResult and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1']:
+            # don't evaluate non-IBE1 games without deltaResult
+            if not deltaResult and map_info['id'] in ['IBE2', 'RIBE1']:
                 doEvaluate = False
 
             # CV support added on 21 January 2019

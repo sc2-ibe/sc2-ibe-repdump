@@ -553,7 +553,14 @@ class GameEvaluation(object):
                             self.session.cLevelId = None
                             self.session.clInitAt = ev['_gameloop']
                             if len(self.session.levels):
-                                self.logGame('Level init, diff=%d' % (ev['_gameloop'] - self.session.levels.values()[-1]['completed_at']))
+                                tdiff = ev['_gameloop'] - self.session.levels.values()[-1]['completed_at']
+                                self.logGame('Level init, tdiff=%d' % (tdiff))
+                                if self.mapId == 'IBE1' and len(self.session.levels) == 1 and tdiff < 90:
+                                    self.session.gameDiff = 1
+                                    self.session.gameSpeed = 2
+                                    self.timeFactor = 1.0
+                                    self.logGame('Speed changed to normal, timefactor=%f' % self.timeFactor)
+                                    # TODO: recalc first challenge
                             else:
                                 if not self.timeFactor:
                                     if self.mapId.startswith('IBE-CV'):
@@ -623,6 +630,12 @@ class GameEvaluation(object):
 
                     if unit['unitTypeName'] == 'IceBaneling2' and self.session.gameStartedAt is not None:
                         if len(self.unState.fetchUnits(unitName='IceBaneling2')) == 0:
+                            self.session.clear()
+                            self.timeFactor = None
+                            self.logGame('GAME FAILED')
+                    # old IBE1 early ~2013
+                    if unit['unitTypeName'] == 'IceBaneCollnDetec' and self.session.gameStartedAt is not None:
+                        if len(self.unState.fetchUnits(unitName='IceBaneCollnDetec')) == 0:
                             self.session.clear()
                             self.timeFactor = None
                             self.logGame('GAME FAILED')
@@ -739,6 +752,11 @@ class GameEvaluation(object):
                                     break
                             else:
                                 self.levelCompleted(ev['_gameloop'])
+                        elif self.mapId == 'IBE1' and self.session.cLevelId == self.mapInfo.finalLevel and self.baseBuild < 26825:
+                            self.levelCompleted(ev['_gameloop'])
+                            self.session.gameEscapedAt = ev['_gameloop']
+                            self.logGame('GAME ESCAPED (no delta result)')
+                            break
 
                 elif ev['_event'] == 'NNet.Game.SCameraUpdateEvent' and ev['m_target'] != None:
                     userId = ev['_userid']['m_userId']
@@ -765,6 +783,8 @@ class GameEvaluation(object):
                         # self.logGame(toJson(self.session.clUnits))
 
                         initCam = self.session.findInitialCamPosition()
+                        if initCam is None:
+                            continue
                         # self.logGame(pformat(initCam))
                         self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', initCam['x'], initCam['y'])
                         tmpCenter = self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].getCenter()
@@ -780,7 +800,8 @@ class GameEvaluation(object):
                     posX = ev['m_target']['x'] / 4096.0
                     posY = ev['m_target']['y'] / 4096.0
                     playerId = self.userMap[ev['_userid']['m_userId']]['player_id']
-                    self.session.registerMoveOrder(ev['_gameloop'], playerId, posX, posY)
+                    if self.session.gameStartedAt is not None:
+                        self.session.registerMoveOrder(ev['_gameloop'], playerId, posX, posY)
                     # self.logGame('Target update [ %5.1f ; %5.1f ]' % (posX, posY), userId=ev['_userid']['m_userId'])
 
                 elif ev['_event'] == 'NNet.Game.SCmdEvent':
@@ -789,7 +810,8 @@ class GameEvaluation(object):
                     if ev['m_abil'] is None and 'TargetPoint' in ev['m_data']:
                         posX = ev['m_data']['TargetPoint']['x'] / 4096.0
                         posY = ev['m_data']['TargetPoint']['y'] / 4096.0
-                        self.session.registerMoveOrder(ev['_gameloop'], playerId, posX, posY)
+                        if self.session.gameStartedAt is not None:
+                            self.session.registerMoveOrder(ev['_gameloop'], playerId, posX, posY)
                         # self.logGame('Target update [ %5.1f ; %5.1f ]' % (posX, posY), userId=ev['_userid']['m_userId'])
                     elif ev['m_abil'] is not None:
                         if ev['m_abil']['m_abilLink'] not in self.session.abilRawUsage[playerId]:
