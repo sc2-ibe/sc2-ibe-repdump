@@ -658,7 +658,7 @@ class GameEvaluation(object):
                                 continue
                         # IBE-CV IBE-CV-PRO
                         elif self.mapId in ['IBE-CV', 'IBE-CV-PRO']:
-                            if self.session.cLevelId != 2:
+                            if self.session.cLevelId != 2 and currLevelOverride is None:
                                 obstCount = len(self.unState.fetchUnits(
                                     unitName="HammerSecurity",
                                     posX=41,
@@ -666,9 +666,18 @@ class GameEvaluation(object):
                                     createdAt=self.session.clInitAt,
                                     includeRemoved=True)
                                 )
-                                # self.logGame('len %d' % obstCount)
                                 if obstCount:
                                     currLevelOverride = 2
+                            if self.session.cLevelId != 7 and currLevelOverride is None:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="Ravager",
+                                    posX=158,
+                                    posY=47,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True)
+                                )
+                                if obstCount:
+                                    currLevelOverride = 7
 
                         if currLevelOverride is not None:
                             self.session.cLevelId = currLevelOverride
