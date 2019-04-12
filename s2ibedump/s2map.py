@@ -9,6 +9,35 @@ import xml.etree.ElementTree as ET
 import math
 
 
+KNOWN_NAME_MAP = {
+    'Ice Baneling Escape': 'IBE1',
+    '도전! 맹독충의 빙판탈출': 'IBE1', # koKR
+    '毒爆大逃亡': 'IBE1', # zhTW
+
+    'Reverse Ice Baneling Escape': 'RIBE1',
+
+    'Ice Baneling Escape 2': 'IBE2',
+    '맹독충의 빙판탈출 2': 'IBE2', # koKR
+
+    'Ice Baneling Escape 2.1 - The Ice Awakens': 'IBE2.1',
+    '맹독충의 빙판탈출 2.1 - 얼음 깨기': 'IBE2.1', # koKR
+
+    'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
+    '맹독충의 빙판탈출 - 차가운 여행': 'IBE-CV', # koKR
+
+    'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
+    '맹독충의 빙판탈출 - 차가운 여행 - EZ': 'IBE-CV-EZ', # koKR
+
+    'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
+    '맹독충의 빙판탈출 - 차가운 여행 - PRO': 'IBE-CV-PRO', # koKR
+
+    'Back to Brood Ice Escape': 'BTB',
+    'Back to Brood Ice Escape PRO': 'BTB-PRO',
+    'Back to Brood Ice Escape PRO mode': 'BTB-PRO',
+    'Back to Brood Baneling mode': 'BTB-BANE',
+}
+
+
 class CmdFlags(object):
     Alternate              = 1 << 0
     Queued                 = 1 << 1

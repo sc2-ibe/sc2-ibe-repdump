@@ -16,6 +16,7 @@ import logging
 from s2ibedump.evaluation import GameEvaluation
 from s2ibedump.objects import PLAYER_TYPE_MAP, GAME_SPEED_MAP, PlayerSlot
 from s2ibedump.helpers import getPlayerSlot, toJson
+from s2ibedump.s2map import KNOWN_NAME_MAP
 
 
 class DReader(object):
@@ -521,7 +522,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('replay_file', help='.SC2Replay file to load')
     parser.add_argument('-v', '--verbose', help='verbose logging', action='store_true')
+    parser.add_argument('--map-id', help='Force replay to be handled as it was played on a given map-id')
     parser.add_argument('--include-loss', help='include results that did not end with an escape', action='store_true')
+    parser.add_argument('--game-speed', type=int, default=4)
     parser.add_argument('--evaluate', action='store_true')
     args = parser.parse_args()
 
@@ -626,41 +629,15 @@ def main():
         general.addInitData(initd)
         general.setupPlayers(initd, details, metadata)
 
-    NAME_MAP = {
-        'Ice Baneling Escape': 'IBE1',
-        '도전! 맹독충의 빙판탈출': 'IBE1', # koKR
-        '毒爆大逃亡': 'IBE1', # zhTW
-
-        'Reverse Ice Baneling Escape': 'RIBE1',
-
-        'Ice Baneling Escape 2': 'IBE2',
-        '맹독충의 빙판탈출 2': 'IBE2', # koKR
-
-        'Ice Baneling Escape 2.1 - The Ice Awakens': 'IBE2.1',
-        '맹독충의 빙판탈출 2.1 - 얼음 깨기': 'IBE2.1', # koKR
-
-        'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
-        '맹독충의 빙판탈출 - 차가운 여행': 'IBE-CV', # koKR
-
-        'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
-        '맹독충의 빙판탈출 - 차가운 여행 - EZ': 'IBE-CV-EZ', # koKR
-
-        'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
-        '맹독충의 빙판탈출 - 차가운 여행 - PRO': 'IBE-CV-PRO', # koKR
-
-        'Back to Brood Ice Escape': 'BTB',
-        'Back to Brood Ice Escape PRO': 'BTB-PRO',
-        'Back to Brood Ice Escape PRO mode': 'BTB-PRO',
-        'Back to Brood Baneling mode': 'BTB-BANE',
-    }
-
     fname = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'minfo.json')
     with open(fname, 'r') as fp:
         minfo = json.load(fp, encoding='utf-8')
 
-    map_id = None
     try:
-        map_id = NAME_MAP[general['game_title']]
+        if args.map_id is not None:
+            map_id = args.map_id
+        else:
+            map_id = KNOWN_NAME_MAP[general['game_title']]
 
         # IBE2.1 before name change
         if general['game_title'] == '맹독충의 빙판탈출 2' and general['author_handle'] in ['1-S2-1-4182020', '2-S2-1-2642502', '3-S2-1-4137301']:
@@ -730,7 +707,7 @@ def main():
                 game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
                 deltaResult = game_result
 
-        if args.evaluate and map_info['id'] in ['IBE1', 'IBE2', 'RIBE1', 'IBE-CV', 'IBE-CV-PRO', 'IBE-CV-EZ']:
+        if args.evaluate and not map_info['id'].startswith('BTB'):
             game_result = None
             doEvaluate = True
 
@@ -752,16 +729,16 @@ def main():
                     doEvaluate = False
                     game_result = sefResult
 
-            if doEvaluate:
-                timeFactor = None
-                if deltaResult:
-                    timeFactor = 1.4 if deltaResult['game_speed'] == 4 else 1.0
+            if doEvaluate or (not game_result and args.include_loss):
+                defaultGameSpeed = args.game_speed
+                if deltaResult is not None:
+                    defaultGameSpeed = deltaResult['game_speed']
                 gstate = GameEvaluation(
                     map_info['id'],
                     general['player_slots'],
                     protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events')),
                     protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events')),
-                    timeFactor
+                    defaultGameSpeed
                 )
                 gstate.process()
                 game_result = gstate.rebuildGameResult(deltaResult=deltaResult, sefResult=sefResult)

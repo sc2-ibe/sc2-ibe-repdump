@@ -218,12 +218,13 @@ class GameSession(object):
 
 
 class GameEvaluation(object):
-    def __init__(self, mapId, playerSlots, trEvents, gmEvents, timeFactor):
+    def __init__(self, mapId, playerSlots, trEvents, gmEvents, defaultGameSpeed):
         self.mapId = mapId
         self.playerSlots = playerSlots
         self.trEvents = EventStream(trEvents)
         self.gmEvents = EventStream(gmEvents)
-        self.timeFactor = timeFactor
+        self.timeFactor = None
+        self.defaultGameSpeed = defaultGameSpeed
         self.gameloop = 0
         self.unState = UnitState()
         self.mapInfo = MapInfo(mapId)
@@ -451,7 +452,7 @@ class GameEvaluation(object):
                 if ev['_event'] == 'NNet.Replay.Tracker.SUnitBornEvent':
                     unit = self.unState.units[ev['m_unitTagIndex']]
 
-                    if unit['unitTypeName'] == 'IceBaneling':
+                    if unit['unitTypeName'] == 'IceBaneling' and unit['controlPlayerId'] != 0:
                         if self.session.gameStartedAt is None:
                             self.session.gameStartedAt = ev['_gameloop']
                             self.logGame(' === GAME STARTED === ')
@@ -463,7 +464,7 @@ class GameEvaluation(object):
                             peekEv = self.trEvents.peek
                             if peekEv['_event'] != 'NNet.Replay.Tracker.SUnitBornEvent' or peekEv['m_unitTypeName'] != 'IceBaneling':
                                 pass
-                    elif unit['unitTypeName'] == 'Beacon_ZergSmall2':
+                    elif unit['unitTypeName'] == 'Beacon_ZergSmall2' and unit['controlPlayerId'] != 0:
                         self.session.playerStats[unit['controlPlayerId']]['deaths'] += 1
                         # self.logGame('IceBaneling died', playerId=unit['controlPlayerId'])
                     elif unit['unitTypeName'] == 'ShapeTorus4':
@@ -511,12 +512,25 @@ class GameEvaluation(object):
                                 if not self.timeFactor:
                                     if self.mapId.startswith('IBE-CV'):
                                         if (ev['_gameloop'] - self.session.gameStartedAt) == 16:
-                                            self.timeFactor = 1.0
                                             self.session.gameSpeed = 2
                                         else:
-                                            self.timeFactor = 1.201935
                                             self.session.gameSpeed = 3
                                         self.session.gameDiff = 1
+                                    elif self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
+                                        self.session.gameSpeed = self.defaultGameSpeed
+
+                                    if self.session.gameSpeed == 2:
+                                        self.timeFactor = 1.0
+                                        # 256 normal
+                                    if self.session.gameSpeed == 3:
+                                        self.timeFactor = 1.201935
+                                        # 256/213 = 1.20187793427
+                                        # 213 fast?
+                                    elif self.session.gameSpeed == 4:
+                                        self.timeFactor = 1.4
+                                        # 182 faster
+                                    else:
+                                        raise Exception()
                                     self.logGame('timefactor=%f' % self.timeFactor)
                                 self.logGame('Level init')
 
@@ -554,8 +568,7 @@ class GameEvaluation(object):
                     if unit['unitTypeName'] == 'IceBaneling2' and self.session.gameStartedAt is not None:
                         if len(self.unState.fetchUnits(unitName='IceBaneling2')) == 0:
                             self.session.clear()
-                            if self.mapId.startswith('IBE-CV'):
-                                self.timeFactor = None
+                            self.timeFactor = None
                             self.logGame('GAME FAILED')
 
                     doCleanup = False
