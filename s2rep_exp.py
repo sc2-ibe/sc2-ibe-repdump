@@ -736,6 +736,7 @@ def main():
                 if deltaResult is not None:
                     defaultGameSpeed = deltaResult['game_speed']
                 gstate = GameEvaluation(
+                    baseBuild,
                     map_info['id'],
                     general['player_slots'],
                     protocol.decode_replay_tracker_events(read_contents(archive, 'replay.tracker.events')),

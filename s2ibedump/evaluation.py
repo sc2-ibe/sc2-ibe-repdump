@@ -9,7 +9,7 @@ import logging
 import math
 from collections import OrderedDict
 from .s2map import MapInfo, CmdFlags
-from .helpers import unitTagIndex
+from .helpers import unitTagIndex, toJson
 
 
 class EventStream(object):
@@ -158,7 +158,7 @@ class GameSession(object):
         tPosMap = OrderedDict()
         for playerId in self.cameraUpdates:
             for item in self.cameraUpdates[playerId]:
-                poskey = '%03d;%03d' % (int(math.ceil(item['x'] / resolutionDiv)), int(math.ceil(item['y'] / resolutionDiv)))
+                poskey = '%03d;%03d' % (int(round(item['x'] / resolutionDiv)), int(round(item['y'] / resolutionDiv)))
                 if poskey not in tPosMap:
                     tPosMap[poskey] = {
                         'playerIds': {},
@@ -385,10 +385,11 @@ class GameEvaluation(object):
         secs = ticks / (16.0 * self.timeFactor)
 
         finishCenter = self.mapInfo.levelRegions[self.session.cLevelId]['finish'].getCenter()
+        self.logGame('finish region [ %5.1f ; %5.1f ]' % (finishCenter['x'], finishCenter['y']))
         playersPosition = self.getPlayersClosest(completedAt, finishCenter['x'], finishCenter['y'])
         bcount = len(self.getActivePlayers())
         rcount = self.mapInfo.levelRegions[self.session.cLevelId]['finPlayers'](bcount)
-        # self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition), gameloop=completedAt)
+        self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition), gameloop=completedAt)
 
         if len(playersPosition) == 0:
             self.logGame('Level failed')
@@ -493,7 +494,7 @@ class GameEvaluation(object):
                             self.logGame(' === GAME STARTED === %s' % self.mapId)
                         self.session.banelings[unit['controlPlayerId']] = unit
                         self.session.createPlayer(unit['controlPlayerId'])
-                        self.logGame('IceBaneling born', playerId=unit['controlPlayerId'])
+                        self.logGame('IceBaneling born [ %5.1f ; %5.1f ]' % (unit['posX'], unit['posY']), playerId=unit['controlPlayerId'])
 
                         if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
                             peekEv = self.trEvents.peek
@@ -501,7 +502,7 @@ class GameEvaluation(object):
                                 pass
                     elif unit['unitTypeName'] == 'Beacon_ZergSmall2' and unit['controlPlayerId'] != 0:
                         self.session.playerStats[unit['controlPlayerId']]['deaths'] += 1
-                        self.logGame('IceBaneling died', playerId=unit['controlPlayerId'])
+                        self.logGame('IceBaneling died [ %5.1f ; %5.1f ]' % (unit['posX'], unit['posY']), playerId=unit['controlPlayerId'])
                         for ctrlPlayerId in self.session.playerSelection:
                             try:
                                 self.session.playerSelection[ctrlPlayerId].remove(unit['controlPlayerId'])
@@ -541,7 +542,7 @@ class GameEvaluation(object):
                         ):
                             continue
 
-                        if not len(self.session.clUnits):
+                        if not len(self.session.clUnits) and self.session.gameStartedAt is not None:
                             if self.session.cLevelId is not None and self.mapId == 'IBE2':
                                 self.levelCompleted(ev['_gameloop'])
                             self.session.cLevelId = None
@@ -606,7 +607,8 @@ class GameEvaluation(object):
                                     self.session.playerStats[playerId]['level'] += 1
                                 self.logGame('Extra level-up acquired: %s' % map(lambda x: self.playerMap[x]['name'], self.getActivePlayers()))
 
-                        self.session.clUnits.append(unit)
+                        if self.session.gameStartedAt is not None:
+                            self.session.clUnits.append(unit)
                     elif self.session.cLevelId is not None and self.mapId.startswith('IBE-CV'):
                         if ev['_gameloop'] == self.session.clInitAt and unit['controlPlayerId'] in [self.mapInfo.obstaclePlayerId]:
                             self.session.clUnits.append(unit)
@@ -626,11 +628,28 @@ class GameEvaluation(object):
                         currLevelOverride = None
 
                         # IBE1
-                        if self.mapId in ['IBE1', 'RIBE1'] and self.session.cLevelId == 20:
-                            if unit['unitTypeName'] == 'RedstoneLavaCritter' and unit['posX'] == 222 and unit['posY'] == 170:
-                                doCleanup = True
-                            else:
-                                continue
+                        if self.mapId in ['IBE1', 'RIBE1']:
+                            if self.session.cLevelId == 20:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="RedstoneLavaCritter",
+                                    createdAt=self.session.clInitAt,
+                                ))
+                                if not obstCount:
+                                    doCleanup = True
+                                else:
+                                    continue
+
+                            if self.session.cLevelId != 9 and currLevelOverride is None:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="PrisonZealot",
+                                    posX=36,
+                                    posY=30,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True
+                                ))
+                                if obstCount:
+                                    currLevelOverride = 9
+                                    doCleanup = True
                         # IBE2
                         elif self.mapId == 'IBE2' and self.session.cLevelId == 26:
                             if unit['unitTypeName'] == 'RedstoneLavaCritter':
@@ -675,11 +694,13 @@ class GameEvaluation(object):
                             #     doCleanup = True
 
                     if doCleanup:
+                        # self.logGame(toJson(self.session.clUnits))
                         # find matching region containing alive creatures instead of relaying on user camera update
-                        if self.mapId.startswith('IBE-CV') and len(self.session.clUnits):
+                        if len(self.session.clUnits):
                             matchingRegion = self.fetchMatchingLevelRegion()[0]
                             # self.logGame(pformat(matchingRegion))
                             if (
+                                (self.mapId == 'IBE1' and len(matchingRegion['obstacles']) > 8 and matchingRegion['chalId'] not in [9]) or
                                 (self.mapId == 'IBE-CV-EZ' and len(matchingRegion['obstacles']) > 5) or
                                 (self.mapId in ['IBE-CV', 'IBE-CV-PRO'] and len(matchingRegion['obstacles']) > 10 and matchingRegion['chalId'] not in [2])
                             ):
@@ -727,6 +748,7 @@ class GameEvaluation(object):
                                 continue
                         if self.mapId in ['IBE1', 'RIBE1'] and len(self.session.levels) == 20 and self.mapInfo.findClosestLevel('spawn', posX, posY) != 0:
                             continue
+                        # self.logGame(toJson(self.session.clUnits))
 
                         initCam = self.session.findInitialCamPosition()
                         # self.logGame(pformat(initCam))
