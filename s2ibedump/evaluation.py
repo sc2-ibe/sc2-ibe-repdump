@@ -234,7 +234,8 @@ class GameSession(object):
 
 
 class GameEvaluation(object):
-    def __init__(self, mapId, playerSlots, trEvents, gmEvents, defaultGameSpeed):
+    def __init__(self, baseBuild, mapId, playerSlots, trEvents, gmEvents, defaultGameSpeed):
+        self.baseBuild = baseBuild
         self.mapId = mapId
         self.playerSlots = playerSlots
         self.trEvents = EventStream(trEvents)
@@ -456,6 +457,10 @@ class GameEvaluation(object):
             try:
                 ev = self.next()
                 if ev['_event'].startswith('NNet.Replay.Tracker'):
+                    # Only 4 point resolution prior to 2.1
+                    if self.baseBuild < 27950 and 'm_x' in ev:
+                        ev['m_x'] = ev['m_x'] * 4
+                        ev['m_y'] = ev['m_y'] * 4
                     self.unState.onEvent(ev)
                 self.gameloop = ev['_gameloop']
 
