@@ -154,11 +154,11 @@ class GameSession(object):
         except KeyError:
             pass
 
-    def findInitialCamPosition(self, fetchLatest=False):
+    def findInitialCamPosition(self, fetchLatest=False, resolutionDiv=4.0):
         tPosMap = OrderedDict()
         for playerId in self.cameraUpdates:
             for item in self.cameraUpdates[playerId]:
-                poskey = '%03d;%03d' % (int(round(item['x'] / 4.0)), int(round(item['y'] / 4.0)))
+                poskey = '%03d;%03d' % (int(math.ceil(item['x'] / resolutionDiv)), int(math.ceil(item['y'] / resolutionDiv)))
                 if poskey not in tPosMap:
                     tPosMap[poskey] = {
                         'playerIds': {},
@@ -181,7 +181,7 @@ class GameSession(object):
 
         # pprint(tPosMap, stream=sys.stderr)
 
-        return tPosMap[bestPick]
+        return tPosMap[bestPick] if bestPick is not None else None
 
     def getLatestCameraPos(self, playerId=None):
         latestPositions = {}
@@ -575,7 +575,16 @@ class GameEvaluation(object):
                                 self.logGame('Level init')
 
                             if self.mapId.startswith('IBE-CV'):
-                                initCam = self.session.findInitialCamPosition(fetchLatest=self.mapId.startswith('IBE-CV'))
+                                initCam = self.session.findInitialCamPosition(fetchLatest=self.mapId.startswith('IBE-CV'), resolutionDiv=4.0)
+                                if not initCam:
+                                    if len(self.session.levels) == 0:
+                                        baneling = self.session.banelings.values()[0]
+                                        initCam = {
+                                            'x': baneling['posX'],
+                                            'y': baneling['posY'],
+                                        }
+                                    else:
+                                        raise Exception('find initcam failed')
                                 # self.logGame(pformat(initCam))
                                 self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', initCam['x'], initCam['y'])
                                 self.logGame('camera lvl %d' % self.session.cLevelId)
@@ -670,7 +679,10 @@ class GameEvaluation(object):
                         if self.mapId.startswith('IBE-CV') and len(self.session.clUnits):
                             matchingRegion = self.fetchMatchingLevelRegion()[0]
                             # self.logGame(pformat(matchingRegion))
-                            if len(matchingRegion['obstacles']) > 10 and matchingRegion['chalId'] not in [2]:
+                            if (
+                                (self.mapId == 'IBE-CV-EZ' and len(matchingRegion['obstacles']) > 5) or
+                                (self.mapId in ['IBE-CV', 'IBE-CV-PRO'] and len(matchingRegion['obstacles']) > 10 and matchingRegion['chalId'] not in [2])
+                            ):
                                 self.session.cLevelId = matchingRegion['chalId']
                                 self.logGame('Level region match %d' % (self.session.cLevelId))
 
