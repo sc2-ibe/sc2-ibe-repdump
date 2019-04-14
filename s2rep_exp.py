@@ -6,6 +6,7 @@ from pprint import pprint, pformat, saferepr
 import sys
 import os
 import json
+import copy
 from collections import OrderedDict
 import mpyq
 from s2protocol import versions
@@ -513,6 +514,20 @@ def hash_result(general, map_id, result):
     return hashlib.sha1(','.join(map(to_str, inp))).hexdigest()
 
 
+def mergeEscapeResults(firstResult, secondResult):
+    gameResult = copy.deepcopy(secondResult)
+
+    # use time of first escape, without including time spent on bonus maps
+    gameResult['escape_time'] = firstResult['escape_time']
+    gameResult['total_time'] = secondResult['escape_time']
+
+    # don't care about players who left before bonus maps
+    for pkey in gameResult['players']:
+        gameResult['players'][pkey]['left'] = firstResult['players'][pkey]['left']
+
+    return gameResult
+
+
 class ExitCodes(object):
     INTERNAL_ERROR = 1
     NOT_SUPPORTED = 2
@@ -710,8 +725,10 @@ def main():
                 if args.include_loss:
                     results_all.append(game_result)
                 if game_result['escaped']:
+                    # there might be a "secon escape" in case of BTB - after completing bonus maps
+                    if sefResult:
+                        game_result = mergeEscapeResults(sefResult, game_result)
                     sefResult = game_result
-                    break
                 else:
                     game_result = None
             else:
