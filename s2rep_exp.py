@@ -732,10 +732,9 @@ def main():
                 else:
                     game_result = None
             else:
-                game_result = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
-                deltaResult = game_result
+                deltaResult = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
 
-        if args.evaluate and not map_info['id'].startswith('BTB'):
+        if args.evaluate and map_info['id'] not in ['BTB', 'BTB-PRO', 'BTB-BANE', 'IBE2.1']:
             game_result = None
             doEvaluate = True
 
