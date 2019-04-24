@@ -95,6 +95,7 @@ class GameSession(object):
         self.moveOrders = OrderedDict()
         self.cameraUpdates = OrderedDict()
         self.playerSelection = OrderedDict()
+        self.ctrlGroups = OrderedDict()
 
     def clearMoveOrders(self):
         for i in range(10):
@@ -113,6 +114,7 @@ class GameSession(object):
         }
         self.abilRawUsage[playerId] = OrderedDict()
         self.playerSelection[playerId] = []
+        self.ctrlGroups[playerId] = [list() for x in range(10)]
 
     def getLivingUnits(self):
         r = []
@@ -844,10 +846,34 @@ class GameEvaluation(object):
                             continue
                         selectedPlayers.append(unit['controlPlayerId'])
                     self.session.playerSelection[playerId] = selectedPlayers
-                    # if len(selectedPlayers) == 0:
-                    #     self.logGame('Selection cleared', playerId=playerId)
-                    # else:
-                    #     self.logGame('Selection updated %s' % str(map(lambda x: 'P%02d %s' % (x, self.playerMap[x]['name']), selectedPlayers)), playerId=playerId)
+                    if len(selectedPlayers) == 0:
+                        self.logGame('Selection cleared', playerId=playerId)
+                    else:
+                        self.logGame('Selection updated %s' % str(map(lambda x: 'P%02d %s' % (x, self.playerMap[x]['name']), selectedPlayers)), playerId=playerId)
+
+                elif ev['_event'] == 'NNet.Game.SControlGroupUpdateEvent':
+                    playerId = self.playerFromUser(ev['_userid']['m_userId'])['player_id']
+                    groupIndex = ev['m_controlGroupIndex']
+                    selectedPlayers = self.session.playerSelection[playerId]
+                    if ev['m_controlGroupUpdate'] == 0: # set
+                        self.session.ctrlGroups[playerId][groupIndex] = copy.copy(selectedPlayers)
+                        self.logGame(
+                            'CtrlGroup [%d] SET %s' % (groupIndex, str(map(lambda x: 'P%02d %s' % (x, self.playerMap[x]['name']), selectedPlayers))),
+                            playerId=playerId
+                        )
+                    elif ev['m_controlGroupUpdate'] == 1: # add
+                        self.session.ctrlGroups[playerId][groupIndex] += copy.copy(selectedPlayers)
+                        self.logGame(
+                            'CtrlGroup [%d] ADD %s' % (groupIndex, str(map(lambda x: 'P%02d %s' % (x, self.playerMap[x]['name']), selectedPlayers))),
+                            playerId=playerId
+                        )
+                    elif ev['m_controlGroupUpdate'] == 2: # get/use
+                        self.session.playerSelection[playerId] = copy.copy(self.session.ctrlGroups[playerId][groupIndex])
+                        selectedPlayers = self.session.playerSelection[playerId]
+                        self.logGame(
+                            'CtrlGroup [%d] USE %s' % (groupIndex, str(map(lambda x: 'P%02d %s' % (x, self.playerMap[x]['name']), selectedPlayers))),
+                            playerId=playerId
+                        )
 
             except StopIteration:
                 break
