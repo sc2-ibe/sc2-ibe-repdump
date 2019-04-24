@@ -706,15 +706,15 @@ class GameEvaluation(object):
                     # === HARDCODED RULES ===
 
                     if self.session.cLevelId != None and len(self.session.clUnits) > 0:
-                        # if self.mapId == 'IBE2' and self.trEvents.peek['_event'] != 'NNet.Replay.Tracker.SUnitDiedEvent':
-                        #     continue
-                        # if self.session.cLevelId == 0:
-                        #     continue
                         # self.logGame('u %f' % (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))))
                         if self.mapId == 'IBE2' and len(self.unState.fetchUnits(playerIds=[15], unitName="PhoenixLow")):
                             continue
                         if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
-                            if (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
+                            # ignore obstacles removed at final level
+                            # for instance when zealots are removed after pressing button in IBE1
+                            if self.session.cLevelId == self.mapInfo.finalLevel:
+                                pass
+                            elif (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
                                 doCleanup = True
                         elif self.mapId.startswith('IBE-CV'):
                             if (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
