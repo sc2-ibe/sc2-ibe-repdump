@@ -767,8 +767,15 @@ def main():
                     protocol.decode_replay_game_events(read_contents(archive, 'replay.game.events')),
                     defaultGameSpeed
                 )
-                gstate.process()
-                game_result = gstate.rebuildGameResult(deltaResult=deltaResult, sefResult=sefResult)
+                for session in gstate.process():
+                    if not session:
+                        continue
+                    game_result = gstate.rebuildGameResult(deltaResult=deltaResult, sefResult=sefResult)
+                    results_all.append(game_result)
+                    if game_result['escaped']:
+                        break
+                    else:
+                        game_result = None
                 general['resumed_replay'] = bool(gstate.hijackReplayGameEvent)
 
         # process gamevents to determine if replay was resumed

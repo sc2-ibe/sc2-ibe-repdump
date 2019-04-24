@@ -50,8 +50,11 @@ class UnitState(object):
                 continue
             if playerIds != None and self.units[key]['controlPlayerId'] not in playerIds:
                 continue
-            if unitName != None and self.units[key]['unitTypeName'] != unitName:
-                continue
+            if unitName != None:
+                if isinstance(unitName, str) and self.units[key]['unitTypeName'] != unitName:
+                    continue
+                elif isinstance(unitName, list) and self.units[key]['unitTypeName'] not in unitName:
+                    continue
             if posX != None and self.units[key]['posX'] != posX:
                 continue
             if posY != None and self.units[key]['posY'] != posY:
@@ -81,7 +84,7 @@ class GameSession(object):
 
     def clear(self):
         self.gameSpeed = None
-        self.gameDiff = None
+        self.gameDiff = 1
         self.cLevelId = None
         self.clInitAt = None
         self.clUnits = []
@@ -359,6 +362,14 @@ class GameEvaluation(object):
         obstacleLevelRegions.sort(key=lambda x: len(x['obstacles']), reverse=True)
         return obstacleLevelRegions
 
+    def getLevelStartedAt(self):
+        startedAt = self.session.clInitAt
+        if self.mapId in ['IBE1', 'RIBE1']:
+            startedAt += 16.0 * 1.0 * self.timeFactor
+            if self.session.cLevelId == self.mapInfo.finalLevel:
+                startedAt += 16.0 * 8.0
+        return startedAt
+
     def levelCompleted(self, gameloopEnd):
         if self.session.cLevelId == 0:
             completedAt = gameloopEnd
@@ -378,11 +389,7 @@ class GameEvaluation(object):
                     completedAt -= math.ceil(16.0 * 0.2)
                 completedAt -= 1
 
-        startedAt = self.session.clInitAt
-        if self.mapId in ['IBE1', 'RIBE1']:
-            startedAt += 16.0 * 1.0 * self.timeFactor
-            if self.session.cLevelId == 0:
-                startedAt += 16.0 * 8.0
+        startedAt = self.getLevelStartedAt()
 
         ticks = completedAt - startedAt
         secs = ticks / (16.0 * self.timeFactor)
@@ -448,6 +455,22 @@ class GameEvaluation(object):
             ', '.join(map(lambda x: '%s [%s]' % (self.playerMap[x[0]]['name'], self.playerMap[x[1]]['name']), completedBy))
         ), gameloop=completedAt)
         self.levelDone(gameloopEnd)
+
+    def levelFailed(self):
+        self.session.levels[self.session.cLevelId] = {
+            'created_at': self.session.clInitAt,
+            'started_at': self.getLevelStartedAt(),
+            'completed_at': self.gameloop,
+            'completed_by': None,
+            'powerups_by': None,
+            'completed_time': None,
+            'order': len(self.session.levels)
+        }
+        self.logGame('[%02d/%02d] Level %d failed' % (
+            len(self.session.levels),
+            len(self.mapInfo.levelRegions),
+            self.session.cLevelId
+        ))
 
     def levelDone(self, gameLoop):
         self.session.clearMoveOrders()
@@ -519,7 +542,7 @@ class GameEvaluation(object):
                         self.levelCompleted(ev['_gameloop'])
                         self.session.gameEscapedAt = ev['_gameloop']
                         self.logGame('GAME ESCAPED')
-                        break
+                        yield self.session
                     elif unit['unitTypeName'] == 'PickupChronoRiftCharge':
                         self.session.clPowerups.append(unit)
 
@@ -557,8 +580,6 @@ class GameEvaluation(object):
                             if len(self.session.levels):
                                 tdiff = ev['_gameloop'] - self.session.levels.values()[-1]['completed_at']
                                 self.logGame('Level init, tdiff=%d' % (tdiff))
-                                if self.mapId == 'IBE1':
-                                    self.session.gameDiff = 1
                                 if self.mapId == 'IBE1' and len(self.session.levels) == 1 and tdiff < 90:
                                     self.session.gameSpeed = 2
                                     self.timeFactor = 1.0
@@ -571,7 +592,6 @@ class GameEvaluation(object):
                                             self.session.gameSpeed = 2
                                         else:
                                             self.session.gameSpeed = 3
-                                        self.session.gameDiff = 1
                                     elif self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
                                         self.session.gameSpeed = self.defaultGameSpeed
 
@@ -631,17 +651,14 @@ class GameEvaluation(object):
                 elif ev['_event'] == 'NNet.Replay.Tracker.SUnitDiedEvent':
                     unit = self.unState.units[ev['m_unitTagIndex']]
 
-                    if unit['unitTypeName'] == 'IceBaneling2' and self.session.gameStartedAt is not None:
-                        if len(self.unState.fetchUnits(unitName='IceBaneling2')) == 0:
+                    if unit['unitTypeName'] in ['IceBaneling2', 'IceBaneCollnDetec'] and self.session.gameStartedAt is not None:
+                        # old IBE1 (early ~2013) used `IceBaneCollnDetec` instead of `IceBaneling2`
+                        if len(self.unState.fetchUnits(unitName=['IceBaneling2', 'IceBaneCollnDetec'])) == 0:
+                            self.levelFailed()
+                            self.logGame('GAME FAILED')
+                            yield self.session
                             self.session.clear()
                             self.timeFactor = None
-                            self.logGame('GAME FAILED')
-                    # old IBE1 early ~2013
-                    if unit['unitTypeName'] == 'IceBaneCollnDetec' and self.session.gameStartedAt is not None:
-                        if len(self.unState.fetchUnits(unitName='IceBaneCollnDetec')) == 0:
-                            self.session.clear()
-                            self.timeFactor = None
-                            self.logGame('GAME FAILED')
 
                     doCleanup = False
                     # === HARDCODED RULES ===
@@ -752,14 +769,14 @@ class GameEvaluation(object):
                                     self.session.gameEscapedAt -= math.ceil(16.0 * 0.2)
                                     self.session.gameEscapedAt -= 1
                                     self.logGame('GAME ESCAPED')
-                                    break
+                                    yield self.session
                             else:
                                 self.levelCompleted(ev['_gameloop'])
                         elif self.mapId == 'IBE1' and self.session.cLevelId == self.mapInfo.finalLevel and self.baseBuild < 26825:
                             self.levelCompleted(ev['_gameloop'])
                             self.session.gameEscapedAt = ev['_gameloop']
                             self.logGame('GAME ESCAPED (no delta result)')
-                            break
+                            yield self.session
 
                 elif ev['_event'] == 'NNet.Game.SCameraUpdateEvent' and ev['m_target'] != None:
                     userId = ev['_userid']['m_userId']
@@ -942,15 +959,16 @@ class GameEvaluation(object):
         ]
 
         result = OrderedDict()
+        sessEscaped = self.session.gameEscapedAt is not None
 
-        if deltaResult:
+        if deltaResult and sessEscaped:
             result['game_diff'] = deltaResult['game_diff']
             result['game_speed'] = deltaResult['game_speed']
             result['framework_version'] = None
             result['game_version'] = deltaResult['minor_version']
             result['escape_time'] = deltaResult['escape_time']
             result['escaped'] = deltaResult['escaped']
-        elif sefResult:
+        elif sefResult and sessEscaped:
             result['game_diff'] = sefResult['game_diff']
             result['game_speed'] = sefResult['game_speed']
             result['framework_version'] = sefResult['framework_version']
@@ -966,9 +984,6 @@ class GameEvaluation(object):
             if self.session.gameEscapedAt is not None:
                 result['escape_time'] = round((self.session.gameEscapedAt - self.session.gameStartedAt) / self.timeFactor / 16.0, 2)
             result['escaped'] = True if result['escape_time'] is not None else None
-
-            if not result['escaped']:
-                return None
 
         result['started_at_rt'] = None
         result['started_at_gt'] = round(self.session.gameStartedAt / 16.0, 2)
@@ -989,7 +1004,7 @@ class GameEvaluation(object):
                     for i, name in enumerate(ABIL_NAMES):
                         result['players'][playerId]['abilities_used'][ABIL_NAMES[i]] = None
 
-                    if deltaResult:
+                    if deltaResult and sessEscaped:
                         matchedAbils = self.determineAbilityLinks(deltaResult)
                         for abilLink in matchedAbils:
                             abilName = ABIL_NAMES[matchedAbils[abilLink]['abilId']]
@@ -1011,12 +1026,15 @@ class GameEvaluation(object):
             for chalId in self.session.levels:
                 result['challenges'][chalId] = OrderedDict()
                 result['challenges'][chalId]['completed_by'] = self.session.levels[chalId]['completed_by']
-                if len(result['challenges'][chalId]['completed_by']) <= 0:
+                if result['challenges'][chalId]['completed_by'] is not None and len(result['challenges'][chalId]['completed_by']) <= 0:
                     result['challenges'][chalId]['completed_by'] = [[15, 15]]
                 result['challenges'][chalId]['buttons_by'] = []
                 # TODO: buttons_by
                 result['challenges'][chalId]['powerups_by'] = self.session.levels[chalId]['powerups_by']
-                result['challenges'][chalId]['completed_time'] = round(self.session.levels[chalId]['completed_time'], 2)
+                if self.session.levels[chalId]['completed_time'] is not None:
+                    result['challenges'][chalId]['completed_time'] = round(self.session.levels[chalId]['completed_time'], 2)
+                else:
+                    result['challenges'][chalId]['completed_time'] = None
                 result['challenges'][chalId]['time_offset_start'] = round(
                     (self.session.levels[chalId]['started_at'] - self.session.gameStartedAt) / (16.0 * self.timeFactor),
                     2
@@ -1024,7 +1042,7 @@ class GameEvaluation(object):
                 result['challenges'][chalId]['order'] = self.session.levels[chalId]['order']
 
             requiredLevels = filter(lambda x: True if 'optional' not in x else False, self.mapInfo.levelRegions.values())
-            if len(self.session.levels) < len(requiredLevels):
+            if len(self.session.levels) < len(requiredLevels) and result['escaped']:
                 raise Exception('Levels completed count doesn\'t match with total count: [%d,%d]' % (len(self.session.levels), len(self.mapInfo.levelRegions)))
         else:
             result['challenges'] = copy.deepcopy(sefResult['challenges'])
