@@ -222,11 +222,39 @@ class GameSession(object):
             'x': startPos['x'],
             'y': startPos['y'],
         }
-        for morder in self.moveOrders[playerId]:
+        currGameloop = None
+
+        for key, morder in enumerate(self.moveOrders[playerId]):
             if morder['gameloop'] > atGameloop:
                 break
-            currPos['x'] = morder['x']
-            currPos['y'] = morder['y']
+
+            morder = copy.deepcopy(morder)
+            try:
+                # in case of orders issued in the same gameloop, skip to latest one
+                if self.moveOrders[playerId][key + 1]['gameloop'] == morder['gameloop']:
+                    continue
+                elif self.moveOrders[playerId][key + 1]['gameloop'] > atGameloop:
+                    morder['gameloop'] = atGameloop
+            except IndexError:
+                pass
+
+            if currGameloop is None:
+                currPos['x'] = morder['x']
+                currPos['y'] = morder['y']
+            else:
+                distance = math.hypot(morder['x'] - currPos['x'], morder['y'] - currPos['y'])
+                distLoops = float(morder['gameloop'] - currGameloop)
+                if distance > 2.0 and distLoops < (16.0 * 2.5):
+                    distX = morder['x'] - currPos['x']
+                    distY = morder['y'] - currPos['y']
+                    currPos['x'] += min(distX, (distX / distance) * 0.375 * distLoops)
+                    currPos['y'] += min(distY, (distY / distance) * 0.375 * distLoops)
+                else:
+                    currPos['x'] = morder['x']
+                    currPos['y'] = morder['y']
+
+            currGameloop = morder['gameloop']
+
         return currPos
 
     def getPlayerCtrl(self, playerId, atGameloop):
@@ -333,7 +361,7 @@ class GameEvaluation(object):
                 'ctrlPlayerId': self.session.getPlayerCtrl(playerId, gameloop),
                 'distance': distance,
                 'alive': self.isPlayerAlive(playerId, gameloop),
-                'onSpawn': self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].containsPoint(position['x'], position['y'])
+                'onSpawn': len(self.session.moveOrders[playerId]) == 0
             })
 
         def closest(item):
