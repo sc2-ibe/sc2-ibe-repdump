@@ -652,6 +652,7 @@ def main():
     with open(fname, 'r') as fp:
         minfo = json.load(fp, encoding='utf-8')
 
+    map_id = None
     try:
         if args.map_id is not None:
             map_id = args.map_id
