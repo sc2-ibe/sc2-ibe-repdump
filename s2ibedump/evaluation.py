@@ -730,7 +730,8 @@ class GameEvaluation(object):
                             # ignore obstacles removed at final level
                             # for instance when zealots are removed after pressing button in IBE1
                             if self.session.cLevelId == self.mapInfo.finalLevel:
-                                pass
+                                if self.mapId == 'IBE1' and len(self.session.getLivingUnits()) == 0:
+                                    doCleanup = True
                             elif (float(len(self.session.getLivingUnits())) / float(len(self.session.clUnits))) < 0.5:
                                 doCleanup = True
                         elif self.mapId.startswith('IBE-CV'):
@@ -815,6 +816,13 @@ class GameEvaluation(object):
                         # self.logGame(pformat(self.unState.fetchUnits(playerIds=[15])))
                         # self.logGame(pformat(self.session.getLivingUnits()))
                         # self.logGame('%d' % len(self.unState.fetchUnits(playerIds=[15])))
+                    if self.mapId == 'IBE1' and self.session.cLevelId == self.mapInfo.finalLevel and self.baseBuild < 26825:
+                        distance = math.hypot(posX - 227.0187, posY - 225.9072)
+                        if distance < 2.5:
+                            self.levelCompleted(ev['_gameloop'])
+                            self.session.gameEscapedAt = ev['_gameloop']
+                            self.logGame('GAME ESCAPED - cam fallback (no delta result)')
+                            yield self.session
 
                 elif ev['_event'] == 'NNet.Game.SCmdUpdateTargetPointEvent':
                     posX = ev['m_target']['x'] / 4096.0
@@ -893,6 +901,12 @@ class GameEvaluation(object):
                         )
 
             except StopIteration:
+                self.logGame('end of stream')
+                if self.session.cLevelId is not None:
+                    self.levelFailed()
+                    if self.session.cLevelId == self.mapInfo.finalLevel:
+                        self.logGame('GAME FAILED; likely..')
+                    yield self.session
                 break
 
     def determineAbilityLinks(self, deltaResult):
