@@ -425,7 +425,7 @@ class GameEvaluation(object):
         finishCenter = self.mapInfo.levelRegions[self.session.cLevelId]['finish'].getCenter()
         self.logGame('finish region [ %5.1f ; %5.1f ]' % (finishCenter['x'], finishCenter['y']))
         playersPosition = self.getPlayersClosest(completedAt, finishCenter['x'], finishCenter['y'])
-        bcount = len(self.getActivePlayers())
+        bcount = len(self.session.banelings.values())
         rcount = self.mapInfo.levelRegions[self.session.cLevelId]['finPlayers'](bcount)
         self.logGame('bcount=%d rcount=%d pos=%s' % (bcount, rcount, playersPosition), gameloop=completedAt)
 
@@ -657,7 +657,7 @@ class GameEvaluation(object):
                             if self.mapId == 'IBE2':
                                 if (
                                     (len(self.session.levels) in [10, 20]) or
-                                    (len(self.getActivePlayers()) >= 8 and len(self.session.levels) in [5, 15])
+                                    (len(self.session.banelings.values()) >= 8 and len(self.session.levels) in [5, 15])
                                 ):
                                     extraLevelup = True
                             elif (
@@ -668,7 +668,7 @@ class GameEvaluation(object):
                             if extraLevelup:
                                 for playerId in self.session.banelings:
                                     self.session.playerStats[playerId]['level'] += 1
-                                self.logGame('Extra level-up acquired: %s' % map(lambda x: self.playerMap[x]['name'], self.getActivePlayers()))
+                                self.logGame('Extra level-up acquired: %s' % map(lambda x: self.playerMap[x]['name'], self.session.banelings.keys()))
 
                         if self.session.gameStartedAt is not None:
                             self.session.clUnits.append(unit)
