@@ -585,8 +585,11 @@ def main():
         logging.warn('Unsupported protocol: (%s)' % str(e))
         if baseBuild > 32283 and baseBuild < 51702:
             protocol = versions.build(51702)
+        # in case there are some holes in releases of s2protocol between 51702 and 70154
+        # don't even attempt to decode so problem can be investigated
         elif baseBuild < 70154:
             sys.exit(ExitCodes.INTERNAL_ERROR)
+        # since 70154 things are stable so fallback to newest available if there's no direct match
         else:
             protocol = versions.latest()
         logging.warn('Attempting to use %s instead' % protocol.__name__)
@@ -596,9 +599,9 @@ def main():
         logging.critical('Test mode detected - map was run from editor')
         sys.exit(ExitCodes.NOT_SUPPORTED)
 
-    archive.files = archive.read_file('(listfile)').splitlines()
+    archive_files = archive.read_file('(listfile)').decode('ascii').splitlines()
     try:
-        archive.files.index('replay.tracker.events')
+        archive_files.index('replay.tracker.events')
     except ValueError:
         logging.critical('"%s" missing' % 'replay.tracker.events')
         sys.exit(ExitCodes.NOT_SUPPORTED)
@@ -620,7 +623,7 @@ def main():
         sys.exit(ExitCodes.INTERNAL_ERROR)
 
     try:
-        if archive.files.index('replay.gamemetadata.json'):
+        if archive_files.index('replay.gamemetadata.json'):
             metadata = json.loads(read_contents(archive, 'replay.gamemetadata.json'))
     except ValueError:
         metadata = None
@@ -646,7 +649,7 @@ def main():
         logging.info('Setting up players..')
         initd = protocol.decode_replay_initdata(read_contents(archive, 'replay.initData'))
         general.addInitData(initd)
-        general.setupPlayers(initd, details, metadata)
+        general.setupPlayers(initd, details)
 
     fname = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'minfo.json')
     with open(fname, 'r') as fp:
