@@ -24,12 +24,15 @@ KNOWN_NAME_MAP = {
 
     'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
     '맹독충의 빙판탈출 - 차가운 여행': 'IBE-CV', # koKR
+    '雪地爆虫逃亡 - 冰霜远征': 'IBE-CV', # zhCN
 
     'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
     '맹독충의 빙판탈출 - 차가운 여행 - EZ': 'IBE-CV-EZ', # koKR
+    '雪地爆虫逃亡 - 冰霜远征 EZ': 'IBE-CV-EZ', # zhCN
 
     'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
     '맹독충의 빙판탈출 - 차가운 여행 - PRO': 'IBE-CV-PRO', # koKR
+    '雪地爆虫逃亡 - 冰霜远征 PRO': 'IBE-CV-PRO', # zhCN
 
     'Back to Brood Ice Escape': 'BTB',
     'Back to Brood Ice Escape PRO': 'BTB-PRO',
