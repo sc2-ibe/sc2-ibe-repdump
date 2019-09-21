@@ -651,6 +651,11 @@ def main():
         general.addInitData(initd)
         general.setupPlayers(initd, details)
 
+    # CN
+    if general['server_region'] == 5:
+        logging.info('CN server')
+        sys.exit(ExitCodes.INTERNAL_ERROR)
+
     fname = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'minfo.json')
     with open(fname, 'r') as fp:
         minfo = json.load(fp, encoding='utf-8')
