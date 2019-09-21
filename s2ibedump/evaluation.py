@@ -1088,11 +1088,11 @@ class GameEvaluation(object):
                 raise Exception('Levels completed count doesn\'t match with total count: [%d,%d]' % (len(self.session.levels), len(self.mapInfo.levelRegions)))
         else:
             result['challenges'] = copy.deepcopy(sefResult['challenges'])
-            if sefResult['schema_version'] < 5:
+            if sefResult['schema_version'] < 5 and self.session.gameEscapedAt:
                 for chalId in result['challenges']:
                     result['challenges'][chalId]['completed_by'][0][1] = self.session.levels[chalId]['completed_by'][0][1]
                     for powerupKey, powerupItem in enumerate(result['challenges'][chalId]['powerups_by']):
                         if len(self.session.levels[chalId]['powerups_by']) > powerupKey:
-                            powerupItem[1] = self.session.levels[chalId]['powerups_by'][powerupKey][1]
+                            result['challenges'][chalId]['powerups_by'][powerupKey][1] = self.session.levels[chalId]['powerups_by'][powerupKey][1]
 
         return result
