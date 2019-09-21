@@ -29,6 +29,9 @@
         },
         "BTB-BANE": {
             "name": "Back to Brood Ice Escape - Baneling"
+        },
+        "BTB-EZ": {
+            "name": "Back to Brood Ice Escape EZ"
         }
     }
 }

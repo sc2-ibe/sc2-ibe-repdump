@@ -38,6 +38,7 @@ KNOWN_NAME_MAP = {
     'Back to Brood Ice Escape PRO': 'BTB-PRO',
     'Back to Brood Ice Escape PRO mode': 'BTB-PRO',
     'Back to Brood Baneling mode': 'BTB-BANE',
+    'Back to Brood Ice Escape EZ': 'BTB-EZ',
 }
 
 
