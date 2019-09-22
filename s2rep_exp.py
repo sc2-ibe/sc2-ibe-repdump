@@ -563,7 +563,12 @@ def main():
         logging.getLogger().setLevel(logging.ERROR)
 
 
-    archive = mpyq.MPQArchive(args.replay_file, listfile=False)
+    try:
+        archive = mpyq.MPQArchive(args.replay_file, listfile=False)
+    except ValueError as e:
+        if e.message == 'Invalid file header.':
+            logging.error(e.message)
+            sys.exit(ExitCodes.NOT_SUPPORTED)
 
     def read_contents(archive, content):
         contents = archive.read_file(content)
