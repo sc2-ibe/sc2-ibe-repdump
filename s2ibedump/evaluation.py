@@ -497,7 +497,7 @@ class GameEvaluation(object):
         self.logGame('[%02d/%02d] Level %d failed' % (
             len(self.session.levels),
             len(self.mapInfo.levelRegions),
-            self.session.cLevelId
+            -1 if self.session.cLevelId is None else self.session.cLevelId
         ))
 
     def levelDone(self, gameLoop):
