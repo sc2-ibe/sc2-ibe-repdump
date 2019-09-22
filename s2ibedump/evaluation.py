@@ -716,6 +716,16 @@ class GameEvaluation(object):
                                 if obstCount:
                                     currLevelOverride = 9
                                     doCleanup = True
+                            if self.session.cLevelId != 20 and currLevelOverride is None:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="PrisonZealot",
+                                    posX=215,
+                                    posY=159,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True
+                                ))
+                                if obstCount:
+                                    currLevelOverride = 20
                         # IBE2
                         elif self.mapId == 'IBE2' and self.session.cLevelId == 26:
                             if unit['unitTypeName'] == 'RedstoneLavaCritter':
