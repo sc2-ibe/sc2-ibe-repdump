@@ -983,7 +983,8 @@ class GameEvaluation(object):
                     'score': abs(totalCount[abilLink] - deltaResult['team'][abilInfo['deltaName']]),
                 })
             abilData.sort(key=lambda x: x['score'])
-            matchedLinks[abilData[0]['abilLink']] = abilData[0]
+            if len(abilData):
+                matchedLinks[abilData[0]['abilLink']] = abilData[0]
 
         return matchedLinks
 
