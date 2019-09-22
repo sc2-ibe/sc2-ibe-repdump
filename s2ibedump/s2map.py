@@ -24,11 +24,12 @@ KNOWN_NAME_MAP = {
 
     'Ice Baneling Escape - Cold Voyage': 'IBE-CV',
     '맹독충의 빙판탈출 - 차가운 여행': 'IBE-CV', # koKR
-    '雪地爆虫逃亡 - 冰霜远征': 'IBE-CV', # zhCN
+    '雪地爆虫逃亡 - 冰霜远征': 'IBE-CV', # zhCN - probably incorrect?
+    '雪地自爆虫逃亡 - 冰霜远征': 'IBE-CV', # zhCN
 
     'Ice Baneling Escape - EZ': 'IBE-CV-EZ',
     '맹독충의 빙판탈출 - 차가운 여행 - EZ': 'IBE-CV-EZ', # koKR
-    '雪地爆虫逃亡 - 冰霜远征 EZ': 'IBE-CV-EZ', # zhCN
+    '雪地爆虫逃亡 - 冰霜远征 EZ': 'IBE-CV-EZ', # zhCN - probably incorrect?
 
     'Ice Baneling Escape - Pro': 'IBE-CV-PRO',
     '맹독충의 빙판탈출 - 차가운 여행 - PRO': 'IBE-CV-PRO', # koKR
@@ -37,6 +38,7 @@ KNOWN_NAME_MAP = {
     'Back to Brood Ice Escape': 'BTB',
     'Back to Brood Ice Escape PRO': 'BTB-PRO',
     'Back to Brood Ice Escape PRO mode': 'BTB-PRO',
+    '雪地爆虫逃亡 - 重回母巣 专家版': 'BTB-PRO', # zhCN
     'Back to Brood Baneling mode': 'BTB-BANE',
     'Back to Brood Ice Escape EZ': 'BTB-EZ',
 }
