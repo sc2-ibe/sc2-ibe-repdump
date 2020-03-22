@@ -726,6 +726,16 @@ class GameEvaluation(object):
                                 ))
                                 if obstCount:
                                     currLevelOverride = 20
+                            if self.session.cLevelId != 7 and currLevelOverride is None:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="UrsadakMaleExotic",
+                                    posX=68,
+                                    posY=225,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True
+                                ))
+                                if obstCount:
+                                    currLevelOverride = 7
                         # IBE2
                         elif self.mapId == 'IBE2':
                             if self.session.cLevelId == 26:
