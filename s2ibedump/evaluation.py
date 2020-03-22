@@ -727,11 +727,22 @@ class GameEvaluation(object):
                                 if obstCount:
                                     currLevelOverride = 20
                         # IBE2
-                        elif self.mapId == 'IBE2' and self.session.cLevelId == 26:
-                            if unit['unitTypeName'] == 'RedstoneLavaCritter':
-                                doCleanup = True
-                            else:
-                                continue
+                        elif self.mapId == 'IBE2':
+                            if self.session.cLevelId == 26:
+                                if unit['unitTypeName'] == 'RedstoneLavaCritter':
+                                    doCleanup = True
+                                else:
+                                    continue
+                            if self.session.cLevelId != 27 and currLevelOverride is None:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="DarkTemplarNoAttack",
+                                    posX=181,
+                                    posY=240,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True
+                                ))
+                                if obstCount:
+                                    currLevelOverride = 27
                         # IBE-CV IBE-CV-PRO
                         elif self.mapId in ['IBE-CV', 'IBE-CV-PRO']:
                             if self.session.cLevelId != 2 and currLevelOverride is None:
