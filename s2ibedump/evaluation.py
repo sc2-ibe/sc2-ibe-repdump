@@ -743,6 +743,16 @@ class GameEvaluation(object):
                                 ))
                                 if obstCount:
                                     currLevelOverride = 27
+                            if self.session.cLevelId != 22 and currLevelOverride is None:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="UrsadakMaleExotic",
+                                    posX=23,
+                                    posY=45,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True
+                                ))
+                                if obstCount:
+                                    currLevelOverride = 22
                         # IBE-CV IBE-CV-PRO
                         elif self.mapId in ['IBE-CV', 'IBE-CV-PRO']:
                             if self.session.cLevelId != 2 and currLevelOverride is None:
