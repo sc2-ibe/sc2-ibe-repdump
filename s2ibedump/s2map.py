@@ -41,6 +41,7 @@ KNOWN_NAME_MAP = {
     '雪地爆虫逃亡 - 重回母巣 专家版': 'BTB-PRO', # zhCN
     'Back to Brood Baneling mode': 'BTB-BANE',
     'Back to Brood Ice Escape EZ': 'BTB-EZ',
+    'Zealot dodge': 'Zealot',
 }
 
 
