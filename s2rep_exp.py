@@ -145,9 +145,11 @@ def decode_game_result(dstream, player_slots):
         gmr['framework_version'] = 0
     gmr['game_version'] = rd.read_uint16()
     if gmr['schema_version'] >= 8:
-        # IBE-CV speed either 2 (norm) or 4 (faster), for some unkown reason - it should be instead 3 (fast)
         gmr['game_diff'] = rd.read_uint8()
-        gmr['game_speed'] = (3 if rd.read_uint8() == 4 else 2)
+        gmr['game_speed'] = rd.read_uint8()
+        # IBE-CV: versions before introduction of speedy incorrectly reported `Fast` as a value of `4` (no idea why)
+        if gmr['framework_version'] <= 22 and gmr['game_speed'] == 4:
+            gmr['game_speed'] = 3
     elif gmr['schema_version'] >= 6:
         # BTB = diff always 0; speed code relative to normal
         gmr['game_diff'] = rd.read_uint8() + 1
