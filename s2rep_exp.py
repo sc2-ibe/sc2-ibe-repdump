@@ -305,7 +305,7 @@ class GeneralSection(OrderedDict):
         self['timestamp'] = (details['m_timeUTC'] / 10000000) - 11644473600
 
     def setupPlayers(self, initd, details):
-        slots = {}
+        lobby_slots = {}
         working_slots = {}
 
         for slot_id, row in enumerate(initd['m_syncLobbyState']['m_lobbyState']['m_slots']):
@@ -313,42 +313,38 @@ class GeneralSection(OrderedDict):
             if row['m_control'] <= 1:
                 continue
 
-            pslot = OrderedDict(
-                player_id=slot_id + 1,
-                apm=None,
-            )
+            pslot = PlayerSlot()
             self['player_slots'].append(pslot)
-            slots[slot_id] = pslot
+            pslot.slot_id = slot_id
+            pslot.player_id = slot_id + 1
+            lobby_slots[slot_id] = pslot
             working_slots[row['m_workingSetSlotId']] = pslot
+            pslot.is_human = False
+            pslot.is_observer = False
 
             if row['m_userId'] is not None:
                 user_data = initd['m_syncLobbyState']['m_userInitialData'][row['m_userId']]
-                pslot['name'] = user_data['m_name']
-                pslot['clan'] = user_data['m_clanTag']
-                pslot['user_id'] = row['m_userId']
-            else:
-                pslot['name'] = None
-                pslot['clan'] = None
-                pslot['user_id'] = None
+                pslot.name = user_data['m_name']
+                pslot.clan = user_data['m_clanTag']
+                pslot.user_id = row['m_userId']
 
         for row in details['m_playerList']:
             pslot = working_slots[row['m_workingSetSlotId']]
-            pslot['type'] = PLAYER_TYPE_MAP[row['m_control']]
+            pslot.type = PLAYER_TYPE_MAP[row['m_control']]
             if row['m_control'] == 2:
-                pslot['handle'] = '%d-S2-%d-%d' % (row['m_toon']['m_region'], row['m_toon']['m_realm'], row['m_toon']['m_id'])
-                pslot['toon'] = {
+                pslot.handle = '%d-S2-%d-%d' % (row['m_toon']['m_region'], row['m_toon']['m_realm'], row['m_toon']['m_id'])
+                pslot.toon = {
                     'region': row['m_toon']['m_region'],
                     'realm': row['m_toon']['m_realm'],
                     'id': row['m_toon']['m_id'],
                 }
             else:
-                pslot['handle'] = None
-                pslot['name'] = row['m_name']
-            pslot['color'] = OrderedDict()
-            pslot['color']['r'] = row['m_color']['m_r']
-            pslot['color']['g'] = row['m_color']['m_g']
-            pslot['color']['b'] = row['m_color']['m_b']
-            pslot['color']['a'] = row['m_color']['m_a']
+                pslot.name = row['m_name']
+            pslot.color = OrderedDict()
+            pslot.color['r'] = row['m_color']['m_r']
+            pslot.color['g'] = row['m_color']['m_g']
+            pslot.color['b'] = row['m_color']['m_b']
+            pslot.color['a'] = row['m_color']['m_a']
 
     def addInitData(self, initd):
         self['battle_net'] = bool(initd['m_syncLobbyState']['m_gameDescription']['m_gameOptions']['m_battleNet'])
@@ -541,6 +537,7 @@ def main():
     parser.add_argument('--include-loss', help='include results that did not end with an escape', action='store_true')
     parser.add_argument('--game-speed', type=int, default=4)
     parser.add_argument('--evaluate', action='store_true')
+    parser.add_argument('--allow-offline', action='store_true')
     args = parser.parse_args()
 
     logging.basicConfig(
@@ -600,7 +597,7 @@ def main():
         logging.warn('Attempting to use %s instead' % protocol.__name__)
 
     details = protocol.decode_replay_details(read_contents(archive, 'replay.details'))
-    if len(details['m_cacheHandles']) == 0:
+    if len(details['m_cacheHandles']) == 0 and not args.allow_offline:
         logging.critical('Test mode detected - map was run from editor')
         sys.exit(ExitCodes.NOT_SUPPORTED)
 
@@ -623,9 +620,12 @@ def main():
         s2rep = sc2reader.load_replay(args.replay_file, load_level=2)
     except Exception as e:
         import traceback
-        logging.error(traceback.format_exc())
-        # logging.error('sc2reader failed, falling back to legacy reader..')
-        sys.exit(ExitCodes.INTERNAL_ERROR)
+        if args.allow_offline:
+            logging.warn(traceback.format_exc())
+            logging.warn('sc2reader failed, falling back to legacy reader..')
+        else:
+            logging.error(traceback.format_exc())
+            sys.exit(ExitCodes.INTERNAL_ERROR)
 
     try:
         if archive_files.index('replay.gamemetadata.json'):
