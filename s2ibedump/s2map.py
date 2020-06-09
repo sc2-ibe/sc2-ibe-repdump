@@ -13,6 +13,7 @@ KNOWN_NAME_MAP = {
     'Ice Baneling Escape': 'IBE1',
     '도전! 맹독충의 빙판탈출': 'IBE1', # koKR
     '毒爆大逃亡': 'IBE1', # zhTW
+    '雪地自爆虫大逃亡': 'IBE1', # zhCN
 
     'Reverse Ice Baneling Escape': 'RIBE1',
 
