@@ -479,7 +479,10 @@ def process_ibe(tracker, map_id, initial_event, player_slots):
         if len(rows):
             result['escape_time'] += rows.pop(0) / 100.0
 
-    result['game_diff'] = 2 if difficulty_index in [3, 4] else 1
+    if map_id == 'IBE2':
+        result['game_diff'] = 2 if difficulty_index in [3, 4] else 1
+    else:
+        result['game_diff'] = 1 # there's only normal diff in IBE1
     result['game_speed'] = 4 if difficulty_index in [2, 4] else 2
 
     return result
