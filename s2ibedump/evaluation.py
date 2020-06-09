@@ -545,6 +545,7 @@ class GameEvaluation(object):
 
                 if ev['_event'] == 'NNet.Replay.Tracker.SUnitBornEvent':
                     unit = self.unState.units[ev['m_unitTagIndex']]
+                    # self.logGame('Unit "%s" born [ %5.1f ; %5.1f ]' % (unit['unitTypeName'], unit['posX'], unit['posY']))
 
                     if unit['unitTypeName'] == 'IceBaneling' and unit['controlPlayerId'] != 0:
                         if self.session.gameStartedAt is None:
@@ -743,6 +744,16 @@ class GameEvaluation(object):
                                     doCleanup = True
                                 else:
                                     continue
+                            if self.session.cLevelId != 1 and currLevelOverride is None:
+                                obstCount = len(self.unState.fetchUnits(
+                                    unitName="DominionKillTeam",
+                                    posX=43,
+                                    posY=199,
+                                    createdAt=self.session.clInitAt,
+                                    includeRemoved=True
+                                ))
+                                if obstCount:
+                                    currLevelOverride = 1
                             if self.session.cLevelId != 27 and currLevelOverride is None:
                                 obstCount = len(self.unState.fetchUnits(
                                     unitName="DarkTemplarNoAttack",
