@@ -107,7 +107,7 @@ def decode_game_result(dstream, player_slots):
     CHALLENGE_MAX = 30
     CHALLENGE_POWERUP_MAX = 16
     CHALLENGE_BUTTON_MAX = 16
-    CURRENT_SCHEMA_VERSION = 9
+    CURRENT_SCHEMA_VERSION = 10
 
     ABIL_MAP = [
         "BOOST",
@@ -139,11 +139,18 @@ def decode_game_result(dstream, player_slots):
     else:
         gmr['schema_build_revision'] = 0
 
-    if gmr['schema_version'] >= 7:
+    if gmr['schema_version'] >= 10:
+        gmr['framework_version'] = rd.read_uint32()
+    elif gmr['schema_version'] >= 7:
         gmr['framework_version'] = rd.read_uint16()
     else:
         gmr['framework_version'] = 0
-    gmr['game_version'] = rd.read_uint16()
+
+    if gmr['schema_version'] >= 10:
+        gmr['game_version'] = rd.read_uint32()
+    else:
+        gmr['game_version'] = rd.read_uint16()
+
     if gmr['schema_version'] >= 8:
         gmr['game_diff'] = rd.read_uint8()
         gmr['game_speed'] = rd.read_uint8()
