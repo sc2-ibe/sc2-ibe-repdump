@@ -154,9 +154,6 @@ def decode_game_result(dstream, player_slots):
     if gmr['schema_version'] >= 8:
         gmr['game_diff'] = rd.read_uint8()
         gmr['game_speed'] = rd.read_uint8()
-        # IBE-CV: versions before introduction of speedy incorrectly reported `Fast` as a value of `4` (no idea why)
-        if gmr['framework_version'] <= 22 and gmr['game_speed'] == 4:
-            gmr['game_speed'] = 3
     elif gmr['schema_version'] >= 6:
         # BTB = diff always 0; speed code relative to normal
         gmr['game_diff'] = rd.read_uint8() + 1
@@ -278,6 +275,14 @@ def decode_game_result(dstream, player_slots):
             gmr['team']['bonus_levelups'] += 1
 
     logging.debug('[%d/%d]' % (rd.offset, len(rd.buff)))
+
+    return gmr
+
+
+def fix_game_result(map_id, gmr):
+    # IBE-CV: versions before introduction of speedy incorrectly reported `Fast` as a value of `4` (no idea why)
+    if map_id.startswith('IBE-CV') and gmr['framework_version'] <= 22 and gmr['game_speed'] == 4:
+        gmr['game_speed'] = 3
 
     return gmr
 
@@ -743,6 +748,7 @@ def main():
                 dstream = fetch_dstream_from_tracker(tracker, initial_event)
                 logging.debug('dstream %s' % (str(dstream)))
                 game_result = decode_game_result(dstream, general['player_slots'])
+                game_result = fix_game_result(map_info['id'], game_result)
                 if args.include_loss:
                     results_all.append(game_result)
                 if game_result['escaped']:
