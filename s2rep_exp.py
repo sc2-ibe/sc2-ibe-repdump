@@ -284,6 +284,17 @@ def fix_game_result(map_id, gmr):
     if map_id.startswith('IBE-CV') and gmr['framework_version'] <= 22 and gmr['game_speed'] == 4:
         gmr['game_speed'] = 3
 
+    # Delta IBE
+    if map_id in ['IBE1', 'RIBE1', 'IBE2']:
+        # it uses major.minor versioning
+        # major version is kept at 1, so we're not going to care about it (unless it'll change from 1)
+        major_ver = gmr['game_version'] >> 16
+        minor_ver = gmr['game_version'] & 0xFFFF
+        if major_ver == 1:
+            major_ver = 0
+        gmr['game_version'] = (major_ver << 16) | (minor_ver & 0xFFFF)
+
+
     return gmr
 
 
