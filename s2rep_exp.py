@@ -294,6 +294,10 @@ def fix_game_result(map_id, gmr):
             major_ver = 0
         gmr['game_version'] = (major_ver << 16) | (minor_ver & 0xFFFF)
 
+    # IBE1v58RC1 incorrectly reported completion times of maps - just invalidate it to fallback to evaluation routine?
+    # if map_id in ['IBE1'] and gmr['game_version'] <= 58:
+    #     return None
+    # ... for the time being this stuff is fixed in `fixup_final_game_result`
 
     return gmr
 
@@ -564,7 +568,7 @@ def main():
     parser.add_argument('--map-id', help='Force replay to be handled as it was played on a given map-id')
     parser.add_argument('--include-loss', help='include results that did not end with an escape', action='store_true')
     parser.add_argument('--game-speed', type=int, default=4)
-    parser.add_argument('--evaluate', action='store_true')
+    parser.add_argument('--force-evaluate', action='store_true')
     parser.add_argument('--allow-offline', action='store_true')
     args = parser.parse_args()
 
@@ -759,7 +763,13 @@ def main():
                 dstream = fetch_dstream_from_tracker(tracker, initial_event)
                 logging.debug('dstream %s' % (str(dstream)))
                 game_result = decode_game_result(dstream, general['player_slots'])
+
                 game_result = fix_game_result(map_info['id'], game_result)
+                # fix_game_result will return null when the result isn't valid
+                # it should be skipped to that we can fallback to evaluation routine
+                if game_result is None:
+                    continue
+
                 if args.include_loss:
                     results_all.append(game_result)
                 if game_result['escaped']:
@@ -772,7 +782,7 @@ def main():
             else:
                 deltaResult = process_ibe(tracker, map_info['id'], initial_event, general['player_slots'])
 
-        if args.evaluate and map_info['id'] not in ['BTB', 'BTB-PRO', 'BTB-BANE', 'BTB-EZ', 'IBE2.1','Zealot']:
+        if map_info['id'] in ['IBE1', 'RIBE1', 'IBE2', 'IBE-CV', 'IBE-CV-EZ', 'IBE-CV-PRO']:
             game_result = None
             doEvaluate = True
 
@@ -783,6 +793,12 @@ def main():
 
             # don't evaluate non-IBE1 games without deltaResult
             if not deltaResult and map_info['id'] in ['IBE2', 'RIBE1']:
+                logging.info('no deltaResult present, skipping evaluation')
+                doEvaluate = False
+
+            # there's no need to evaluate modern Delta IBEs, as everything we care about will be in `sefResult`
+            if map_info['id'] in ['IBE2', 'RIBE1'] and sefResult['framework_version'] >= 5:
+                logging.info('modern Delta IBE, skipping evaluation')
                 doEvaluate = False
 
             # CV support added on 21 January 2019
@@ -793,7 +809,7 @@ def main():
                     doEvaluate = False
                     game_result = sefResult
 
-            if doEvaluate or (not game_result and args.include_loss):
+            if doEvaluate or args.force_evaluate or (not game_result and args.include_loss):
                 defaultGameSpeed = args.game_speed
                 if deltaResult is not None:
                     defaultGameSpeed = deltaResult['game_speed']
@@ -811,6 +827,7 @@ def main():
                     game_result = gstate.rebuildGameResult(deltaResult=deltaResult, sefResult=sefResult)
                     results_all.append(game_result)
                     if game_result['escaped']:
+                        game_result = gstate.fixup_final_game_result(game_result, deltaResult=deltaResult, sefResult=sefResult)
                         break
                     else:
                         game_result = None

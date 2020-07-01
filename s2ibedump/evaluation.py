@@ -1149,3 +1149,11 @@ class GameEvaluation(object):
                             result['challenges'][chalId]['powerups_by'][powerupKey][1] = self.session.levels[chalId]['powerups_by'][powerupKey][1]
 
         return result
+
+
+    def fixup_final_game_result(self, result, deltaResult=None, sefResult=None):
+        # IBE1v58RC1 incorrectly reported completion times of maps - fix it up
+        if self.mapId in ['IBE1'] and result['game_version'] <= 58 and result['framework_version'] <= 4:
+            for chalId in result['challenges']:
+                result['challenges'][chalId]['completed_time'] = round(self.session.levels[chalId]['completed_time'], 2)
+        return result
