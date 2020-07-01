@@ -14,8 +14,6 @@ KNOWN_NAME_MAP = {
     '도전! 맹독충의 빙판탈출': 'IBE1', # koKR
     '毒爆大逃亡': 'IBE1', # zhTW
     '雪地自爆虫大逃亡': 'IBE1', # zhCN
-    'Ice Baneling Escape 1 - Comunity Version': 'IBE1',
-    'Ice Baneling Escape 1 - Community Version': 'IBE1',
 
     'Reverse Ice Baneling Escape': 'RIBE1',
 
@@ -45,6 +43,16 @@ KNOWN_NAME_MAP = {
     'Back to Brood Baneling mode': 'BTB-BANE',
     'Back to Brood Ice Escape EZ': 'BTB-EZ',
     'Zealot dodge': 'Zealot',
+
+    # UNOFFICIAL
+
+    # Adu's test version
+    'Ice Baneling Escape 1 - Comunity Version': 'IBE1',
+    'Ice Baneling Escape 1 - Community Version': 'IBE1',
+
+    # Talv's test version
+    'IBE1 [T]': 'IBE1',
+    'IBE2 [T]': 'IBE2',
 }
 
 
