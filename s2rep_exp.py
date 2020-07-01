@@ -797,7 +797,7 @@ def main():
                 doEvaluate = False
 
             # there's no need to evaluate modern Delta IBEs, as everything we care about will be in `sefResult`
-            if map_info['id'] in ['IBE2', 'RIBE1'] and sefResult['framework_version'] >= 5:
+            if map_info['id'] in ['IBE1', 'RIBE1', 'IBE2'] and sefResult and sefResult['framework_version'] >= 5:
                 logging.info('modern Delta IBE, skipping evaluation')
                 doEvaluate = False
 
