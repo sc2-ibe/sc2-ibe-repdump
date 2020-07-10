@@ -1166,8 +1166,13 @@ class GameEvaluation(object):
 
 
     def fixup_final_game_result(self, result, deltaResult=None, sefResult=None):
+        if not sefResult:
+            return
         # IBE1v58RC1 incorrectly reported completion times of maps - fix it up
-        if self.mapId in ['IBE1'] and result['game_version'] <= 58 and result['framework_version'] <= 4:
+        if (
+            (self.mapId in ['IBE1', 'RIBE1'] and result['game_version'] <= 58 and result['framework_version'] <= 4) or
+            (self.mapId in ['IBE2'])
+        ):
             for chalId in result['challenges']:
                 result['challenges'][chalId]['completed_time'] = round(self.session.levels[chalId]['completed_time'], 2)
         return result
