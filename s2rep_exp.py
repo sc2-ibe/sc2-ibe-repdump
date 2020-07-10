@@ -526,8 +526,7 @@ def hash_result(general, map_id, result):
         inp.append(x['type'])
         if x['type'] == 'USER':
             inp.append(x['handle'])
-        if result:
-            inp.append(result['players'][x['player_id']]['left'])
+        inp.append(False)
 
     if result:
         inp.append(result['escape_time'])
@@ -538,6 +537,8 @@ def hash_result(general, map_id, result):
 
     def to_str(val):
         return str(val)
+
+    logging.info('hash input = %s' % inp)
 
     return hashlib.sha1(','.join(map(to_str, inp))).hexdigest()
 
