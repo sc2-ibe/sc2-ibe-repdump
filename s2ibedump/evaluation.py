@@ -159,10 +159,12 @@ class GameSession(object):
         except KeyError:
             pass
 
-    def findInitialCamPosition(self, fetchLatest=False, resolutionDiv=4.0):
+    def findInitialCamPosition(self, fetchLatest=False, mingameloop=None, resolutionDiv=4.0):
         tPosMap = OrderedDict()
         for playerId in self.cameraUpdates:
             for item in self.cameraUpdates[playerId]:
+                if mingameloop is not None and item['gameloop'] < mingameloop:
+                    continue
                 poskey = '%03d;%03d' % (int(round(item['x'] / resolutionDiv)), int(round(item['y'] / resolutionDiv)))
                 if poskey not in tPosMap:
                     tPosMap[poskey] = {
@@ -679,6 +681,7 @@ class GameEvaluation(object):
 
                 elif ev['_event'] == 'NNet.Replay.Tracker.SUnitDiedEvent':
                     unit = self.unState.units[ev['m_unitTagIndex']]
+                    # self.logGame('Unit "%s" died [ %5.1f ; %5.1f ]' % (unit['unitTypeName'], unit['posX'], unit['posY']))
 
                     if unit['unitTypeName'] in ['IceBaneling2', 'IceBaneCollnDetec'] and self.session.gameStartedAt is not None:
                         # old IBE1 (early ~2013) used `IceBaneCollnDetec` instead of `IceBaneling2`
@@ -819,6 +822,7 @@ class GameEvaluation(object):
                         if self.mapId in ['IBE1', 'IBE2', 'RIBE1']:
                             # ignore obstacles removed at final level
                             # for instance when zealots are removed after pressing button in IBE1
+                            # self.logGame('living units = %d' % len(self.session.getLivingUnits()))
                             if self.session.cLevelId == self.mapInfo.finalLevel:
                                 if self.mapId == 'IBE1' and len(self.session.getLivingUnits()) == 0:
                                     doCleanup = True
@@ -893,10 +897,10 @@ class GameEvaluation(object):
                             continue
                         # self.logGame(toJson(self.session.clUnits))
 
-                        initCam = self.session.findInitialCamPosition()
+                        initCam = self.session.findInitialCamPosition(mingameloop=self.session.clInitAt)
                         if initCam is None:
                             continue
-                        # self.logGame(pformat(initCam))
+                        # self.logGame(pformat(initCam, width=140))
                         self.session.cLevelId = self.mapInfo.findClosestLevel('spawn', initCam['x'], initCam['y'])
                         tmpCenter = self.mapInfo.levelRegions[self.session.cLevelId]['spawn'].getCenter()
                         if math.hypot(tmpCenter['x'] - posX, tmpCenter['y'] - posY) > 10.0:
