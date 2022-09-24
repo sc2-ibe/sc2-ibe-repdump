@@ -19,6 +19,7 @@ KNOWN_NAME_MAP = {
 
     'Ice Baneling Escape 2': 'IBE2',
     '도전! 맹독충의 빙판탈출 2': 'IBE2', # koKR
+    '雪地自爆虫大逃亡 2': 'IBE2', # zhCN
 
     'Ice Baneling Escape 2.1 - The Ice Awakens': 'IBE2.1',
     '맹독충의 빙판탈출 2.1 - 얼음 깨기': 'IBE2.1', # koKR - attempted name change
