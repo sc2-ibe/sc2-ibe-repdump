@@ -46,6 +46,15 @@ KNOWN_NAME_MAP = {
     'Back to Brood Ice Escape EZ': 'BTB-EZ',
     'Zealot dodge': 'Zealot',
 
+    # CN 2025 (+)
+    '雪地自爆虫大逃亡_2': 'IBE2', # Sam
+    '雪地自爆虫大逃亡 2': 'IBE2', # Yourpigeon (window)
+    '雪地自爆虫大逃亡 1': 'IBE1', # Yourpigeon
+    '雪地自爆虫大逃亡 - 冰霜远征': 'IBE-CV', # Yourpigeon
+    '雪地自爆虫大逃亡 - 冰霜远征 简易版': 'IBE-CV-EZ', # Yourpigeon
+    '雪地自爆虫大逃亡 - 冰霜远征 专家版': 'IBE-CV-PRO', # Yourpigeon
+    # '雪地自爆虫大逃亡 - 冰霜远征': 'IBE-CS-S-AV', # Yourpigeon, (not supported: Arctic Adventure)
+
     # UNOFFICIAL
 
     # Adu's test version
