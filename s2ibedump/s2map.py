@@ -48,8 +48,8 @@ KNOWN_NAME_MAP = {
     'Zealot dodge': 'Zealot',
 
     # CN 2025 (+)
-    '雪地自爆虫大逃亡_2': 'IBE2', # Sam
-    '雪地自爆虫大逃亡 2': 'IBE2', # Yourpigeon (window)
+    '雪地自爆虫大逃亡_2': 'IBE2', # Sam (deprecated; to be removed?)
+    '雪地自爆虫大逃亡 2': 'IBE2', # Yourpigeon (transfered from Sam - actively maintained)
     '雪地自爆虫大逃亡 1': 'IBE1', # Yourpigeon
     '雪地自爆虫大逃亡 - 冰霜远征': 'IBE-CV', # Yourpigeon
     '雪地自爆虫大逃亡 - 冰霜远征 简易版': 'IBE-CV-EZ', # Yourpigeon
