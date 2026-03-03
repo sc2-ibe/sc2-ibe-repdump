@@ -35,6 +35,12 @@
         },
         "Zealot": {
             "name": "Zealot dodge"
+        },
+        "IBE-ARCT": {
+            "name": "Ice Baneling Escape Arctic Adventures"
+        },
+        "IBE-BZ": {
+            "name": "Ice Baneling Escape Below Zero"
         }
     }
 }

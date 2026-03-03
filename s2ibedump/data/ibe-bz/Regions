@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Regions>
+    <region id="1">
+        <name value="L1 spawn"/>
+        <shape type="circle">
+            <center value="23.5002,232.0002"/>
+            <radius value="2.4997"/>
+        </shape>
+    </region>
+    <region id="2">
+        <name value="L1 finish"/>
+        <shape type="circle">
+            <center value="45.7,243.7"/>
+            <radius value="1.1098"/>
+        </shape>
+    </region>
+    <region id="3">
+        <name value="L1 map bounds"/>
+        <shape type="rect">
+            <quad value="2.2502,209.7502,65.7502,250.2502"/>
+        </shape>
+    </region>
+    <region id="4">
+        <name value="L1 map revealer"/>
+        <shape type="rect">
+            <quad value="2,209.5,65.5,250.25"/>
+        </shape>
+    </region>
+    <region id="5">
+        <name value="L2 spawn"/>
+        <shape type="rect">
+            <quad value="69.6264,221,73,224"/>
+        </shape>
+    </region>
+    <region id="6">
+        <name value="L2 Map Bounds"/>
+        <shape type="rect">
+            <quad value="66,209,167.5,239"/>
+        </shape>
+    </region>
+    <region id="7">
+        <name value="L2 Finish"/>
+        <shape type="circle">
+            <center value="161.5002,222.5012"/>
+            <radius value="1.8022"/>
+        </shape>
+    </region>
+    <region id="8">
+        <name value="L2 map revealer"/>
+        <shape type="rect">
+            <quad value="65.7502,208.7502,167.5,239"/>
+        </shape>
+    </region>
+    <region id="9">
+        <name value="L2 Death Region"/>
+        <shape type="rect">
+            <quad value="130.5002,237.5,168.5002,240.0002"/>
+        </shape>
+    </region>
+    <region id="10">
+        <name value="L3 Spawn"/>
+        <shape type="circle">
+            <center value="165,200"/>
+            <radius value="3.0412"/>
+        </shape>
+    </region>
+    <region id="11">
+        <name value="L3 Finish"/>
+        <shape type="circle">
+            <center value="185.5,204.7998"/>
+            <radius value="1.414"/>
+        </shape>
+    </region>
+    <region id="12">
+        <name value="L3 Map Revealer"/>
+        <shape type="rect">
+            <quad value="160,186,203,241.5"/>
+        </shape>
+    </region>
+    <region id="50">
+        <name value="L9 Spawn Region"/>
+        <shape type="rect">
+            <quad value="233.2504,221.5,238.7504,226.5"/>
+        </shape>
+    </region>
+    <region id="51">
+        <name value="L9 Finish"/>
+        <shape type="circle">
+            <center value="240,179"/>
+            <radius value="1.414"/>
+        </shape>
+    </region>
+    <region id="52">
+        <name value="L9 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="206,173.5,256,229.5"/>
+        </shape>
+    </region>
+    <region id="83">
+        <name value="L14 Spawn"/>
+        <shape type="rect">
+            <quad value="50.5,79,54.2514,82.501"/>
+        </shape>
+    </region>
+    <region id="84">
+        <name value="L14 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="13.3752,31,105,89.3752"/>
+        </shape>
+    </region>
+    <region id="85">
+        <name value="L14 Finish"/>
+        <shape type="circle">
+            <center value="82.502,70.2998"/>
+            <radius value="0.9"/>
+        </shape>
+    </region>
+    <region id="86">
+        <name value="L14 Jump 1"/>
+        <shape type="rect">
+            <quad value="75.0031,74.75,81,76.25"/>
+        </shape>
+    </region>
+    <region id="87">
+        <name value="L14 Jump 2"/>
+        <shape type="rect">
+            <quad value="76.0043,64,80.5,64.3642"/>
+        </shape>
+    </region>
+    <region id="91">
+        <name value="L14 Catapult"/>
+        <shape type="rect">
+            <quad value="71.7873,70.1123,72.8122,71.0874"/>
+        </shape>
+    </region>
+    <region id="101">
+        <name value="L16 Catapult 1"/>
+        <shape type="rect">
+            <quad value="143.7,46,144.7,47"/>
+        </shape>
+    </region>
+    <region id="102">
+        <name value="L16 Catapult 2"/>
+        <shape type="rect">
+            <quad value="162.5,25.7,163.5,26.7"/>
+        </shape>
+    </region>
+    <region id="103">
+        <name value="L16 Catapult 3"/>
+        <shape type="rect">
+            <quad value="147.7998,14.2998,148.7998,15.2998"/>
+        </shape>
+    </region>
+    <region id="104">
+        <name value="L16 Catapult 4"/>
+        <shape type="rect">
+            <quad value="130.525,25.2,131.6748,26.2"/>
+        </shape>
+    </region>
+    <region id="105">
+        <name value="L16 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="113,3.2502,171.2502,60.5"/>
+        </shape>
+    </region>
+    <region id="106">
+        <name value="L16 Spawn"/>
+        <shape type="circle">
+            <center value="137.5004,22.5014"/>
+            <radius value="2.5014"/>
+        </shape>
+    </region>
+    <region id="107">
+        <name value="L16 Finish"/>
+        <shape type="circle">
+            <center value="153,50.5"/>
+            <radius value="1.118"/>
+        </shape>
+    </region>
+    <region id="111">
+        <name value="L18 Spawn"/>
+        <shape type="rect">
+            <quad value="175.5,13.5,182.5,20"/>
+        </shape>
+    </region>
+    <region id="112">
+        <name value="L18 Finish"/>
+        <shape type="circle">
+            <center value="176.5041,45.503"/>
+            <radius value="1.4191"/>
+        </shape>
+    </region>
+    <region id="113">
+        <name value="L18 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="171.5,7.5,203,50"/>
+        </shape>
+    </region>
+    <region id="115">
+        <name value="l18 stalker 2"/>
+        <shape type="rect">
+            <quad value="185,29.5,189.5,41.5"/>
+        </shape>
+    </region>
+    <region id="116">
+        <name value="l18 stalker 1"/>
+        <shape type="rect">
+            <quad value="176.5,37.5,185,42"/>
+        </shape>
+    </region>
+    <region id="117">
+        <name value="l18 stalker 3"/>
+        <shape type="rect">
+            <quad value="193.5,31.5,198,37"/>
+        </shape>
+    </region>
+    <region id="129">
+        <name value="L21 Spawn"/>
+        <shape type="rect">
+            <quad value="143.5,70,148,74.5"/>
+        </shape>
+    </region>
+    <region id="130">
+        <name value="L21 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="140.2502,61,198.7502,95"/>
+        </shape>
+    </region>
+    <region id="131">
+        <name value="L21 Finish"/>
+        <shape type="circle">
+            <center value="195.5,80"/>
+            <radius value="1.118"/>
+        </shape>
+    </region>
+    <region id="133">
+        <name value="L21 Catapult 1"/>
+        <shape type="rect">
+            <quad value="161.7001,80.5,163,81.5"/>
+        </shape>
+    </region>
+    <region id="134">
+        <name value="L21 Catapult 2"/>
+        <shape type="circle">
+            <center value="174.7,73.7998"/>
+            <radius value="0.75"/>
+        </shape>
+    </region>
+    <region id="135">
+        <name value="L21 Catapult 3"/>
+        <shape type="circle">
+            <center value="181.25,78.75"/>
+            <radius value="0.7905"/>
+        </shape>
+    </region>
+    <region id="136">
+        <name value="L21 Catapult 4"/>
+        <shape type="circle">
+            <center value="180.25,85.25"/>
+            <radius value="0.7905"/>
+        </shape>
+    </region>
+    <region id="132">
+        <name value="L21 Jump"/>
+        <shape type="circle">
+            <center value="173.5014,86.001"/>
+            <radius value="1.7998"/>
+        </shape>
+    </region>
+    <region id="137">
+        <name value="L21 Catapult 5 "/>
+        <shape type="circle">
+            <center value="159.25,65.25"/>
+            <radius value="0.7905"/>
+        </shape>
+    </region>
+    <region id="147">
+        <name value="L24 Spawn"/>
+        <shape type="rect">
+            <quad value="125,138.5,131.5,145"/>
+        </shape>
+    </region>
+    <region id="148">
+        <name value="L24 Finish"/>
+        <shape type="circle">
+            <center value="86,125"/>
+            <radius value="4.031"/>
+        </shape>
+    </region>
+    <region id="153">
+        <name value="L24 Teleport region"/>
+        <shape type="rect">
+            <quad value="227.6965,26.6882,233.3051,32.3134"/>
+        </shape>
+    </region>
+    <region id="53">
+        <name value="Creature Bonus Trigger"/>
+        <shape type="rect">
+            <quad value="250.5,196.4382,254,197.5"/>
+        </shape>
+    </region>
+    <region id="54">
+        <name value="Trigger spawn death"/>
+        <shape type="rect">
+            <quad value="249.5,200.8767,253.3171,202.1267"/>
+        </shape>
+    </region>
+    <region id="55">
+        <name value="L9 Lyote Death 1"/>
+        <shape type="rect">
+            <quad value="240.5,201.5,242.5,203.5"/>
+        </shape>
+    </region>
+    <region id="156">
+        <name value="Portal Move"/>
+        <shape type="rect">
+            <quad value="237.5,184,250,187"/>
+        </shape>
+    </region>
+    <region id="157">
+        <name value="L9 Catapult 1"/>
+        <shape type="rect">
+            <quad value="231.5,216.5083,233,217.5"/>
+        </shape>
+    </region>
+    <region id="158">
+        <name value="L9 Lyote death 2"/>
+        <shape type="rect">
+            <quad value="243.5,192.5,244.5,193.5"/>
+        </shape>
+    </region>
+    <region id="159">
+        <name value="L3 Size 1"/>
+        <shape type="rect">
+            <quad value="195.6357,201.1911,198.3857,201.8144"/>
+        </shape>
+    </region>
+    <region id="160">
+        <name value="L3 Size 2"/>
+        <shape type="rect">
+            <quad value="195.643,230.3767,198.393,231"/>
+        </shape>
+    </region>
+    <region id="161">
+        <name value="L3 Size 3"/>
+        <shape type="rect">
+            <quad value="169.143,230.3767,171.893,231"/>
+        </shape>
+    </region>
+    <region id="162">
+        <name value="L3 Size 4"/>
+        <shape type="rect">
+            <quad value="169.143,211.3767,171.893,212"/>
+        </shape>
+    </region>
+    <region id="163">
+        <name value="L3 Size 5"/>
+        <shape type="rect">
+            <quad value="192.643,211.3767,195.393,212"/>
+        </shape>
+    </region>
+    <region id="164">
+        <name value="L3 Size 6"/>
+        <shape type="rect">
+            <quad value="192.643,226.8767,195.393,227.5"/>
+        </shape>
+    </region>
+    <region id="165">
+        <name value="L3 Size 7"/>
+        <shape type="rect">
+            <quad value="173,226.8767,175.893,227.5"/>
+        </shape>
+    </region>
+    <region id="166">
+        <name value="L3 Size 8"/>
+        <shape type="rect">
+            <quad value="173.143,214.5,175.893,215.1267"/>
+        </shape>
+    </region>
+    <region id="167">
+        <name value="L3 Size 9"/>
+        <shape type="rect">
+            <quad value="188.643,214.3767,191.393,215"/>
+        </shape>
+    </region>
+    <region id="168">
+        <name value="L3 Size 10"/>
+        <shape type="rect">
+            <quad value="188.643,223.3767,191.5,224"/>
+        </shape>
+    </region>
+    <region id="169">
+        <name value="L3 Size 11"/>
+        <shape type="rect">
+            <quad value="176.643,223,179.393,223.6267"/>
+        </shape>
+    </region>
+    <region id="170">
+        <name value="L3 Size 12"/>
+        <shape type="rect">
+            <quad value="176.643,217.5,179.393,218.1267"/>
+        </shape>
+    </region>
+    <region id="171">
+        <name value="L3 Size 13"/>
+        <shape type="rect">
+            <quad value="185.5,217.5,188.393,218.1267"/>
+        </shape>
+    </region>
+    <region id="172">
+        <name value="L3 Size 14"/>
+        <shape type="rect">
+            <quad value="180,219.6911,182.879,220.3144"/>
+        </shape>
+    </region>
+    <region id="173">
+        <name value="L3 Lyote death"/>
+        <shape type="rect">
+            <quad value="181,219.2541,183,220.7541"/>
+        </shape>
+    </region>
+    <region id="184">
+        <name value="L26 Spawn"/>
+        <shape type="rect">
+            <quad value="229.7502,72.251,234.2502,76.751"/>
+        </shape>
+    </region>
+    <region id="185">
+        <name value="L26 Revealer/Playable"/>
+        <shape type="rect">
+            <quad value="212.1252,67.1252,251.8752,132.5"/>
+        </shape>
+    </region>
+    <region id="186">
+        <name value="L26 Finish"/>
+        <shape type="circle">
+            <center value="238.2,74.7"/>
+            <radius value="1.25"/>
+        </shape>
+    </region>
+    <region id="13">
+        <name value="L5 Spawn"/>
+        <shape type="rect">
+            <quad value="10,203.5,15,208"/>
+        </shape>
+    </region>
+    <region id="17">
+        <name value="L5 Finish"/>
+        <shape type="circle">
+            <center value="12.5,182"/>
+            <radius value="1.8027"/>
+        </shape>
+    </region>
+    <region id="18">
+        <name value="L5 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="3.5,177.5,59.5,211.5"/>
+        </shape>
+    </region>
+    <region id="187">
+        <name value="L5 Predator Reveal"/>
+        <shape type="rect">
+            <quad value="7,191,10.5,191.7624"/>
+        </shape>
+    </region>
+    <region id="188">
+        <name value="L5 Predator spawn trigger"/>
+        <shape type="rect">
+            <quad value="49.1252,189.0017,49.8767,194.0017"/>
+        </shape>
+    </region>
+    <region id="191">
+        <name value="L5 Predator Death"/>
+        <shape type="rect">
+            <quad value="43.6254,187.375,44.3754,193.625"/>
+        </shape>
+    </region>
+    <region id="192">
+        <name value="L5 Marauder Reveal"/>
+        <shape type="rect">
+            <quad value="53.5,183.5,57.2607,184.5"/>
+        </shape>
+    </region>
+    <region id="124">
+        <name value="L27 Finish"/>
+        <shape type="circle">
+            <center value="52.5,163"/>
+            <radius value="0.707"/>
+        </shape>
+    </region>
+    <region id="126">
+        <name value="L27 Spawn"/>
+        <shape type="rect">
+            <quad value="65,142.5,70,147.5"/>
+        </shape>
+    </region>
+    <region id="128">
+        <name value="L27 Bounds"/>
+        <shape type="rect">
+            <quad value="0,137.5,71.5,178.5"/>
+        </shape>
+    </region>
+    <region id="193">
+        <name value="L27 Catapult 1"/>
+        <shape type="rect">
+            <quad value="16.6806,162.2031,17.919,163.3964"/>
+        </shape>
+    </region>
+    <region id="194">
+        <name value="L27 Catapult 3"/>
+        <shape type="rect">
+            <quad value="20,155.5095,21.2636,156.5095"/>
+        </shape>
+    </region>
+    <region id="195">
+        <name value="L27 Catapult 2"/>
+        <shape type="rect">
+            <quad value="17.25,176.25,18.75,177.75"/>
+        </shape>
+    </region>
+    <region id="197">
+        <name value="L27 Catapult 4"/>
+        <shape type="rect">
+            <quad value="23.7563,167.5102,25,168.5102"/>
+        </shape>
+    </region>
+    <region id="198">
+        <name value="L27 Catapult 5"/>
+        <shape type="rect">
+            <quad value="20.2998,157.5,21.2998,158.5"/>
+        </shape>
+    </region>
+    <region id="199">
+        <name value="L27 Catapult 6"/>
+        <shape type="rect">
+            <quad value="3,167.5,4.5,169"/>
+        </shape>
+    </region>
+    <region id="200">
+        <name value="L27 Random Move 1"/>
+        <shape type="rect">
+            <quad value="23,142,47,149"/>
+        </shape>
+    </region>
+    <region id="201">
+        <name value="L27 Random Move 2"/>
+        <shape type="rect">
+            <quad value="22.5,157.5,47.5,164.5"/>
+        </shape>
+    </region>
+    <region id="212">
+        <name value="L24 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="72,114,142.5,153.5"/>
+        </shape>
+    </region>
+    <region id="151">
+        <name value="L24 Playable 2"/>
+        <shape type="rect">
+            <quad value="215.5002,0,256,37.0002"/>
+        </shape>
+    </region>
+    <region id="190">
+        <name value="L26 Speed up 1"/>
+        <shape type="rect">
+            <quad value="218,98.9406,244.3693,124.9526"/>
+        </shape>
+    </region>
+    <region id="211">
+        <name value="L3 Map Bounds"/>
+        <shape type="rect">
+            <quad value="145,194,212,237.5"/>
+        </shape>
+    </region>
+    <region id="38">
+        <name value="L8 Spawn"/>
+        <shape type="rect">
+            <quad value="241.0798,142.157,244.5,145.5"/>
+        </shape>
+    </region>
+    <region id="39">
+        <name value="L8 Finish"/>
+        <shape type="circle">
+            <center value="178.5026,153.003"/>
+            <radius value="0.9973"/>
+        </shape>
+    </region>
+    <region id="40">
+        <name value="L8 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="169.5,134.5,250.5,181.5"/>
+        </shape>
+    </region>
+    <region id="41">
+        <name value="L30 Finish"/>
+        <shape type="circle">
+            <center value="184.2,117.0002"/>
+            <radius value="1.3461"/>
+        </shape>
+    </region>
+    <region id="42">
+        <name value="L30 Spawn"/>
+        <shape type="rect">
+            <quad value="204.625,96.5,209.3754,101.5"/>
+        </shape>
+    </region>
+    <region id="43">
+        <name value="L30 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="168,95,212.5,134"/>
+        </shape>
+    </region>
+    <region id="14">
+        <name value="L4 Spawn"/>
+        <shape type="rect">
+            <quad value="82.5,190,88.5,195.5"/>
+        </shape>
+    </region>
+    <region id="15">
+        <name value="L4 Finish"/>
+        <shape type="circle">
+            <center value="112.5,162.5"/>
+            <radius value="1.8027"/>
+        </shape>
+    </region>
+    <region id="16">
+        <name value="L4 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="69,156.5,140.5,207.5"/>
+        </shape>
+    </region>
+    <region id="19">
+        <name value="L27 Revealer"/>
+        <shape type="rect">
+            <quad value="5.75,137.5,71.5,178.5"/>
+        </shape>
+    </region>
+    <region id="20">
+        <name value="L6 Spawn"/>
+        <shape type="rect">
+            <quad value="26,112.5,30.5,116.5"/>
+        </shape>
+    </region>
+    <region id="21">
+        <name value="L6 Finish"/>
+        <shape type="circle">
+            <center value="47,114.5"/>
+            <radius value="1.414"/>
+        </shape>
+    </region>
+    <region id="22">
+        <name value="L6 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="11.75,102.25,64,132.5"/>
+        </shape>
+    </region>
+    <region id="23">
+        <name value="L13 Spawn"/>
+        <shape type="rect">
+            <quad value="140,189,145,194"/>
+        </shape>
+    </region>
+    <region id="24">
+        <name value="L13 Finish"/>
+        <shape type="circle">
+            <center value="154.5,191.75"/>
+            <radius value="1.677"/>
+        </shape>
+    </region>
+    <region id="25">
+        <name value="L13 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="127.5,152,167,197"/>
+        </shape>
+    </region>
+    <region id="26">
+        <name value="L20 Spawn"/>
+        <shape type="rect">
+            <quad value="127.25,99,132.5,103.5"/>
+        </shape>
+    </region>
+    <region id="27">
+        <name value="L20 Finish"/>
+        <shape type="circle">
+            <center value="157.5,109.5"/>
+            <radius value="1.8027"/>
+        </shape>
+    </region>
+    <region id="28">
+        <name value="L20 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="122.5,90.5,164.5,130"/>
+        </shape>
+    </region>
+    <region id="29">
+        <name value="L20 Stalker Zone 1"/>
+        <shape type="rect">
+            <quad value="155.5,117.5,162.0002,121"/>
+        </shape>
+    </region>
+    <region id="30">
+        <name value="L20 Stalker Zone 2"/>
+        <shape type="rect">
+            <quad value="154.001,121,162,124"/>
+        </shape>
+    </region>
+    <region id="31">
+        <name value="L20 Stalker Zone 3"/>
+        <shape type="rect">
+            <quad value="152,121.5,154.5,128.5"/>
+        </shape>
+    </region>
+    <region id="32">
+        <name value="L20 Stalker Zone 4"/>
+        <shape type="rect">
+            <quad value="154.501,126,161,128.7504"/>
+        </shape>
+    </region>
+    <region id="33">
+        <name value="L25 Spawn"/>
+        <shape type="rect">
+            <quad value="16.5,12,21.5,16.5"/>
+        </shape>
+    </region>
+    <region id="34">
+        <name value="L25 Finish"/>
+        <shape type="circle">
+            <center value="102.0046,24.004"/>
+            <radius value="1.119"/>
+        </shape>
+    </region>
+    <region id="35">
+        <name value="L25 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="0.25,0.25,112,31"/>
+        </shape>
+    </region>
+    <region id="36">
+        <name value="L25 Jump 1"/>
+        <shape type="rect">
+            <quad value="60,10,61,15"/>
+        </shape>
+    </region>
+    <region id="37">
+        <name value="L25 Player Kill Region 1"/>
+        <shape type="rect">
+            <quad value="52,1.5,98.25,2.5"/>
+        </shape>
+    </region>
+    <region id="45">
+        <name value="L25 Player Kill Region 2"/>
+        <shape type="rect">
+            <quad value="57.5,18.75,86.5,21"/>
+        </shape>
+    </region>
+    <region id="47">
+        <name value="L25 Jump 2"/>
+        <shape type="rect">
+            <quad value="76.1303,11,76.8771,15.5"/>
+        </shape>
+    </region>
+    <region id="48">
+        <name value="L7 Spawn"/>
+        <shape type="rect">
+            <quad value="209.2504,59,214.7504,64"/>
+        </shape>
+    </region>
+    <region id="49">
+        <name value="L7 Finish"/>
+        <shape type="circle">
+            <center value="222,60"/>
+            <radius value="1.414"/>
+        </shape>
+    </region>
+    <region id="56">
+        <name value="L7 Revealer/Bounds"/>
+        <shape type="rect">
+            <quad value="207,44,238.5,67.5"/>
+        </shape>
+    </region>
+    <region id="46">
+        <name value="L14 Player Kill Region 1"/>
+        <shape type="rect">
+            <quad value="85.2504,41.5002,87.7502,80.5002"/>
+        </shape>
+    </region>
+    <region id="57">
+        <name value="L14 Freeze 1"/>
+        <shape type="rect">
+            <quad value="53,57.075,56.5,57.5"/>
+        </shape>
+    </region>
+    <region id="58">
+        <name value="L14 Freeze 2"/>
+        <shape type="rect">
+            <quad value="53.2578,63.8864,56.7578,64.5"/>
+        </shape>
+    </region>
+    <region id="44">
+        <name value="l18 stalker 4"/>
+        <shape type="rect">
+            <quad value="187.5,27,198,31.5"/>
+        </shape>
+    </region>
+    <region id="60">
+        <name value="L16 Stalker Zone 1 Extreme"/>
+        <shape type="rect">
+            <quad value="140.5,26.5,147.5,34"/>
+        </shape>
+    </region>
+    <region id="59">
+        <name value="L21 Marauder Random Shot"/>
+        <shape type="rect">
+            <quad value="149,60.5,191,89.5"/>
+        </shape>
+    </region>
+    <region id="61">
+        <name value="L26 Speed Revert"/>
+        <shape type="rect">
+            <quad value="211.2502,71.2502,249.7502,98.5"/>
+        </shape>
+    </region>
+    <region id="62">
+        <name value="L26 Speed Revert 2"/>
+        <shape type="rect">
+            <quad value="229.4692,125.4743,234.4692,126.2221"/>
+        </shape>
+    </region>
+</Regions>
