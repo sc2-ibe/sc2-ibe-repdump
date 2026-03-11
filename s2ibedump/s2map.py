@@ -53,10 +53,17 @@ KNOWN_NAME_MAP = {
     '雪地自爆虫大逃亡_2': 'IBE2', # Sam (deprecated; to be removed?)
     '雪地自爆虫大逃亡 2': 'IBE2', # Yourpigeon (transfered from Sam - actively maintained)
     '雪地自爆虫大逃亡 1': 'IBE1', # Yourpigeon
+    '雪地自爆虫大逃亡 2.1 - 极寒苏醒': 'IBE2.1', # Yourpigeon
     '雪地自爆虫大逃亡 - 冰霜远征': 'IBE-CV', # Yourpigeon
     '雪地自爆虫大逃亡 - 冰霜远征 简易版': 'IBE-CV-EZ', # Yourpigeon
     '雪地自爆虫大逃亡 - 冰霜远征 专家版': 'IBE-CV-PRO', # Yourpigeon
-    # '雪地自爆虫大逃亡 - 冰霜远征': 'IBE-CS-S-AV', # Yourpigeon, (not supported: Arctic Adventure)
+    '雪地工蜂大逃亡 - 重回母巢': 'BTB', # Yourpigeon
+    '雪地工蜂大逃亡 - 重回母巢 专家版': 'BTB-PRO', # Yourpigeon
+    '雪地工蜂大逃亡 - 重回母巢 爆虫mod': 'BTB-BANE', # Yourpigeon
+    '雪地工蜂大逃亡 - 重回母巢 简易版': 'BTB-EZ', # Yourpigeon
+    '雪地自爆虫大逃亡 - 闪避狂热者': 'ZEALOT', # Yourpigeon
+    '雪地自爆虫大逃亡 - 北极探险': 'IBE-ARCT', # Yourpigeon
+    '雪地自爆虫大逃亡 - 零度之下': 'IBE-BZ', # Yourpigeon
 
     # UNOFFICIAL
 
