@@ -698,10 +698,8 @@ def main():
         if args.map_id is not None:
             map_id = args.map_id
         else:
-            for mid, mdata in minfo['maps'].items():
-                if mdata['name'] == general['game_title']:
-                    map_id = mid
-                    break
+            map_id = KNOWN_NAME_MAP[general['game_title']]
+
         # IBE2.1 before name change
         if general['game_title'] == '맹독충의 빙판탈출 2' and general['author_handle'] in ['1-S2-1-4182020', '2-S2-1-2642502', '3-S2-1-4137301']:
             map_id = 'IBE2.1'
