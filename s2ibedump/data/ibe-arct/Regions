@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Regions>
+    <region id="1">
+        <name value="ch1 spawn"/>
+        <shape type="rect">
+            <quad value="30.8906,221.8632,34.3906,225.3632"/>
+        </shape>
+    </region>
+    <region id="2">
+        <name value="ch1 finish"/>
+        <shape type="circle">
+            <center value="20.717,224.3837"/>
+            <radius value="0.7377"/>
+        </shape>
+    </region>
+    <region id="3">
+        <name value="ch1 rb"/>
+        <shape type="rect">
+            <quad value="16.502,206.5173,66.002,236.5173"/>
+        </shape>
+    </region>
+    <region id="4">
+        <name value="ch2 finish"/>
+        <shape type="circle">
+            <center value="57.5,158"/>
+            <radius value="1.8027"/>
+        </shape>
+    </region>
+    <region id="5">
+        <name value="ch2 spawn"/>
+        <shape type="rect">
+            <quad value="54.7504,164,60.2504,169"/>
+        </shape>
+    </region>
+    <region id="6">
+        <name value="ch2 rb"/>
+        <shape type="rect">
+            <quad value="8.046,147.3471,65.817,179.4897"/>
+        </shape>
+    </region>
+    <region id="7">
+        <name value="ch3 finish"/>
+        <shape type="circle">
+            <center value="107.1821,245.7385"/>
+            <radius value="0.4777"/>
+        </shape>
+    </region>
+    <region id="8">
+        <name value="ch3 spawn"/>
+        <shape type="rect">
+            <quad value="98.4257,217.5197,101.5754,220.482"/>
+        </shape>
+    </region>
+    <region id="9">
+        <name value="ch3 rb"/>
+        <shape type="rect">
+            <quad value="79.3251,202.8618,118.4267,249.3508"/>
+        </shape>
+    </region>
+    <region id="10">
+        <name value="ch4 spawn"/>
+        <shape type="rect">
+            <quad value="192.8557,213.0158,196.8403,217.0512"/>
+        </shape>
+    </region>
+    <region id="11">
+        <name value="ch4 finish"/>
+        <shape type="circle">
+            <center value="206.6384,233.0527"/>
+            <radius value="0.9672"/>
+        </shape>
+    </region>
+    <region id="12">
+        <name value="ch4 rb"/>
+        <shape type="rect">
+            <quad value="157.6154,202.105,213.3483,244"/>
+        </shape>
+    </region>
+    <region id="13">
+        <name value="ch5 spawn"/>
+        <shape type="rect">
+            <quad value="93.0642,165.1003,97.261,169.0246"/>
+        </shape>
+    </region>
+    <region id="14">
+        <name value="ch5 finish"/>
+        <shape type="circle">
+            <center value="120.216,172.126"/>
+            <radius value="0.9624"/>
+        </shape>
+    </region>
+    <region id="15">
+        <name value="ch5 rb"/>
+        <shape type="rect">
+            <quad value="83.2204,153.7441,124.3286,183.351"/>
+        </shape>
+    </region>
+    <region id="16">
+        <name value="ch5- random spawn kill"/>
+        <shape type="rect">
+            <quad value="98.6828,164.7197,99.7763,169.812"/>
+        </shape>
+    </region>
+    <region id="17">
+        <name value="ch6- catapult 1"/>
+        <shape type="rect">
+            <quad value="172.462,157.1396,173.5231,158.0744"/>
+        </shape>
+    </region>
+    <region id="18">
+        <name value="ch6 spawn"/>
+        <shape type="rect">
+            <quad value="170.923,168.264,173.9277,171.276"/>
+        </shape>
+    </region>
+    <region id="21">
+        <name value="ch6- catapult 2"/>
+        <shape type="rect">
+            <quad value="180.6437,164.334,181.651,165.3386"/>
+        </shape>
+    </region>
+    <region id="20">
+        <name value="ch6 finish"/>
+        <shape type="circle">
+            <center value="179.0922,170.0368"/>
+            <radius value="0.805"/>
+        </shape>
+    </region>
+    <region id="22">
+        <name value="ch6- catapult 3"/>
+        <shape type="rect">
+            <quad value="189.3645,153.981,190.395,154.9675"/>
+        </shape>
+    </region>
+    <region id="23">
+        <name value="ch7 spawn"/>
+        <shape type="rect">
+            <quad value="39.8215,122.319,42.9106,125.1696"/>
+        </shape>
+    </region>
+    <region id="24">
+        <name value="ch7 finish"/>
+        <shape type="circle">
+            <center value="52.0461,123.963"/>
+            <radius value="0.7814"/>
+        </shape>
+    </region>
+    <region id="25">
+        <name value="ch7 rb"/>
+        <shape type="rect">
+            <quad value="26.42,104.9868,66.0961,137.5087"/>
+        </shape>
+    </region>
+    <region id="26">
+        <name value="ch7 random shot"/>
+        <shape type="rect">
+            <quad value="42.4926,112.0664,51.4145,112.98"/>
+        </shape>
+    </region>
+    <region id="27">
+        <name value="ch8 spawn"/>
+        <shape type="rect">
+            <quad value="90.749,85.8486,94.5166,89.1535"/>
+        </shape>
+    </region>
+    <region id="29">
+        <name value="ch8 rb"/>
+        <shape type="rect">
+            <quad value="78.2285,78.1486,106.67,141.091"/>
+        </shape>
+    </region>
+    <region id="28">
+        <name value="ch8 finish"/>
+        <shape type="circle">
+            <center value="92.5275,131.2292"/>
+            <radius value="1.0444"/>
+        </shape>
+    </region>
+    <region id="30">
+        <name value="ch9 finish"/>
+        <shape type="circle">
+            <center value="143.7165,117.556"/>
+            <radius value="0.7832"/>
+        </shape>
+    </region>
+    <region id="31">
+        <name value="ch9 spawn"/>
+        <shape type="rect">
+            <quad value="152.5344,89.3125,155.8134,92.849"/>
+        </shape>
+    </region>
+    <region id="32">
+        <name value="ch9 rb"/>
+        <shape type="rect">
+            <quad value="137,87,172,142"/>
+        </shape>
+    </region>
+    <region id="33">
+        <name value="ch9- jump 1"/>
+        <shape type="rect">
+            <quad value="160,115,161,119"/>
+        </shape>
+    </region>
+    <region id="42">
+        <name value="ch12 spawn"/>
+        <shape type="diamond">
+            <center value="222.626,182.4997"/>
+            <width value="4.025"/>
+            <height value="3.9028"/>
+        </shape>
+    </region>
+    <region id="43">
+        <name value="ch12 finish"/>
+        <shape type="circle">
+            <center value="230.329,181.9897"/>
+            <radius value="0.5083"/>
+        </shape>
+    </region>
+    <region id="44">
+        <name value="ch12 rb"/>
+        <shape type="rect">
+            <quad value="209.7412,142.6225,251.2673,196.4306"/>
+        </shape>
+    </region>
+    <region id="37">
+        <name value="ch13 spawn"/>
+        <shape type="circle">
+            <center value="49.121,71.952"/>
+            <radius value="1.6855"/>
+        </shape>
+    </region>
+    <region id="45">
+        <name value="ch13 rb"/>
+        <shape type="rect">
+            <quad value="11.4873,43.0888,73.0942,87.2072"/>
+        </shape>
+    </region>
+    <region id="46">
+        <name value="ch13 finish"/>
+        <shape type="circle">
+            <center value="35.2133,73.7624"/>
+            <radius value="0.7656"/>
+        </shape>
+    </region>
+    <region id="48">
+        <name value="ch14 spawn"/>
+        <shape type="rect">
+            <quad value="32.9655,30.7446,36.034,33.7443"/>
+        </shape>
+    </region>
+    <region id="49">
+        <name value="ch14 rb"/>
+        <shape type="rect">
+            <quad value="18.282,14.6577,63.636,39.0043"/>
+        </shape>
+    </region>
+    <region id="50">
+        <name value="ch14 finish"/>
+        <shape type="circle">
+            <center value="49.264,29.1992"/>
+            <radius value="0.4921"/>
+        </shape>
+    </region>
+    <region id="51">
+        <name value="ch14 jump 1"/>
+        <shape type="diamond">
+            <center value="39.887,22.6806"/>
+            <width value="1.786"/>
+            <height value="3.6723"/>
+        </shape>
+    </region>
+    <region id="52">
+        <name value="ch14 chaser 1"/>
+        <shape type="rect">
+            <quad value="36.7485,30.7805,37.4326,32.946"/>
+        </shape>
+    </region>
+    <region id="53">
+        <name value="ch14 chaser kill"/>
+        <shape type="rect">
+            <quad value="51.1267,26.263,53.4575,27.099"/>
+        </shape>
+    </region>
+    <region id="54">
+        <name value="ch1- catapult 1"/>
+        <shape type="rect">
+            <quad value="25.511,220.5693,26.4455,221.5422"/>
+        </shape>
+    </region>
+    <region id="55">
+        <name value="ch1 kill 1"/>
+        <shape type="rect">
+            <quad value="36.0021,219.0014,37.0021,228.0014"/>
+        </shape>
+    </region>
+    <region id="56">
+        <name value="ch1- move trigger 1"/>
+        <shape type="rect">
+            <quad value="34.9758,219.215,55.8334,228.1127"/>
+        </shape>
+    </region>
+    <region id="57">
+        <name value="ch1- move trigger 2"/>
+        <shape type="rect">
+            <quad value="28.3195,210.152,44.8437,216.0227"/>
+        </shape>
+    </region>
+    <region id="58">
+        <name value="ch1 kill 2"/>
+        <shape type="rect">
+            <quad value="29.004,210.0644,30.004,215.9411"/>
+        </shape>
+    </region>
+    <region id="59">
+        <name value="ch1- catapult 2"/>
+        <shape type="rect">
+            <quad value="48.2448,216.8144,49.1594,217.7463"/>
+        </shape>
+    </region>
+    <region id="60">
+        <name value="ch3- north move"/>
+        <shape type="rect">
+            <quad value="105.067,227.5915,105.948,228.5268"/>
+        </shape>
+    </region>
+    <region id="61">
+        <name value="ch3- west move"/>
+        <shape type="rect">
+            <quad value="102.5214,225.0373,103.504,225.948"/>
+        </shape>
+    </region>
+    <region id="62">
+        <name value="ch3- east move"/>
+        <shape type="rect">
+            <quad value="107.5332,225.0417,108.4882,225.9357"/>
+        </shape>
+    </region>
+    <region id="63">
+        <name value="ch3- south move"/>
+        <shape type="rect">
+            <quad value="105.0698,222.5881,105.9787,223.465"/>
+        </shape>
+    </region>
+    <region id="65">
+        <name value="ch3- zealot sacrifice"/>
+        <shape type="circle">
+            <center value="112.8371,224.2951"/>
+            <radius value="0.6765"/>
+        </shape>
+    </region>
+    <region id="66">
+        <name value="ch3- moves on trigger"/>
+        <shape type="rect">
+            <quad value="102.0815,221.9287,109.0021,228.7617"/>
+        </shape>
+    </region>
+    <region id="67">
+        <name value="ch3- catapult region 1"/>
+        <shape type="diamond">
+            <center value="94.858,233.8488"/>
+            <width value="0.8696"/>
+            <height value="0.8498"/>
+        </shape>
+    </region>
+    <region id="68">
+        <name value="ch15- random move 1"/>
+        <shape type="circle">
+            <center value="206.6223,76.5964"/>
+            <radius value="7.1982"/>
+        </shape>
+        <shape type="circle">
+            <negative/>
+            <center value="206.5158,76.2797"/>
+            <radius value="1.5231"/>
+        </shape>
+    </region>
+    <region id="70">
+        <name value="ch15- jump 2"/>
+        <shape type="rect">
+            <quad value="226.3662,79.823,231.8537,81.175"/>
+        </shape>
+    </region>
+    <region id="71">
+        <name value="ch15 rb"/>
+        <shape type="rect">
+            <quad value="183.4882,53.801,246.7402,118.7741"/>
+        </shape>
+    </region>
+    <region id="72">
+        <name value="ch15 spawn"/>
+        <shape type="rect">
+            <quad value="205,102.5,208,105.5"/>
+        </shape>
+    </region>
+    <region id="73">
+        <name value="ch15- button 1"/>
+        <shape type="rect">
+            <quad value="210.9355,85.104,212.0412,86.177"/>
+        </shape>
+    </region>
+    <region id="74">
+        <name value="ch15- button 2"/>
+        <shape type="rect">
+            <quad value="210.9577,86.6364,212.0634,87.7094"/>
+        </shape>
+    </region>
+    <region id="75">
+        <name value="ch15- button 3"/>
+        <shape type="rect">
+            <quad value="210.9421,88.0754,212.0478,89.1484"/>
+        </shape>
+    </region>
+    <region id="76">
+        <name value="ch15- button 4"/>
+        <shape type="rect">
+            <quad value="210.9436,89.4865,212.0493,90.5595"/>
+        </shape>
+    </region>
+    <region id="77">
+        <name value="ch15- button 5"/>
+        <shape type="rect">
+            <quad value="210.9621,90.9133,212.0678,91.9863"/>
+        </shape>
+    </region>
+    <region id="78">
+        <name value="ch15- button 6"/>
+        <shape type="rect">
+            <quad value="210.9936,92.4094,212.0993,93.4824"/>
+        </shape>
+    </region>
+    <region id="79">
+        <name value="ch15- button 7"/>
+        <shape type="rect">
+            <quad value="212.5202,85.1525,213.626,86.2255"/>
+        </shape>
+    </region>
+    <region id="80">
+        <name value="ch15- button 8"/>
+        <shape type="rect">
+            <quad value="214.4667,85.1333,215.5725,86.2062"/>
+        </shape>
+    </region>
+    <region id="81">
+        <name value="ch15- button 9"/>
+        <shape type="rect">
+            <quad value="216.5017,85.0063,217.6074,86.0793"/>
+        </shape>
+    </region>
+    <region id="82">
+        <name value="ch15- button 10"/>
+        <shape type="rect">
+            <quad value="218.5168,85.0632,219.6225,86.1362"/>
+        </shape>
+    </region>
+    <region id="83">
+        <name value="ch15- jump 3"/>
+        <shape type="diamond">
+            <center value="215.391,59.015"/>
+            <width value="1.0573"/>
+            <height value="5.0183"/>
+        </shape>
+    </region>
+    <region id="84">
+        <name value="ch15- jump 4"/>
+        <shape type="rect">
+            <quad value="226.4055,82.1313,231.893,83.4833"/>
+        </shape>
+    </region>
+    <region id="85">
+        <name value="ch15- crystal 1"/>
+        <shape type="circle">
+            <center value="229.0263,94.3012"/>
+            <radius value="7.9907"/>
+        </shape>
+    </region>
+    <region id="86">
+        <name value="ch15- catapult region 1"/>
+        <shape type="rect">
+            <quad value="217.4963,70.9663,218.4577,71.9538"/>
+        </shape>
+    </region>
+    <region id="69">
+        <name value="ch15- catapult region 2"/>
+        <shape type="rect">
+            <quad value="206.0322,91.281,207.047,92.293"/>
+        </shape>
+    </region>
+    <region id="87">
+        <name value="end area playable"/>
+        <shape type="circle">
+            <center value="222.229,24.1462"/>
+            <radius value="19.4423"/>
+        </shape>
+    </region>
+    <region id="88">
+        <name value="end area spawn"/>
+        <shape type="circle">
+            <center value="222.4484,23.026"/>
+            <radius value="3.9145"/>
+        </shape>
+    </region>
+    <region id="89">
+        <name value="end area catapult 1"/>
+        <shape type="circle">
+            <center value="225.5236,18.5937"/>
+            <radius value="0.8886"/>
+        </shape>
+    </region>
+    <region id="90">
+        <name value="end area catapult 2"/>
+        <shape type="circle">
+            <center value="217.0861,23.2165"/>
+            <radius value="0.8886"/>
+        </shape>
+    </region>
+    <region id="91">
+        <name value="ch16 spawn"/>
+        <shape type="rect">
+            <quad value="94.715,19.6618,96.2314,21.1962"/>
+        </shape>
+    </region>
+    <region id="92">
+        <name value="ch16 rb"/>
+        <shape type="rect">
+            <quad value="73.3408,8.055,115.4428,49.2746"/>
+        </shape>
+    </region>
+    <region id="93">
+        <name value="ch16- cycle trigger"/>
+        <shape type="rect">
+            <quad value="89.5734,26.9138,98.7766,31.9206"/>
+        </shape>
+    </region>
+    <region id="95">
+        <name value="ch16- train unit kill"/>
+        <shape type="diamond">
+            <center value="101.0634,18.138"/>
+            <width value="0.9155"/>
+            <height value="5.734"/>
+        </shape>
+    </region>
+    <region id="96">
+        <name value="ch16 finish"/>
+        <shape type="circle">
+            <center value="108.424,23.6254"/>
+            <radius value="0.7084"/>
+        </shape>
+    </region>
+    <region id="97">
+        <name value="ch16- catapult 2"/>
+        <shape type="circle">
+            <center value="89.7761,25.6247"/>
+            <radius value="0.625"/>
+        </shape>
+    </region>
+    <region id="64">
+        <name value="ch4- jump 1"/>
+        <shape type="rect">
+            <quad value="177,223.5,178,226.5"/>
+        </shape>
+    </region>
+    <region id="98">
+        <name value="ch4- jump 2"/>
+        <shape type="rect">
+            <quad value="189,231.5,190,234.5"/>
+        </shape>
+    </region>
+    <region id="99">
+        <name value="ch9- Catpault 1"/>
+        <shape type="rect">
+            <quad value="148.4006,122.939,149.395,124.8432"/>
+        </shape>
+    </region>
+    <region id="100">
+        <name value="ch9- bonus trap spawn 1"/>
+        <shape type="rect">
+            <quad value="153.438,134.3581,154.639,134.784"/>
+        </shape>
+    </region>
+    <region id="101">
+        <name value="ch9- bonus trap spawn 2"/>
+        <shape type="rect">
+            <quad value="153.4343,136.5285,154.6352,136.9543"/>
+        </shape>
+    </region>
+    <region id="102">
+        <name value="ch9- trap spawn kill"/>
+        <shape type="rect">
+            <quad value="153.4672,131.0266,154.4782,131.7395"/>
+        </shape>
+    </region>
+    <region id="103">
+        <name value="ch9- bonus trap spawn 3"/>
+        <shape type="rect">
+            <quad value="153.4978,138.9494,154.6987,139.3752"/>
+        </shape>
+    </region>
+    <region id="104">
+        <name value="ch9- trap spawn kill 2"/>
+        <shape type="rect">
+            <quad value="153.5847,137.8693,154.5957,138.5822"/>
+        </shape>
+    </region>
+    <region id="34">
+        <name value="ch10 spawn"/>
+        <shape type="rect">
+            <quad value="139.8676,45.1428,143.339,48.1467"/>
+        </shape>
+    </region>
+    <region id="35">
+        <name value="ch10 rb"/>
+        <shape type="rect">
+            <quad value="125.7932,31.7592,164.3457,66.8154"/>
+        </shape>
+    </region>
+    <region id="36">
+        <name value="ch10 finish"/>
+        <shape type="circle">
+            <center value="144.1533,59.508"/>
+            <radius value="0.7014"/>
+        </shape>
+    </region>
+    <region id="38">
+        <name value="ch14- catapult region 1"/>
+        <shape type="diamond">
+            <center value="37.4841,27.5187"/>
+            <width value="1.0393"/>
+            <height value="1.1867"/>
+        </shape>
+    </region>
+    <region id="19">
+        <name value="ch6 rb"/>
+        <shape type="rect">
+            <quad value="162.4704,151.221,201.0476,178.3007"/>
+        </shape>
+    </region>
+    <region id="39">
+        <name value="ch5- catapult 1"/>
+        <shape type="rect">
+            <quad value="125.356,157.0422,126.2746,157.9604"/>
+        </shape>
+    </region>
+    <region id="40">
+        <name value="end area move 1"/>
+        <shape type="diamond">
+            <center value="213.9392,12.8354"/>
+            <width value="1.4345"/>
+            <height value="4.6047"/>
+        </shape>
+    </region>
+    <region id="41">
+        <name value="end area move 2"/>
+        <shape type="rect">
+            <quad value="218.4934,9.7827,223.808,11.1118"/>
+        </shape>
+    </region>
+    <region id="47">
+        <name value="end area move 3"/>
+        <shape type="diamond">
+            <center value="211.5415,34.9582"/>
+            <width value="5.844"/>
+            <height value="1.1074"/>
+        </shape>
+    </region>
+    <region id="94">
+        <name value="end area move 4"/>
+        <shape type="diamond">
+            <center value="232.5834,33.0051"/>
+            <width value="1.0922"/>
+            <height value="5.735"/>
+        </shape>
+    </region>
+    <region id="105">
+        <name value="end area jump zone"/>
+        <shape type="rect">
+            <quad value="219.1362,27.6176,221.137,28.6547"/>
+        </shape>
+    </region>
+    <region id="106">
+        <name value="ch8- catapult 1"/>
+        <shape type="rect">
+            <quad value="104.3183,106.4313,105.1977,107.3632"/>
+        </shape>
+    </region>
+    <region id="107">
+        <name value="ch8- catapult 2"/>
+        <shape type="rect">
+            <quad value="79.6511,108.639,80.5285,109.5847"/>
+        </shape>
+    </region>
+    <region id="108">
+        <name value="ch8- catapult 3"/>
+        <shape type="rect">
+            <quad value="81.0827,121.3498,81.9963,122.1257"/>
+        </shape>
+    </region>
+    <region id="109">
+        <name value="ch8- catapult 4"/>
+        <shape type="diamond">
+            <center value="103.6748,112.1821"/>
+            <width value="0.8603"/>
+            <height value="1.0183"/>
+        </shape>
+    </region>
+</Regions>

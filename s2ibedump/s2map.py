@@ -46,6 +46,8 @@ KNOWN_NAME_MAP = {
     'Back to Brood Baneling mode': 'BTB-BANE',
     'Back to Brood Ice Escape EZ': 'BTB-EZ',
     'Zealot dodge': 'Zealot',
+    'Ice Baneling Escape Arctic Adventures': 'IBE-ARCT',
+    'Ice Baneling Escape Below Zero': 'IBE-BZ',
 
     # CN 2025 (+)
     '雪地自爆虫大逃亡_2': 'IBE2', # Sam (deprecated; to be removed?)
